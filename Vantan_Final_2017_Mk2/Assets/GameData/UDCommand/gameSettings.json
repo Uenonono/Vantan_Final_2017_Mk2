@@ -1,0 +1,8 @@
+{
+    "gameSettings": {
+        "gameTime": 5,
+        "easyDecrease": 50,
+        "mediumDecrease": 100,
+        "hardDecrease": 150
+    }
+}
