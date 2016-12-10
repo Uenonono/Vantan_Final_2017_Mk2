@@ -6,10 +6,10 @@ namespace UDCommand {
   public class RescaleByState : MonoBehaviour {
 
     [SerializeField]
-    private Vector2 neutralScale = new Vector2(50, 50);
+    private Vector2 neutralScale = new Vector2(200, 200);
 
     [SerializeField]
-    private Vector2 highlightedScale = new Vector2(75, 75);
+    private Vector2 highlightedScale = new Vector2(250, 250);
 
     private UDC.CommandState _currentState;
 

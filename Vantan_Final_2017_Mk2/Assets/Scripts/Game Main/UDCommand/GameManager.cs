@@ -10,15 +10,7 @@ namespace UDCommand {
   public class GameManager : MonoBehaviour {
 
     [SerializeField]
-    private GameObject firstCommand = null;
-    [SerializeField]
-    private GameObject secondCommand = null;
-    [SerializeField]
-    private GameObject thirdCommand = null;
-    [SerializeField]
-    private GameObject fourthCommand = null;
-    [SerializeField]
-    private GameObject fifthCommand = null;
+    private GameObject commandPrefab;
 
     [SerializeField]
     private Text timeText = null;
@@ -30,9 +22,6 @@ namespace UDCommand {
     [SerializeField]
     private UDC.Dificulty dificulty = UDC.Dificulty.Easy;
 
-    private UDC.GameMode mode = UDC.GameMode.VSCPU;
-    private UDC.PlayerType currentPlayer = UDC.PlayerType.Player1;
-
     private int previousFrameCommand = -1;
     private int currentCommand = 0;
 
@@ -40,28 +29,31 @@ namespace UDCommand {
 
     private int waitTime;
     private float currentWaitTime;
-    private float decreaseTime;
     private UDC.GameSettings gameSettings;
-    private int[] correctCommands;
-
-    private float CPUTime;//for debug
+    private int correctCommands;
+    private bool commandAdded = false;
 
     void Start() {
       images = new List<UDC.ImageType>();
       commandObjects = new List<GameObject>();
       inputList = new List<TFC.InputType>();
       gameSettings = new UDC.GameSettings();
-      correctCommands = new int[2];
-      AddCommandsToList();
+      InitCommands();
       SetGameSettings();
     }
 
-    private void AddCommandsToList() {
-      commandObjects.Add(firstCommand);
-      commandObjects.Add(secondCommand);
-      commandObjects.Add(thirdCommand);
-      commandObjects.Add(fourthCommand);
-      commandObjects.Add(fifthCommand);
+    private void InitCommands() {
+      for (var i = 0; i < DificultyToQtt(); i++) {
+        var obj = Instantiate(commandPrefab);
+        obj.transform.SetParent(transform, false);
+        obj.name = "Command" + (i + 1).ToString();
+        obj.GetComponent<PositionByQuantity>().index = i;
+        commandObjects.Add(obj);
+      }
+
+      foreach (var obj in commandObjects) {
+        obj.GetComponent<PositionByQuantity>().SetTotalChildrenFromParent();
+      }
     }
 
     private void SetGameSettings() {
@@ -71,7 +63,6 @@ namespace UDCommand {
       }
       waitTime = gameSettings.GetGameTime();
       currentWaitTime = waitTime;
-      decreaseTime = gameSettings.GetDecreaseByDificulty(dificulty);
     }
 
     void Update() {
@@ -81,52 +72,9 @@ namespace UDCommand {
       }
       UpdateCommandIcons(currentCommand);
       previousFrameCommand = currentCommand;
-      if (currentPlayer != UDC.PlayerType.CPU) {
-        if (mode == UDC.GameMode.VSCPU) {
-          CheckGamepadInput();
-        }
-        else if(mode == UDC.GameMode.VSPlayer) {
-          CheckGamepadInput(PlayerTypeToPlayerNumber(currentPlayer));
-        }
-      }
-      else {
-        CPUAdvanceCommand();
-      }
+      CheckGamepadInput();
       ResetCurrentCommand();
       currentWaitTime -= Time.deltaTime;
-    }
-
-    private int PlayerTypeToPlayerNumber(UDC.PlayerType player) {
-      if(player == UDC.PlayerType.Player1) {
-        return 1;
-      }
-      else if (player == UDC.PlayerType.Player2){
-        return 2;
-      }
-      else {
-        return 0;
-      }
-    }
-
-    private void SwitchPlayers() {
-      switch (mode) {
-        case UDC.GameMode.VSCPU:
-          if (currentPlayer == UDC.PlayerType.Player1) {
-            currentPlayer = UDC.PlayerType.CPU;
-          }
-          else {
-            currentPlayer = UDC.PlayerType.Player1;
-          }
-          break;
-        case UDC.GameMode.VSPlayer:
-          if (currentPlayer == UDC.PlayerType.Player1) {
-            currentPlayer = UDC.PlayerType.Player2;
-          }
-          else {
-            currentPlayer = UDC.PlayerType.Player1;
-          }
-          break;
-      }
     }
 
     private void UpdateDisplayTime() {
@@ -134,10 +82,9 @@ namespace UDCommand {
     }
 
     private void GenerateRandomCommands() {
-      SetSpritesByDificulty();
       images.Clear();
       inputList.Clear();
-      for (var i = 0; i < DificultyToQtt(); i++) {
+      for (var i = 0; i < commandObjects.Count; i++) {
         images.Add((UDC.ImageType)Unity.Random.Range(0, 8));
       }
 
@@ -147,16 +94,6 @@ namespace UDCommand {
 
       foreach (var img in images) {
         inputList.Add(ImageTypeToInputType(img));
-      }
-    }
-
-    private void SetSpritesByDificulty() {
-      foreach (var obj in commandObjects) {
-        obj.SetActive(false);
-      }
-
-      for (int i = 0; i < DificultyToQtt(); i++) {
-        commandObjects[i].SetActive(true);
       }
     }
 
@@ -199,30 +136,33 @@ namespace UDCommand {
       }
     }
 
-    private void CPUAdvanceCommand() {
-      CPUTime += Time.deltaTime;
-      if (CPUTime > 0.5f) {
-        currentCommand++;
-        CPUTime = 0;
-      }
-      ResetCurrentCommand();
-    }
-
     private void ResetCurrentCommand() {
-      if (currentCommand >= DificultyToQtt()) {
+      if (currentCommand >= commandObjects.Count) {
         currentCommand = 0;
-        correctCommands[PlayerTypeToScoreIndex(currentPlayer)]++;
-        SwitchPlayers();
-        currentWaitTime = waitTime - ((float)(decreaseTime / 1000.0f) * correctCommands[PlayerTypeToScoreIndex(currentPlayer)]);
+        correctCommands++;
+        commandAdded = false;
+        currentWaitTime = waitTime;
+      }
+
+      if(correctCommands >= 5) {
+        if(correctCommands % 5 == 0) {
+          if(commandObjects.Count < 10 && !commandAdded) {
+            AddCommand();
+            commandAdded = true;
+          }
+        }
       }
     }
 
-    private int PlayerTypeToScoreIndex(UDC.PlayerType playerType) {
-      if(playerType == UDC.PlayerType.Player1) {
-        return 0;
-      }
-      else {
-        return 1;
+    private void AddCommand() {
+      var obj = Instantiate(commandPrefab);
+      obj.transform.SetParent(transform, false);
+      obj.transform.localPosition = new Vector3(0, 1000.0f);
+      obj.name = "Command" + (commandObjects.Count + 1).ToString();
+      obj.GetComponent<PositionByQuantity>().index = commandObjects.Count;
+      commandObjects.Add(obj);
+      foreach (var comm in commandObjects) {
+        comm.GetComponent<PositionByQuantity>().SetTotalChildrenFromParent();
       }
     }
 
