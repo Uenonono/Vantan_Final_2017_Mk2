@@ -15,21 +15,25 @@ namespace UDCommand {
     [SerializeField]
     private Text timeText = null;
 
+    private int score;
+    [SerializeField]
+    private Text scoreText = null;
+
+    [SerializeField]
+    private UDC.GameMode gameMode = UDC.GameMode.Trial;
+
     private List<UDC.ImageType> images;
     private List<GameObject> commandObjects;
     private List<TFC.InputType> inputList;
-
-    [SerializeField]
-    private UDC.Dificulty dificulty = UDC.Dificulty.Easy;
+    private List<TFC.ActionInputs> trialInputList;
 
     private int previousFrameCommand = -1;
     private int currentCommand = 0;
 
     private bool resetedToNeutral;
 
-    private int waitTime;
-    private float currentWaitTime;
-    private UDC.GameSettings gameSettings;
+    [SerializeField]
+    private float waitTime = 60.0f;
     private int correctCommands;
     private bool commandAdded = false;
 
@@ -37,13 +41,12 @@ namespace UDCommand {
       images = new List<UDC.ImageType>();
       commandObjects = new List<GameObject>();
       inputList = new List<TFC.InputType>();
-      gameSettings = new UDC.GameSettings();
+      trialInputList = new List<TFC.ActionInputs>();
       InitCommands();
-      SetGameSettings();
     }
 
     private void InitCommands() {
-      for (var i = 0; i < DificultyToQtt(); i++) {
+      for (var i = 0; i < 3; i++) {
         var obj = Instantiate(commandPrefab);
         obj.transform.SetParent(transform, false);
         obj.name = "Command" + (i + 1).ToString();
@@ -56,17 +59,9 @@ namespace UDCommand {
       }
     }
 
-    private void SetGameSettings() {
-      if (!gameSettings.LoadFromJson()) {
-        gameSettings.SerializeDefaultData();
-        gameSettings.LoadFromJson();
-      }
-      waitTime = gameSettings.GetGameTime();
-      currentWaitTime = waitTime;
-    }
-
     void Update() {
       UpdateDisplayTime();
+      UpdateScoreText();
       if (currentCommand == 0 && (currentCommand != previousFrameCommand)) {
         GenerateRandomCommands();
       }
@@ -74,58 +69,74 @@ namespace UDCommand {
       previousFrameCommand = currentCommand;
       CheckGamepadInput();
       ResetCurrentCommand();
-      currentWaitTime -= Time.deltaTime;
+      waitTime -= Time.deltaTime;
     }
 
     private void UpdateDisplayTime() {
-      timeText.text = "Time : " + currentWaitTime.ToString("F2");
+      timeText.text = "Time : " + waitTime.ToString("F2");
+    }
+
+    private void UpdateScoreText() {
+      scoreText.text = "Score : " + score.ToString();
     }
 
     private void GenerateRandomCommands() {
       images.Clear();
       inputList.Clear();
+      trialInputList.Clear();
       for (var i = 0; i < commandObjects.Count; i++) {
-        images.Add((UDC.ImageType)Unity.Random.Range(0, 8));
+        if (gameMode == UDC.GameMode.Trial) {
+          images.Add((UDC.ImageType)Unity.Random.Range(0, 4));
+        }
+        else if(gameMode == UDC.GameMode.Challenge) {
+          images.Add((UDC.ImageType)Unity.Random.Range(4, 12));
+        }
       }
 
       for (var i = 0; i < images.Count; i++) {
         commandObjects[i].GetComponent<Image>().sprite = ImageTypeToSprite(images[i]);
       }
 
-      foreach (var img in images) {
-        inputList.Add(ImageTypeToInputType(img));
+      if (gameMode == UDC.GameMode.Trial) {
+        foreach (var img in images) {
+          trialInputList.Add(ImageTypeToActionInput(img));
+        }   
       }
-    }
-
-    private int DificultyToQtt() {
-      int res = 3;
-      switch (dificulty) {
-        case UDC.Dificulty.Easy:
-          res = 3;
-          break;
-        case UDC.Dificulty.Medium:
-          res = 4;
-          break;
-        case UDC.Dificulty.Hard:
-          res = 5;
-          break;
+      else if (gameMode == UDC.GameMode.Challenge) {
+        foreach (var img in images) {
+          inputList.Add(ImageTypeToInputType(img));
+        }
       }
-
-      return res;
     }
 
     private void CheckGamepadInput(int player = 0) {
-      var inputs = TFC.GamepadInputHandler.GetInputs(player);
+      var inputs = TFC.GamepadInputHandler.GetInputs();
+      var trialInputs = TFC.GamepadInputHandler.GetColorInputs();
       if (resetedToNeutral) {
         if (inputs.Count != 0) {
-          if (inputs.Contains(inputList[currentCommand])) {
-            resetedToNeutral = false;
-            currentCommand++;
+          if (gameMode == UDC.GameMode.Trial) {
+            if (trialInputs.Contains(trialInputList[currentCommand])) {
+              resetedToNeutral = false;
+              AddScoreByCommandIndex(currentCommand);
+              currentCommand++;
+            }
+            else {
+              currentCommand = 0;
+              GenerateRandomCommands();
+              resetedToNeutral = false;
+            }
           }
-          else {
-            currentCommand = 0;
-            GenerateRandomCommands();
-            resetedToNeutral = false;
+          else if (gameMode == UDC.GameMode.Challenge) {
+            if (inputs.Contains(inputList[currentCommand])) {
+              resetedToNeutral = false;
+              AddScoreByCommandIndex(currentCommand);
+              currentCommand++;
+            }
+            else {
+              currentCommand = 0;
+              GenerateRandomCommands();
+              resetedToNeutral = false;
+            }
           }
         }
       }
@@ -136,17 +147,20 @@ namespace UDCommand {
       }
     }
 
+    private void AddScoreByCommandIndex(int currentCommand) {
+      score += (int)(10 * Mathf.Pow(2, currentCommand));
+    }
+
     private void ResetCurrentCommand() {
       if (currentCommand >= commandObjects.Count) {
         currentCommand = 0;
         correctCommands++;
         commandAdded = false;
-        currentWaitTime = waitTime;
       }
 
-      if(correctCommands >= 5) {
+      if(correctCommands >= 10) {
         if(correctCommands % 5 == 0) {
-          if(commandObjects.Count < 10 && !commandAdded) {
+          if(commandObjects.Count < 5 && !commandAdded) {
             AddCommand();
             commandAdded = true;
           }
@@ -181,30 +195,43 @@ namespace UDCommand {
     private Sprite ImageTypeToSprite(UDC.ImageType imageType) {
       string path = "";
       switch (imageType) {
-        case UDC.ImageType.Left:
-          path = "Sprites/UDCommand/leftArrow";
+        case UDC.ImageType.Red:
+          path = "Sprites/UDCommand/red";
           break;
-        case UDC.ImageType.Down:
-          path = "Sprites/UDCommand/downArrow";
+        case UDC.ImageType.Green:
+          path = "Sprites/UDCommand/green";
           break;
-        case UDC.ImageType.Right:
-          path = "Sprites/UDCommand/rightArrow";
+        case UDC.ImageType.Blue:
+          path = "Sprites/UDCommand/blue";
           break;
-        case UDC.ImageType.Up:
-          path = "Sprites/UDCommand/upArrow";
+        case UDC.ImageType.Yellow:
+          path = "Sprites/UDCommand/yellow";
           break;
 
-        case UDC.ImageType.Square:
-          path = "Sprites/UDCommand/square";
+        case UDC.ImageType.URed:
+          path = "Sprites/UDCommand/Ured";
           break;
-        case UDC.ImageType.Cross:
-          path = "Sprites/UDCommand/cross";
+        case UDC.ImageType.UGreen:
+          path = "Sprites/UDCommand/Ugreen";
           break;
-        case UDC.ImageType.Circle:
-          path = "Sprites/UDCommand/circle";
+        case UDC.ImageType.UBlue:
+          path = "Sprites/UDCommand/Ublue";
           break;
-        case UDC.ImageType.Triangle:
-          path = "Sprites/UDCommand/triangle";
+        case UDC.ImageType.UYellow:
+          path = "Sprites/UDCommand/Uyellow";
+          break;
+
+        case UDC.ImageType.BRed:
+          path = "Sprites/UDCommand/Bred";
+          break;
+        case UDC.ImageType.BGreen:
+          path = "Sprites/UDCommand/Bgreen";
+          break;
+        case UDC.ImageType.BBlue:
+          path = "Sprites/UDCommand/Bblue";
+          break;
+        case UDC.ImageType.BYellow:
+          path = "Sprites/UDCommand/Byellow";
           break;
       }
 
@@ -213,6 +240,10 @@ namespace UDCommand {
 
     private TFC.InputType ImageTypeToInputType(UDC.ImageType imageType) {
       return (TFC.InputType)imageType + 1;
+    }
+
+    private TFC.ActionInputs ImageTypeToActionInput(UDC.ImageType imageType) {
+      return (TFC.ActionInputs)((int)imageType % 4) + 1;
     }
   }
 }

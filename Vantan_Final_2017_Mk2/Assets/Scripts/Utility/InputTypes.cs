@@ -6,10 +6,14 @@ namespace ToppingFullCustom {
     Down,
     Right,
     Up,
-    Pink,
-    Blue,
-    Red,
-    Green
+    URed,
+    UGreen,
+    UBlue,
+    UYellow,
+    BRed,
+    BGreen,
+    BBlue,
+    BYellow
   }
 
   public enum DirectionalInputs {
@@ -20,12 +24,18 @@ namespace ToppingFullCustom {
     Up
   }
 
+
+  public enum ActionInputSubType {
+    Upper,
+    Bottom
+  }
+
   public enum ActionInputs {
     Neutral,
-    Square,
-    Cross,
-    Circle,
-    Triangle
+    Red,
+    Green,
+    Blue,
+    Yellow
   }
 
   public class InputUtility {
@@ -34,10 +44,15 @@ namespace ToppingFullCustom {
       return (InputType)dirInt;
     }
 
-    public static InputType ActionToInputType(ActionInputs actInput) {
+    public static InputType ActionToInputType(ActionInputSubType subType ,ActionInputs actInput) {
       var actInt = (int)actInput;
       if (actInput != ActionInputs.Neutral) {
-        return (InputType)actInt + 4;
+        if(subType == ActionInputSubType.Upper) {
+          return (InputType)actInt + 4;
+        }
+        else if(subType == ActionInputSubType.Bottom) {
+          return (InputType)actInt + 8;
+        }
       }
       return InputType.Neutral;
     }
