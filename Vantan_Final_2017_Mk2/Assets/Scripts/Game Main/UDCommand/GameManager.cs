@@ -159,7 +159,7 @@ namespace UDCommand {
       }
 
       if(correctCommands >= 10) {
-        if(correctCommands % 5 == 0) {
+        if(correctCommands % 10 == 0) {
           if(commandObjects.Count < 5 && !commandAdded) {
             AddCommand();
             commandAdded = true;
