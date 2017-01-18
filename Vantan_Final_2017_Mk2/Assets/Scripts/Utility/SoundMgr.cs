@@ -51,8 +51,9 @@ public class SoundMgr
         {
             Key = key;
             ResName = "Sounds/" + res;
+
             //AudioClipの取得
-            Clip = Resources.Load(ResName) as AudioClip;
+            Clip = Resources.Load<AudioClip>(ResName);
         }
     }
 

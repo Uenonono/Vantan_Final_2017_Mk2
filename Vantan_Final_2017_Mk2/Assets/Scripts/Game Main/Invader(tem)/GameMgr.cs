@@ -20,7 +20,7 @@ public class GameMgr : MonoBehaviour
     public void Start()
     {
         DontDestroyOnLoad(this.gameObject);
-        SoundMgr.SoundLoadBgm("img_Title2", "img_Title2");
+        //SoundMgr.SoundLoadBgm("img_Title2", "img_Title2");
     }
 
 
@@ -46,7 +46,7 @@ public class GameMgr : MonoBehaviour
                 {
                     gameState = GameState.Main;
                     SceneManager.LoadScene("Main");
-                    SoundMgr.PlayBgm("img_Title2");
+                    //SoundMgr.PlayBgm("img_Title2");
                 }
                 break;
 

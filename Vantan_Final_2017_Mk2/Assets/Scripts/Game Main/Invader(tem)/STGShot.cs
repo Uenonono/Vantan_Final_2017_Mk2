@@ -11,7 +11,7 @@ public class STGShot : MonoBehaviour
     void Start()
     {
         //サウンドロード
-        SoundMgr.SoundLoadSe("Bounce", "Bounce");
+        SoundMgr.SoundLoadSe("Bounce", "Invader/Bounce");
 
         if (enemyShot)
         {

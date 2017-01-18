@@ -18,8 +18,8 @@ public class STGPlayer : MonoBehaviour
         isDead = false;
 
         //サウンドロード
-        SoundMgr.SoundLoadSe("Shot", "Shot");
-        SoundMgr.SoundLoadSe("Death", "Death");
+        SoundMgr.SoundLoadSe("Shot", "Invader/Shot");
+        SoundMgr.SoundLoadSe("Death", "Invader/Death");
     }
 
 
