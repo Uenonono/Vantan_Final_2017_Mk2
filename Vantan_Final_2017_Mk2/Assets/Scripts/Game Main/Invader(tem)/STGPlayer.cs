@@ -9,6 +9,7 @@ public class STGPlayer : MonoBehaviour
     public float intervalTime;  //発射間隔
     public GameObject Shot; //弾
 
+    public GameObject Pice; //エフェクト
     public static bool isDead;  //生死フラグ
 
 
@@ -72,6 +73,11 @@ public class STGPlayer : MonoBehaviour
         if (collision.gameObject.tag == "Enemy" || collision.gameObject.tag == "Shot" || collision.gameObject.tag == "EnemyShot")
         {
             isDead = true;
+
+            Instantiate(Pice, new Vector3(transform.position.x,
+                              transform.position.y,
+                              transform.position.z),
+                              Quaternion.identity);
 
             //音
             SoundMgr.PlaySe("Death", 4);
