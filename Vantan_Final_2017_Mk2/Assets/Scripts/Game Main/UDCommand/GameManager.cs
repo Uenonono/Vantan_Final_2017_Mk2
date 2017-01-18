@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using Unity = UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using System;
@@ -19,8 +20,7 @@ namespace UDCommand {
     [SerializeField]
     private Text scoreText = null;
 
-    [SerializeField]
-    private UDC.GameMode gameMode = UDC.GameMode.Trial;
+    private UDC.GameMode gameMode;
 
     private List<UDC.ImageType> images;
     private List<GameObject> commandObjects;
@@ -34,15 +34,42 @@ namespace UDCommand {
 
     [SerializeField]
     private float waitTime = 60.0f;
+
     private int correctCommands;
     private bool commandAdded = false;
+
+    private bool init = false;
+    private bool initialInput = false;
+
+    [SerializeField]
+    GameObject pauseCanvas = null;
+    private bool isPaused = false;
+    private bool isPauseReleased = true;
 
     void Start() {
       images = new List<UDC.ImageType>();
       commandObjects = new List<GameObject>();
       inputList = new List<TFC.InputType>();
       trialInputList = new List<TFC.ActionInputs>();
+    }
+
+    private void Init() {
+      transform.DetachChildren();
+      foreach(var command in commandObjects) {
+        Destroy(command);
+      }
+      commandObjects.Clear();
+      previousFrameCommand = -1;
+      currentCommand = 0;
+      score = 0;
+      waitTime = 60.0f;
+      correctCommands = 0;
+      initialInput = false;
+      UpdateDisplayTime();
+      UpdateScoreText();
+      gameMode = (UDC.GameMode)UDC.SelectedGameMode.GetMode();
       InitCommands();
+      init = true;
     }
 
     private void InitCommands() {
@@ -59,17 +86,50 @@ namespace UDCommand {
       }
     }
 
+    public void Reset() {
+      init = false;
+    }
+
     void Update() {
-      UpdateDisplayTime();
-      UpdateScoreText();
-      if (currentCommand == 0 && (currentCommand != previousFrameCommand)) {
-        GenerateRandomCommands();
+      if (!init) {
+        Init();
       }
-      UpdateCommandIcons(currentCommand);
-      previousFrameCommand = currentCommand;
-      CheckGamepadInput();
-      ResetCurrentCommand();
-      waitTime -= Time.deltaTime;
+      if (!isPaused) {
+        UpdateDisplayTime();
+        UpdateScoreText();
+        if (currentCommand == 0 && (currentCommand != previousFrameCommand)) {
+          GenerateRandomCommands();
+        }
+        UpdateCommandIcons(currentCommand);
+        previousFrameCommand = currentCommand;
+        if (!initialInput) {
+          CheckForFirstInput();
+        }
+        if(Input.GetAxis("Pause") == 0) {
+          isPauseReleased = true;
+        }
+        if ((Input.GetAxis("Pause") == 1) && isPauseReleased) {
+          isPaused = true;
+          pauseCanvas.SetActive(true);
+          pauseCanvas.GetComponent<PauseMenu>().SetButtonState();
+        }
+        CheckGamepadInput();
+        ResetCurrentCommand();
+        if (initialInput) {
+          waitTime -= Time.deltaTime;
+        }
+      }
+      if (isPaused) {
+        if(!pauseCanvas.activeSelf) {
+          isPaused = false;
+          isPauseReleased = false;
+        }
+      }
+
+      if(waitTime <= 0) {
+        SceneManager.LoadScene("UDCResult");
+        Reset();
+      }
     }
 
     private void UpdateDisplayTime() {
@@ -109,7 +169,13 @@ namespace UDCommand {
       }
     }
 
-    private void CheckGamepadInput(int player = 0) {
+    private void CheckForFirstInput() {
+      if (TFC.GamepadInputHandler.GetInputs().Count > 0) {
+        initialInput = true;
+      }
+    }
+
+    private void CheckGamepadInput() {
       var inputs = TFC.GamepadInputHandler.GetInputs();
       var trialInputs = TFC.GamepadInputHandler.GetColorInputs();
       if (resetedToNeutral) {

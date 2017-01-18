@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using TFC = ToppingFullCustom;
+using System;
 
 namespace ToppingFullCustom {
   public class GamepadInputHandler : MonoBehaviour {
@@ -9,7 +10,6 @@ namespace ToppingFullCustom {
       List<InputType> inputs = new List<InputType>();
       GetDirectionalInputs(inputs);
       GetActionInputs(inputs);
-
       return inputs;
     }
 
