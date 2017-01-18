@@ -13,6 +13,12 @@ namespace ToppingFullCustom {
       return inputs;
     }
 
+    public static List<InputType> GetActionsOnly() {
+      List<InputType> inputs = new List<InputType>();
+      GetActionInputs(inputs);
+      return inputs;
+    }
+
     public static List<ActionInputs> GetColorInputs() {
       List<ActionInputs> resList = new List<ActionInputs>();
 

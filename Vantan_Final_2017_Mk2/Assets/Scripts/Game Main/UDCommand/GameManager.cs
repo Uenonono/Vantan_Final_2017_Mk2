@@ -20,6 +20,12 @@ namespace UDCommand {
     [SerializeField]
     private Text scoreText = null;
 
+    [SerializeField]
+    private GameObject standbyCanvas = null;
+
+    [SerializeField]
+    private GameObject resultCanvas = null;
+
     private UDC.GameMode gameMode;
 
     private List<UDC.ImageType> images;
@@ -32,14 +38,16 @@ namespace UDCommand {
 
     private bool resetedToNeutral;
 
-    [SerializeField]
-    private float waitTime = 60.0f;
+    public float waitTimeDebug = 60.0f;
+
+    private float waitTime;
 
     private int correctCommands;
     private bool commandAdded = false;
 
     private bool init = false;
-    private bool initialInput = false;
+    private bool onStandby = true;
+    private bool gameEnded = false;
 
     [SerializeField]
     GameObject pauseCanvas = null;
@@ -62,9 +70,12 @@ namespace UDCommand {
       previousFrameCommand = -1;
       currentCommand = 0;
       score = 0;
-      waitTime = 60.0f;
+      waitTime = waitTimeDebug;
       correctCommands = 0;
-      initialInput = false;
+      onStandby = true;
+      gameEnded = false;
+      standbyCanvas.SetActive(true);
+      resultCanvas.SetActive(false);
       UpdateDisplayTime();
       UpdateScoreText();
       gameMode = (UDC.GameMode)UDC.SelectedGameMode.GetMode();
@@ -90,6 +101,11 @@ namespace UDCommand {
       init = false;
     }
 
+    public void StartGame() {
+      onStandby = false;
+      resetedToNeutral = false;
+    }
+
     void Update() {
       if (!init) {
         Init();
@@ -102,9 +118,6 @@ namespace UDCommand {
         }
         UpdateCommandIcons(currentCommand);
         previousFrameCommand = currentCommand;
-        if (!initialInput) {
-          CheckForFirstInput();
-        }
         if(Input.GetAxis("Pause") == 0) {
           isPauseReleased = true;
         }
@@ -113,9 +126,9 @@ namespace UDCommand {
           pauseCanvas.SetActive(true);
           pauseCanvas.GetComponent<PauseMenu>().SetButtonState();
         }
+        if (!onStandby && !gameEnded) {
         CheckGamepadInput();
         ResetCurrentCommand();
-        if (initialInput) {
           waitTime -= Time.deltaTime;
         }
       }
@@ -127,8 +140,9 @@ namespace UDCommand {
       }
 
       if(waitTime <= 0) {
-        SceneManager.LoadScene("UDCResult");
-        Reset();
+        gameEnded = true;
+        waitTime = 0;
+        resultCanvas.SetActive(true);
       }
     }
 
@@ -169,14 +183,8 @@ namespace UDCommand {
       }
     }
 
-    private void CheckForFirstInput() {
-      if (TFC.GamepadInputHandler.GetInputs().Count > 0) {
-        initialInput = true;
-      }
-    }
-
     private void CheckGamepadInput() {
-      var inputs = TFC.GamepadInputHandler.GetInputs();
+      var inputs = TFC.GamepadInputHandler.GetActionsOnly();
       var trialInputs = TFC.GamepadInputHandler.GetColorInputs();
       if (resetedToNeutral) {
         if (inputs.Count != 0) {
@@ -256,6 +264,12 @@ namespace UDCommand {
           commandObjects[i].GetComponent<UDC.RescaleByState>().currentState = UDC.CommandState.Neutral;
         }
       }
+    }
+
+    public void EndGame() {
+      //SaveScore();
+      Reset();
+      SceneManager.LoadScene("UDCResult");
     }
 
     private Sprite ImageTypeToSprite(UDC.ImageType imageType) {
