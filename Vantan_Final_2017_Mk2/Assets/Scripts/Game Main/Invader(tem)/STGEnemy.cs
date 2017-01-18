@@ -6,7 +6,7 @@ public class STGEnemy : MonoBehaviour
 {
     public bool Normal;   //通常エネミー
     public bool Attacker;   //攻撃エネミー
-    public bool Shilder;   //盾エネミー
+    public bool Shielder;   //盾エネミー
 
     public float speed; //移動速度
     public int getScore;    //スコア
@@ -36,8 +36,8 @@ public class STGEnemy : MonoBehaviour
         active = 0;
 
         //サウンドロードSpawn
-        SoundMgr.SoundLoadSe("Shot", "Shot");
-        SoundMgr.SoundLoadSe("Death", "Death");
+        SoundMgr.SoundLoadSe("Shot", "Invader/Shot");
+        SoundMgr.SoundLoadSe("Death", "Invader/Death");
     }
 
 
@@ -45,7 +45,7 @@ public class STGEnemy : MonoBehaviour
     {
         if (Normal) { NormalMove(); }
         if (Attacker) { AttackMove(); }
-        if (Shilder) { ShildMove(); }
+        if (Shielder) { ShieldMove(); }
     }
 
 
@@ -134,7 +134,7 @@ public class STGEnemy : MonoBehaviour
         }
     }
 
-    public void ShildMove()
+    public void ShieldMove()
     {
         switch (enemyState)
         {

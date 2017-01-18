@@ -50,7 +50,6 @@ public class GameTime : MonoBehaviour
             //時間が0になったら
             if (limitTime <= 0.0f)
             {
-                Debug.Log("終了");
                 isTimeUp = true;
             }
         }

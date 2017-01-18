@@ -12,7 +12,7 @@ public class STGSpawner : MonoBehaviour
     void Start()
     {
         InvokeRepeating("Create", 0, spawnIntervalTime);
-        SoundMgr.SoundLoadSe("Spawn", "Spawn");
+        SoundMgr.SoundLoadSe("Spawn", "Invader/Spawn");
     }
 
 
