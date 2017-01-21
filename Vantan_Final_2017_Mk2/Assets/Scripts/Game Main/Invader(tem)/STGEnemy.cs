@@ -20,12 +20,15 @@ public class STGEnemy : MonoBehaviour
     //敵の状態
     enum EnemyState
     {
+        Summon, //召喚
         Normal,  //通常
         Active,   //異常
     }
-    EnemyState enemyState = EnemyState.Normal;
+    EnemyState enemyState = EnemyState.Summon;
 
     //状態チェンジまでの時間
+    public float changeTime;
+    float change;
     public float activeTime;
     float active;
 
@@ -33,6 +36,7 @@ public class STGEnemy : MonoBehaviour
     void Start()
     {
         interval = 0;
+        change = 0;
         active = 0;
 
         //サウンドロードSpawn
@@ -54,6 +58,14 @@ public class STGEnemy : MonoBehaviour
     {
         switch (enemyState)
         {
+            //召喚
+            case EnemyState.Summon:
+                change += Time.deltaTime;
+                if (change >= changeTime)
+                {
+                    enemyState = EnemyState.Normal;
+                }
+                break;
             //通常
             case EnemyState.Normal:
                 //ステータス変更
@@ -80,6 +92,14 @@ public class STGEnemy : MonoBehaviour
     {
         switch (enemyState)
         {
+            //召喚
+            case EnemyState.Summon:
+                change += Time.deltaTime;
+                if (change >= changeTime)
+                {
+                    enemyState = EnemyState.Normal;
+                }
+                break;
             //通常
             case EnemyState.Normal:
                 //ステータス変更
@@ -138,6 +158,14 @@ public class STGEnemy : MonoBehaviour
     {
         switch (enemyState)
         {
+            //召喚
+            case EnemyState.Summon:
+                change += Time.deltaTime;
+                if (change >= changeTime)
+                {
+                    enemyState = EnemyState.Normal;
+                }
+                break;
             //通常
             case EnemyState.Normal:
                 //ステータス変更
