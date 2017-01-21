@@ -49,7 +49,7 @@ public class STGPlayer : MonoBehaviour
 
         //ショット
         interval += Time.deltaTime;
-        if (Input.GetKey("space"))
+        if (Input.GetAxis("BottomRed") == 1)
         {
             if (interval >= intervalTime)
             {
