@@ -5,14 +5,21 @@ using System.Collections;
 public class SoftReset : MonoBehaviour {
 
 	void Awake() {
-    DontDestroyOnLoad(transform.gameObject);
+    if (FindObjectsOfType<SoftReset>().Length != 1) {
+      Destroy(gameObject);
+    }
+    else {
+      DontDestroyOnLoad(transform.gameObject);
+    }
   }
 
   void Update() {
     if(Input.GetAxis("Option") == 1 && Input.GetAxis("Pause") == 1) {
-      var menuObj = GameObject.FindGameObjectWithTag("Menu Selector");
+      var menuObj = GameObject.FindGameObjectsWithTag("Menu Selector");
       if(menuObj != null) {
-        menuObj.GetComponent<ToppingFullCustom.MenuSelector>().Reset();
+        foreach(var obj in menuObj) {
+        obj.GetComponent<ToppingFullCustom.MenuSelector>().Reset();
+        }
       }
 
       var UDC_GM_Obj = GameObject.FindGameObjectWithTag("UDC Game Manager");
