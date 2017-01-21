@@ -32,15 +32,16 @@ public static class STGGameState
 //ゲーム管理
 public class GameMgr : MonoBehaviour
 {
-    public void Start()
+    private void Start()
     {
         STGGameState.SetState(0);
         SoundMgr.SoundLoadBgm("img_Title2", "Invader/img_Title2");
     }
 
+
     void Awake()
     {
-        if(FindObjectsOfType<GameMgr>().Length != 1)
+        if (FindObjectsOfType<GameMgr>().Length != 1)
         {
             Destroy(this.gameObject);
         }
@@ -106,12 +107,16 @@ public class GameMgr : MonoBehaviour
                 //ボタン押したらタイトル画面へ
                 if (Input.GetAxis("BottomGreen") == 1)
                 {
-                    Score.MasterScore = 0;
-
-                    STGGameState.SetState(4);
+                    Disable();
                     SceneManager.LoadScene("MainTitle");
                 }
                 break;
         }
+    }
+
+    public void Disable()
+    {
+        Score.MasterScore = 0;
+        STGGameState.SetState(4);
     }
 }
