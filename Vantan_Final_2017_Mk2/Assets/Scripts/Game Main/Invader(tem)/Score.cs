@@ -13,7 +13,7 @@ public class Score : MonoBehaviour
 
     void Start()
     {
-
+        MasterScore = 0;
     }
 
 

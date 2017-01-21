@@ -4,7 +4,6 @@ using System.Collections;
 
 namespace ToppingFullCustom {
   public class MainTitleManager : MonoBehaviour {
-
     [SerializeField]
     GameObject softResetHandler = null;
 
@@ -21,9 +20,11 @@ namespace ToppingFullCustom {
           SceneManager.LoadScene("UDCTitle");
           menuSelector.Reset();
         }
-        else if(index == 1) {
+
+        if (index == 1) {
           SceneManager.LoadScene("InvaderTitle");
           menuSelector.Reset();
+          STGGameState.SetState(0);
         }
       }
     }
