@@ -3,73 +3,113 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 
+//シーンの状態
+public enum GameState
+{
+    Title,  //タイトル
+    Rule,   //ルール
+    Main,   //本編
+    Result, //リザルト
+    Disabled, //なし
+}
+
+public static class STGGameState
+{
+    static int state = 0;
+
+    public static void SetState(int val)
+    {
+        state = val;
+    }
+
+    public static int GetState()
+    {
+        return state;
+    }
+}
+
+
 //ゲーム管理
 public class GameMgr : MonoBehaviour
 {
-    //シーンの状態
-    enum GameState
-    {
-        Title,  //タイトル
-        Rule,   //ルール
-        Main,   //本編
-        Result, //リザルト
-    }
-    GameState gameState = GameState.Title;
-
-
     public void Start()
     {
-        DontDestroyOnLoad(this.gameObject);
-        //SoundMgr.SoundLoadBgm("img_Title2", "img_Title2");
+        STGGameState.SetState(0);
+        SoundMgr.SoundLoadBgm("img_Title2", "Invader/img_Title2");
+    }
+
+    void Awake()
+    {
+        if(FindObjectsOfType<GameMgr>().Length != 1)
+        {
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            DontDestroyOnLoad(this.gameObject);
+        }
     }
 
 
     void Update()
     {
         //シーン変更
-        switch (gameState)
+        switch ((GameState)STGGameState.GetState())
         {
             //タイトル
             case GameState.Title:
+                //Debug.Log("タイトル");
                 //ボタン押したらルール画面へ
-                if (Input.GetAxis("BottomRed") == 1 && gameState == GameState.Title)
+                if (Input.GetAxis("BottomRed") == 1)
                 {
-                    gameState = GameState.Rule;
+                    STGGameState.SetState(1);
                     SceneManager.LoadScene("InvaderRule");
                 }
                 break;
 
             //ルール
             case GameState.Rule:
+                //Debug.Log("ルール");
                 //ボタン押したらゲーム本編へ
-                if (Input.GetAxis("BottomRed") == 1 && gameState == GameState.Rule)
+                if (Input.GetAxis("BottomRed") == 1)
                 {
-                    gameState = GameState.Main;
+                    STGGameState.SetState(2);
                     SceneManager.LoadScene("InvaderMain");
-                    //SoundMgr.PlayBgm("img_Title2");
+                    SoundMgr.PlayBgm("img_Title2");
                 }
                 break;
 
             //ゲーム本編
             case GameState.Main:
+                //Debug.Log("本編");
                 //ゲームオーバーorタイムアップでリザルト画面へ
-                if(gameState == GameState.Main && STGPlayer.isDead == true || GameTime.isTimeUp)
+                if (STGPlayer.isDead == true || GameTime.isTimeUp)
                 {
-                        gameState = GameState.Result;
-                        SceneManager.LoadScene("InvaderResult");
+                    SoundMgr.StopBgm();
+                    STGGameState.SetState(3);
+                    SceneManager.LoadScene("InvaderResult");
                 }
                 break;
 
             //リザルト
             case GameState.Result:
+                //Debug.Log("リザルト");
                 //ボタン押したらタイトル画面へ
-                if (Input.GetAxis("BottomRed") == 1 && gameState == GameState.Result)
+                if (Input.GetAxis("BottomRed") == 1)
                 {
-                    gameState = GameState.Title;
-                    SceneManager.LoadScene("InvaderTitle");
-
                     Score.MasterScore = 0;
 
+                    STGGameState.SetState(0);
+                    SceneManager.LoadScene("InvaderTitle");
+                }
+
+                //ボタン押したらタイトル画面へ
+                if (Input.GetAxis("BottomGreen") == 1)
+                {
+                    Score.MasterScore = 0;
+
+                    STGGameState.SetState(4);
+                    SceneManager.LoadScene("MainTitle");
                 }
                 break;
         }
