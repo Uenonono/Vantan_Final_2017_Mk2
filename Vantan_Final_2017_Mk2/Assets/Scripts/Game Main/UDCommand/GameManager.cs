@@ -22,9 +22,11 @@ namespace UDCommand {
 
     [SerializeField]
     private GameObject standbyCanvas = null;
+    private bool standbyCanvasLastState;
 
     [SerializeField]
     private GameObject resultCanvas = null;
+    private bool resultCanvasLastState;
 
     private UDC.GameMode gameMode;
 
@@ -59,9 +61,9 @@ namespace UDCommand {
       commandObjects = new List<GameObject>();
       inputList = new List<TFC.InputType>();
       trialInputList = new List<TFC.ActionInputs>();
-      SoundMgr.SoundLoadSe("CorrectCommand", "UDCommand/CorrectCommand");
-      SoundMgr.SoundLoadSe("CorrectList", "UDCommand/CorrectList");
-      SoundMgr.SoundLoadSe("MissCommand", "UDCommand/MissCommand");
+      SoundMgr.SoundLoadSe("UDCCorrectCommand", "UDCommand/CorrectCommand");
+      SoundMgr.SoundLoadSe("UDCCorrectList", "UDCommand/CorrectList");
+      SoundMgr.SoundLoadSe("UDCMissCommand", "UDCommand/MissCommand");
     }
 
     private void Init() {
@@ -126,6 +128,12 @@ namespace UDCommand {
         }
         if ((Input.GetAxis("Pause") == 1) && isPauseReleased) {
           isPaused = true;
+          standbyCanvasLastState = standbyCanvas.activeSelf;
+          resultCanvasLastState = resultCanvas.activeSelf;
+          standbyCanvas.GetComponent<TFC.MenuSelector>().Reset();
+          resultCanvas.GetComponent<TFC.MenuSelector>().Reset();
+          standbyCanvas.SetActive(false);
+          resultCanvas.SetActive(false);
           pauseCanvas.SetActive(true);
           pauseCanvas.GetComponent<PauseMenu>().SetButtonState();
         }
@@ -139,13 +147,17 @@ namespace UDCommand {
         if(!pauseCanvas.activeSelf) {
           isPaused = false;
           isPauseReleased = false;
+          standbyCanvas.SetActive(standbyCanvasLastState);
+          resultCanvas.SetActive(resultCanvasLastState);
         }
       }
 
       if(waitTime <= 0) {
         gameEnded = true;
         waitTime = 0;
-        resultCanvas.SetActive(true);
+        if (!isPaused) {
+          resultCanvas.SetActive(true);
+        }
       }
     }
 
@@ -195,13 +207,13 @@ namespace UDCommand {
             if (trialInputs.Contains(trialInputList[currentCommand])) {
               resetedToNeutral = false;
               AddScoreByCommandIndex(currentCommand);
-              SoundMgr.PlaySe("CorrectCommand", 2);
+              SoundMgr.PlaySe("UDCCorrectCommand", 2);
               currentCommand++;
             }
             else {
               currentCommand = 0;
               GenerateRandomCommands();
-              SoundMgr.PlaySe("MissCommand", 3);
+              SoundMgr.PlaySe("UDCMissCommand", 3);
               resetedToNeutral = false;
             }
           }
@@ -209,13 +221,13 @@ namespace UDCommand {
             if (inputs.Contains(inputList[currentCommand])) {
               resetedToNeutral = false;
               AddScoreByCommandIndex(currentCommand);
-              SoundMgr.PlaySe("CorrectCommand", 2);
+              SoundMgr.PlaySe("UDCCorrectCommand", 2);
               currentCommand++;
             }
             else {
               currentCommand = 0;
               GenerateRandomCommands();
-              SoundMgr.PlaySe("MissCommand", 3);
+              SoundMgr.PlaySe("UDCMissCommand", 3);
               resetedToNeutral = false;
             }
           }
@@ -236,7 +248,7 @@ namespace UDCommand {
       if (currentCommand >= commandObjects.Count) {
         currentCommand = 0;
         correctCommands++;
-        SoundMgr.PlaySe("CorrectList", 4);
+        SoundMgr.PlaySe("UDCCorrectList", 4);
         commandAdded = false;
       }
 

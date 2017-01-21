@@ -15,6 +15,7 @@ namespace UDCommand {
         }
         else if (index == 1) {
           SceneManager.LoadScene("MainTitle");
+          SoundMgr.StopBgm();
           menuSelector.Reset();
         }
       }

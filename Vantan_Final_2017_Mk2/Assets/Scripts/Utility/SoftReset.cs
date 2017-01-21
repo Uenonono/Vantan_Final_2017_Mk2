@@ -27,6 +27,10 @@ public class SoftReset : MonoBehaviour {
         UDC_GM_Obj.GetComponent<UDCommand.GameManager>().Reset();
       }
 
+      if (SceneManager.GetActiveScene().name.Contains("UDC")) {
+        SoundMgr.StopBgm();
+      }
+
       SceneManager.LoadScene("MainTitle");
     }
   }
