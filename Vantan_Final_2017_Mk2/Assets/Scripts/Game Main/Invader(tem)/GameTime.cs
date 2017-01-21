@@ -9,6 +9,7 @@ public class GameTime : MonoBehaviour
     [SerializeField]
     public Text timeText;
 
+    public float time;
     public static float limitTime;     //制限時間
     int minite;                 //制限時間（分）
     float second;	            //制限時間（秒）
@@ -20,6 +21,8 @@ public class GameTime : MonoBehaviour
     void Start()
     {
         timeText = timeText.GetComponent<Text>();
+
+        limitTime = time;
 
         minite = ((int)(limitTime)) / 60;
         limitTime = minite * 60 + second;
@@ -50,6 +53,7 @@ public class GameTime : MonoBehaviour
             //時間が0になったら
             if (limitTime <= 0.0f)
             {
+                Debug.Log("終了");
                 isTimeUp = true;
             }
         }
