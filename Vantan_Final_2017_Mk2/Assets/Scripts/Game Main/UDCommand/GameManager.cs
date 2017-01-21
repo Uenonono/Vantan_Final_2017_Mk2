@@ -59,6 +59,9 @@ namespace UDCommand {
       commandObjects = new List<GameObject>();
       inputList = new List<TFC.InputType>();
       trialInputList = new List<TFC.ActionInputs>();
+      SoundMgr.SoundLoadSe("CorrectCommand", "UDCommand/CorrectCommand");
+      SoundMgr.SoundLoadSe("CorrectList", "UDCommand/CorrectList");
+      SoundMgr.SoundLoadSe("MissCommand", "UDCommand/MissCommand");
     }
 
     private void Init() {
@@ -192,11 +195,13 @@ namespace UDCommand {
             if (trialInputs.Contains(trialInputList[currentCommand])) {
               resetedToNeutral = false;
               AddScoreByCommandIndex(currentCommand);
+              SoundMgr.PlaySe("CorrectCommand", 2);
               currentCommand++;
             }
             else {
               currentCommand = 0;
               GenerateRandomCommands();
+              SoundMgr.PlaySe("MissCommand", 3);
               resetedToNeutral = false;
             }
           }
@@ -204,11 +209,13 @@ namespace UDCommand {
             if (inputs.Contains(inputList[currentCommand])) {
               resetedToNeutral = false;
               AddScoreByCommandIndex(currentCommand);
+              SoundMgr.PlaySe("CorrectCommand", 2);
               currentCommand++;
             }
             else {
               currentCommand = 0;
               GenerateRandomCommands();
+              SoundMgr.PlaySe("MissCommand", 3);
               resetedToNeutral = false;
             }
           }
@@ -229,6 +236,7 @@ namespace UDCommand {
       if (currentCommand >= commandObjects.Count) {
         currentCommand = 0;
         correctCommands++;
+        SoundMgr.PlaySe("CorrectList", 4);
         commandAdded = false;
       }
 
