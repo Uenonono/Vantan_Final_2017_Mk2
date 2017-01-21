@@ -154,6 +154,8 @@ public class STGEnemy : MonoBehaviour
 
             //時間経過
             case EnemyState.Active:
+                //移動
+                transform.Translate(0, 0, 0);
                 break;
         }
     }

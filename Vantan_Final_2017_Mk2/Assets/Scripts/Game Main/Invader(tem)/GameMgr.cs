@@ -32,20 +32,20 @@ public class GameMgr : MonoBehaviour
             //タイトル
             case GameState.Title:
                 //ボタン押したらルール画面へ
-                if (Input.GetMouseButtonDown(0) && gameState == GameState.Title)
+                if (Input.GetAxis("BottomRed") == 1 && gameState == GameState.Title)
                 {
                     gameState = GameState.Rule;
-                    SceneManager.LoadScene("Rule");
+                    SceneManager.LoadScene("InvaderRule");
                 }
                 break;
 
             //ルール
             case GameState.Rule:
                 //ボタン押したらゲーム本編へ
-                if (Input.GetMouseButtonDown(0) && gameState == GameState.Rule)
+                if (Input.GetAxis("BottomRed") == 1 && gameState == GameState.Rule)
                 {
                     gameState = GameState.Main;
-                    SceneManager.LoadScene("Main");
+                    SceneManager.LoadScene("InvaderMain");
                     //SoundMgr.PlayBgm("img_Title2");
                 }
                 break;
@@ -56,17 +56,17 @@ public class GameMgr : MonoBehaviour
                 if(gameState == GameState.Main && STGPlayer.isDead == true || GameTime.isTimeUp)
                 {
                         gameState = GameState.Result;
-                        SceneManager.LoadScene("Result");
+                        SceneManager.LoadScene("InvaderResult");
                 }
                 break;
 
             //リザルト
             case GameState.Result:
                 //ボタン押したらタイトル画面へ
-                if (Input.GetMouseButtonDown(0) && gameState == GameState.Result)
+                if (Input.GetAxis("BottomRed") == 1 && gameState == GameState.Result)
                 {
                     gameState = GameState.Title;
-                    SceneManager.LoadScene("Title");
+                    SceneManager.LoadScene("InvaderTitle");
 
                     Score.MasterScore = 0;
 
