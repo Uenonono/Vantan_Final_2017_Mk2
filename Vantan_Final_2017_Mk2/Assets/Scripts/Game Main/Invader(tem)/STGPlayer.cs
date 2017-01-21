@@ -10,6 +10,7 @@ public class STGPlayer : MonoBehaviour
     public GameObject Shot; //弾
 
     public GameObject Pice; //エフェクト
+    public GameObject Effect;    //死亡エフェクト
     public static bool isDead;  //生死フラグ
 
 
@@ -78,6 +79,12 @@ public class STGPlayer : MonoBehaviour
                               transform.position.y,
                               transform.position.z),
                               Quaternion.identity);
+
+            //エフェクト
+            Instantiate(Effect, new Vector3(transform.position.x,
+                                           transform.position.y,
+                                           transform.position.z),
+                                           Quaternion.identity);
 
             //音
             SoundMgr.PlaySe("Death", 4);
