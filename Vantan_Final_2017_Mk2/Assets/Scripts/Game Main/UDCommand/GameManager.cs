@@ -130,8 +130,8 @@ namespace UDCommand {
           isPaused = true;
           standbyCanvasLastState = standbyCanvas.activeSelf;
           resultCanvasLastState = resultCanvas.activeSelf;
-          standbyCanvas.GetComponent<TFC.MenuSelector>().Reset();
-          resultCanvas.GetComponent<TFC.MenuSelector>().Reset();
+          standbyCanvas.GetComponent<MSMM.MenuSelector>().Reset();
+          resultCanvas.GetComponent<MSMM.MenuSelector>().Reset();
           standbyCanvas.SetActive(false);
           resultCanvas.SetActive(false);
           pauseCanvas.SetActive(true);

@@ -7,7 +7,7 @@ namespace UDCommand {
 
     void Update() {
       if (Input.GetAxis("BottomGreen") == 1) {
-        var menuSelector = GetComponent<ToppingFullCustom.MenuSelector>();
+        var menuSelector = GetComponent<MSMM.MenuSelector>();
         var index = menuSelector.GetCurrentSelectedIndex();
         if (index == 0) {
           SceneManager.LoadScene("UDCTitle");

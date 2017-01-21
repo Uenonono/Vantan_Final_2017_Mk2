@@ -7,13 +7,13 @@ namespace UDCommand {
 
     bool isButtonReleased = false;
 
-    ToppingFullCustom.MenuSelector pauseMenu;
+    MSMM.MenuSelector pauseMenu;
 
     [SerializeField]
     UDCommand.GameManager manager = null;
 
     void Start() {
-      pauseMenu = GetComponent<ToppingFullCustom.MenuSelector>();
+      pauseMenu = GetComponent<MSMM.MenuSelector>();
     }
 
     void Update() {
@@ -28,7 +28,7 @@ namespace UDCommand {
           pauseMenu.Reset();
         }
         if (Input.GetAxis("BottomGreen") == 1) {
-          var index = GetComponent<ToppingFullCustom.MenuSelector>().GetCurrentSelectedIndex();
+          var index = GetComponent<MSMM.MenuSelector>().GetCurrentSelectedIndex();
           if (index == 0) {
             gameObject.SetActive(false);
             pauseMenu.Reset();

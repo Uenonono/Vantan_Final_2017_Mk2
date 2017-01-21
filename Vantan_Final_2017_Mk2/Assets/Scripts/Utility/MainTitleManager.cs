@@ -2,7 +2,7 @@
 using UnityEngine.SceneManagement;
 using System.Collections;
 
-namespace ToppingFullCustom {
+namespace MSMM {
   public class MainTitleManager : MonoBehaviour {
     [SerializeField]
     GameObject softResetHandler = null;
@@ -14,7 +14,7 @@ namespace ToppingFullCustom {
 
     private void Update() {
       if (Input.GetAxis("BottomGreen") == 1) {
-        var menuSelector = GetComponent<ToppingFullCustom.MenuSelector>();
+        var menuSelector = GetComponent<MSMM.MenuSelector>();
         var index = menuSelector.GetCurrentSelectedIndex();
         if (index == 0) {
           SceneManager.LoadScene("UDCTitle");

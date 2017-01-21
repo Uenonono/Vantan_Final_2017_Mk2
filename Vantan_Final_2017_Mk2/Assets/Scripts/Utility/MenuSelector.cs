@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using System.Collections;
 using System;
 
-namespace ToppingFullCustom {
+namespace MSMM{
   public class MenuSelector : MonoBehaviour {
 
     [SerializeField]
