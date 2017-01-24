@@ -12,10 +12,12 @@ public class STGPlayer : MonoBehaviour
     public GameObject Pice; //エフェクト
     public GameObject Effect;    //死亡エフェクト
     public static bool isDead;  //生死フラグ
+    Rigidbody _rigidbody;
 
 
     void Start()
     {
+        _rigidbody = GetComponent<Rigidbody>();
         interval = 0;
         isDead = false;
 
@@ -38,14 +40,14 @@ public class STGPlayer : MonoBehaviour
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
         // 移動する向きを求める
-        Vector3 direction = new Vector3(x, 0, z).normalized;
+        Vector3 direction = new Vector3(x, 0, z);
         // 移動する向きとスピードを代入する
-        GetComponent<Rigidbody>().velocity = direction * speed;
+        _rigidbody.velocity = direction * speed;
 
+        //制限をかけた値をプレイヤーの位置とする
         Vector3 pos = transform.position;
         pos.x = Mathf.Clamp(pos.x, -20, 20);
         pos.z = Mathf.Clamp(pos.z, -20, -10);
-        //制限をかけた値をプレイヤーの位置とする
         transform.position = pos;
 
         //ショット
