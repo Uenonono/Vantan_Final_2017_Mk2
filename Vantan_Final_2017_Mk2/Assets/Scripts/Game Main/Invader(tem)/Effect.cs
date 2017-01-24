@@ -4,11 +4,11 @@ using System.Collections;
 //エフェクト
 public class Effect : MonoBehaviour
 {
-
+    public float time;
 
     void Start()
     {
-        Destroy(this.gameObject, 1);
+        Destroy(this.gameObject, time);
     }
 
 
