@@ -11,6 +11,7 @@ public class STGEnemy : MonoBehaviour
     public float speed; //移動速度
     public int getScore;    //スコア
     public GameObject Piece;    //死亡エフェクト
+    public GameObject Effect;    //死亡エフェクト
 
     public GameObject Shot; //弾
     public float intervalTime;  //発射間隔
@@ -26,6 +27,7 @@ public class STGEnemy : MonoBehaviour
     }
     EnemyState enemyState = EnemyState.Summon;
 
+    public GameObject activeEffect;    //エフェクト
     //状態チェンジまでの時間
     public float changeTime;
     float change;
@@ -200,8 +202,14 @@ public class STGEnemy : MonoBehaviour
             //スコア
             Score.score += getScore;
 
-            //エフェクト
+            //エフェクトピース
             Instantiate(Piece, new Vector3(transform.position.x,
+                                           transform.position.y,
+                                           transform.position.z),
+                                           Quaternion.identity);
+
+            //エフェクト
+            Instantiate(Effect, new Vector3(transform.position.x,
                                            transform.position.y,
                                            transform.position.z),
                                            Quaternion.identity);

@@ -1,11 +1,11 @@
 fileFormatVersion: 2
-guid: f6547f833f412af489247cddb944a997
-timeCreated: 1485253113
+guid: 306b45b666b81804b9fe4ff5909934e1
+timeCreated: 1484990545
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: enemy000_0
-    21300002: enemy000_1
+    21300000: effect_0
+    21300002: effect_1
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -55,26 +55,26 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: enemy000_0
+      name: effect_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 100
-        height: 100
+        width: 40
+        height: 40
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: enemy000_1
+      name: effect_1
       rect:
         serializedVersion: 2
-        x: 100
+        x: 40
         y: 0
-        width: 100
-        height: 100
+        width: 40
+        height: 40
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
