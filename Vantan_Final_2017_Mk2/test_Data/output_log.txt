@@ -1,0 +1,44 @@
+Initialize engine version: 5.4.1f1 (649f48bbbf0f)
+GfxDevice: creating device client; threaded=1
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.0]
+    Renderer: Intel(R) HD Graphics Family (ID=0xa16)
+    Vendor:   Intel
+    VRAM:     1024 MB
+Begin MonoManager ReloadAssembly
+Platform assembly: C:\Users\CAT_D\Desktop\Vantan_Final_2017_Mk2\Vantan_Final_2017_Mk2\test_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading C:\Users\CAT_D\Desktop\Vantan_Final_2017_Mk2\Vantan_Final_2017_Mk2\test_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: C:\Users\CAT_D\Desktop\Vantan_Final_2017_Mk2\Vantan_Final_2017_Mk2\test_Data\Managed\Assembly-CSharp.dll (this message is harmless)
+Loading C:\Users\CAT_D\Desktop\Vantan_Final_2017_Mk2\Vantan_Final_2017_Mk2\test_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+Platform assembly: C:\Users\CAT_D\Desktop\Vantan_Final_2017_Mk2\Vantan_Final_2017_Mk2\test_Data\Managed\UnityEngine.UI.dll (this message is harmless)
+Loading C:\Users\CAT_D\Desktop\Vantan_Final_2017_Mk2\Vantan_Final_2017_Mk2\test_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
+Platform assembly: C:\Users\CAT_D\Desktop\Vantan_Final_2017_Mk2\Vantan_Final_2017_Mk2\test_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
+Loading C:\Users\CAT_D\Desktop\Vantan_Final_2017_Mk2\Vantan_Final_2017_Mk2\test_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
+- Completed reload, in  0.113 seconds
+Platform assembly: C:\Users\CAT_D\Desktop\Vantan_Final_2017_Mk2\Vantan_Final_2017_Mk2\test_Data\Managed\System.Core.dll (this message is harmless)
+Platform assembly: C:\Users\CAT_D\Desktop\Vantan_Final_2017_Mk2\Vantan_Final_2017_Mk2\test_Data\Managed\System.dll (this message is harmless)
+desktop: 1920x1080 60Hz; virtual: 1920x1080 at 0,0
+<RI> Initializing input.
+<RI> Input initialized.
+<RI> Initialized touch support.
+UnloadTime: 1.574908 ms
+Setting up 1 worker threads for Enlighten.
+  Thread -> id: 29fc -> priority: 1 
+Unloading 6 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 9.783019 ms
+
+Unloading 8 unused Assets to reduce memory usage. Loaded Objects now: 220.
+Total: 0.298787 ms (FindLiveObjects: 0.021667 ms CreateObjectMapping: 0.021667 ms MarkObjects: 0.239486 ms  DeleteObjects: 0.015395 ms)
+
+Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.398573 ms
+
+Unloading 6 unused Assets to reduce memory usage. Loaded Objects now: 214.
+Total: 0.214967 ms (FindLiveObjects: 0.019386 ms CreateObjectMapping: 0.019386 ms MarkObjects: 0.163078 ms  DeleteObjects: 0.012544 ms)
+
+Unloading 5 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.506912 ms
+
+Unloading 3 unused Assets to reduce memory usage. Loaded Objects now: 521.
+Total: 0.537133 ms (FindLiveObjects: 0.043335 ms CreateObjectMapping: 0.038203 ms MarkObjects: 0.443049 ms  DeleteObjects: 0.011404 ms)
+

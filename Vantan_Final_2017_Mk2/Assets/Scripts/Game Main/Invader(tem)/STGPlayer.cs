@@ -1,9 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 //シューティング プレイヤー
 public class STGPlayer : MonoBehaviour
 {
+    Rigidbody _rigidbody;
     public float speed; //移動速度
     float interval;
     public float intervalTime;  //発射間隔
@@ -11,14 +13,15 @@ public class STGPlayer : MonoBehaviour
 
     public GameObject Pice; //エフェクト
     public GameObject Effect;    //死亡エフェクト
+
     public static bool isDead;  //生死フラグ
-    Rigidbody _rigidbody;
 
 
     void Start()
     {
         _rigidbody = GetComponent<Rigidbody>();
         interval = 0;
+
         isDead = false;
 
         //サウンドロード
@@ -29,7 +32,10 @@ public class STGPlayer : MonoBehaviour
 
     void Update()
     {
-        Move();
+        if(GameTime.isCount)
+        {
+            Move();
+        }
     }
 
 

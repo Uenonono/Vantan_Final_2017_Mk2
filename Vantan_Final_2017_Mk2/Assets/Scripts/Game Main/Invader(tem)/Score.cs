@@ -14,6 +14,7 @@ public class Score : MonoBehaviour
     void Start()
     {
         MasterScore = 0;
+        score = 0;
     }
 
 
@@ -24,9 +25,9 @@ public class Score : MonoBehaviour
         //スコア表示
         GetComponent<Text>().text = "score:" + MasterScore.ToString();
 
-        if(GameTime.limitTime <= 0.0f)
-        {
-            MScore = MasterScore;
-        }
+        //if(GameTime.limitTime <= 0.0f)
+        //{
+        //    MScore = MasterScore;
+        //}
     }
 }
