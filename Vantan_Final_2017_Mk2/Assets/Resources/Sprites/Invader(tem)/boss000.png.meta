@@ -1,11 +1,11 @@
 fileFormatVersion: 2
-guid: 306b45b666b81804b9fe4ff5909934e1
-timeCreated: 1484990545
+guid: 513ddaf030bd27445b97843011c049b1
+timeCreated: 1485585092
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: effect_0
-    21300002: effect_1
+    21300000: boss000_0
+    21300002: boss000_1
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -55,26 +55,26 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: effect_0
+      name: boss000_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 40
-        height: 40
+        width: 200
+        height: 100
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: effect_1
+      name: boss000_1
       rect:
         serializedVersion: 2
-        x: 40
+        x: 200
         y: 0
-        width: 40
-        height: 40
+        width: 200
+        height: 100
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
