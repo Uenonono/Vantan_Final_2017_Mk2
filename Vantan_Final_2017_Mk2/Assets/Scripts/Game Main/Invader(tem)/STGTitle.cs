@@ -17,10 +17,13 @@ public class STGTitle : MonoBehaviour
 
     Text TitleName;
 
+
+
     // Use this for initialization
     void Start()
     {
-        Time = 0.0f;
+      Time = 0.0f;
+       
     }
 
     // Update is called once per frame
