@@ -28,6 +28,12 @@ namespace MSMM {
           UDC_GM_Obj.GetComponent<UDCommand.GameManager>().Reset();
         }
 
+                var STG_GM_Obj = GameObject.FindGameObjectWithTag("STG Scene Switcher");
+                if(STG_GM_Obj != null)
+                {
+                    STG_GM_Obj.GetComponent<GameMgr>().Disable();
+                }
+
         if (SceneManager.GetActiveScene().name.Contains("UDC")) {
           SoundMgr.StopBgm();
         }
