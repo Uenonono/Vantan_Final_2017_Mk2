@@ -36,21 +36,22 @@ namespace MSMM {
 
   [System.Serializable]
   public class RankingArray {
+    
     public RankingData[] data;
 
-    public void SaveData(string path) {
+    public void SaveData(string fileName) {
       string json = JsonUtility.ToJson(this, true);
-      FileStream fs = new FileStream(Application.dataPath + "/GameData/" + path, FileMode.Create);
+      FileStream fs = new FileStream(Application.dataPath + "/GameData/Ranking/" + fileName + ".json", FileMode.Create);
       StreamWriter sw = new StreamWriter(fs);
       sw.Write(json);
       sw.Close();
       fs.Close();
     }
 
-    public bool LoadData(string path) {
+    public bool LoadData(string fileName) {
       string json = "";
-      if (Directory.Exists(Path.GetDirectoryName(Application.dataPath + "/GameData/" + path))) {
-        FileStream fs = new FileStream(Application.dataPath + "/GameData/" + path, FileMode.OpenOrCreate);
+      if (Directory.Exists(Path.GetDirectoryName(Application.dataPath + "/GameData/Ranking/" + fileName + ".json"))) {
+        FileStream fs = new FileStream(Application.dataPath + "/GameData/Ranking/" + fileName + ".json", FileMode.OpenOrCreate);
         StreamReader sr = new StreamReader(fs);
         json = sr.ReadToEnd();
         sr.Close();
@@ -58,7 +59,8 @@ namespace MSMM {
         if (json == "") return false;
       }
       else {
-        Directory.CreateDirectory(Path.GetDirectoryName(Application.dataPath + "/GameData/" + path));
+        Directory.CreateDirectory(Path.GetDirectoryName(Application.dataPath + "/GameData/Ranking/" + fileName + ".json"));
+        SerializeDefaultData(fileName);
         return false;
       }
 
@@ -67,13 +69,15 @@ namespace MSMM {
       return true;
     }
 
-    public void SerializeDefaultData(string path) {
+    public void SerializeDefaultData(string fileName) {
       RankingArray temp = new RankingArray();
       temp.data = new RankingData[5];
       for(uint i = 0; i < temp.data.Length; i++) {
+        temp.data[i] = new RankingData();
         temp.data[i].Name = "AAA";
         temp.data[i].Score = 100 + 100 * i;
       }
+      temp.SaveData(fileName);
     }
   }
 
@@ -85,29 +89,91 @@ namespace MSMM {
     Text[] rankingTexts = null;
 
     [SerializeField]
-    private string path = "";
+    private string fileName = "";
+
+    [SerializeField]
+    GameObject newRecordCanvas = null;
+
+    [SerializeField]
+    MSMM.MenuSelector[] selectors = null;
+
+    private bool updatingRanking = false;
 
     void Start() {
-      rankingArray = new RankingArray();
-      rankingArray.LoadData(path);
-      Array.Sort(rankingArray.data);
-      UpdateTexts();
+      if (fileName == "") {
+        Debug.LogError("fileName not defined!");
+      }
+      else {
+        rankingArray = new RankingArray();
+        if (!rankingArray.LoadData(fileName)) {
+          rankingArray.SerializeDefaultData(fileName);
+          rankingArray.LoadData(fileName);
+        }
+        Array.Sort(rankingArray.data);
+        UpdateTexts();
+      }
     }
 
     void Update() {
+      if (CheckForNewRecord(MSMM.RankingTempData.TempScore)) {
+        ActivateNameEntry();
+      }
 
+      if(updatingRanking && !newRecordCanvas.activeSelf) {
+        SwapScores(MSMM.RankingTempData.TempName, MSMM.RankingTempData.TempScore);
+        Array.Sort(rankingArray.data);
+        rankingArray.SaveData(fileName);
+      }
     }
-
 
     void UpdateTexts() {
       if(rankingTexts == null || rankingTexts.Length < 5) {
-        Debug.Log("Texts Missing");
+        Debug.LogError("Texts Missing");
       }
 
       for(int i = 0;i < rankingTexts.Length; i++) {
-        rankingTexts[i].text = "Name : " + rankingArray.data[i].Name + " Score : " + rankingArray.data[i].Score.ToString();
+        rankingTexts[i].text = "Name : " + rankingArray.data[i].Name + "      Score : " + rankingArray.data[i].Score.ToString();
       }
     }
 
+    bool CheckForNewRecord(uint newScore) {
+      for(int i = 0; i < 5; i++) {
+        if(newScore > rankingArray.data[i].Score) {
+          return true;
+        }
+      }
+      return false;
+    }
+
+    void ActivateNameEntry() {
+      foreach(var selec in selectors) {
+        selec.SetComponentActive(false);
+      }
+      newRecordCanvas.SetActive(true);
+      updatingRanking = true;
+    }
+
+    void SwapScores(string newName, uint newScore) {
+      bool swapped = false;
+      RankingData temp = new RankingData();
+      for (int i = 0; i < 5; i++) {
+        if (newScore > rankingArray.data[i].Score && !swapped) {
+          temp = rankingArray.data[i];
+          rankingArray.data[i].Name = newName;
+          rankingArray.data[i].Score = newScore;
+          swapped = true;
+        }
+        if (swapped) {
+          if(i == 4) {
+            rankingArray.data[i] = temp;
+          }
+          else {
+            rankingArray.data[i + 1] = rankingArray.data[i];
+            rankingArray.data[i] = temp;
+          }
+        }
+      }
+    }
+   
   }
 }

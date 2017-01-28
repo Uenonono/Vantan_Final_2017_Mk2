@@ -15,43 +15,47 @@ namespace MSMM{
 
     private bool stickNeutral = true;
 
+    private bool active = true;
+
     void Start() {
     }
 
     void Update() {
-      if (initialInput) {
-        if (stickNeutral) {
-          if (Input.GetAxis("Horizontal") > 0.5f) {
-            selectedIndex++;
-            if (selectedIndex > (buttons.Length - 1)) {
-              selectedIndex = 0;
+      if (active) {
+        if (initialInput) {
+          if (stickNeutral) {
+            if (Input.GetAxis("Horizontal") > 0.5f) {
+              selectedIndex++;
+              if (selectedIndex > (buttons.Length - 1)) {
+                selectedIndex = 0;
+              }
             }
-          }
 
-          if (Input.GetAxis("Horizontal") < -0.5f) {
-            selectedIndex--;
-            if (selectedIndex < 0) {
-              selectedIndex = buttons.Length - 1;
+            if (Input.GetAxis("Horizontal") < -0.5f) {
+              selectedIndex--;
+              if (selectedIndex < 0) {
+                selectedIndex = buttons.Length - 1;
+              }
             }
+            stickNeutral = false;
           }
-          stickNeutral = false;
         }
-      }
 
-      if (!initialInput) {
-        if ((Input.GetAxis("Horizontal") != 0) || (Input.GetAxis("Vertical") != 0)) {
-          selectedIndex = 0;
-          initialInput = true;
-          stickNeutral = false;
+        if (!initialInput) {
+          if ((Input.GetAxis("Horizontal") != 0) || (Input.GetAxis("Vertical") != 0)) {
+            selectedIndex = 0;
+            initialInput = true;
+            stickNeutral = false;
+          }
         }
+
+
+        if (Input.GetAxis("Horizontal") == 0) {
+          stickNeutral = true;
+        }
+
+        ChangeColorBySelection(selectedIndex);
       }
-
-
-      if (Input.GetAxis("Horizontal") == 0) {
-        stickNeutral = true;
-      }
-
-      ChangeColorBySelection(selectedIndex);
     }
 
     private void ChangeColorBySelection(int index) {
@@ -65,6 +69,10 @@ namespace MSMM{
       }
     }
 
+    public void SetComponentActive(bool val) {
+      active = val;
+    }
+
     public int GetCurrentSelectedIndex() {
       return selectedIndex;
     }
@@ -76,6 +84,7 @@ namespace MSMM{
       foreach(Image but in buttons) {
         but.color = Color.white;
       }
+      active = true;
     }
   }
 }
