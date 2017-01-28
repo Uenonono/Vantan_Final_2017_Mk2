@@ -6,7 +6,7 @@ using System.Collections;
 
 namespace MSMM {
   [System.Serializable]
-  public class RankingData : IComparable<RankingData> {
+  public struct RankingData : IComparable<RankingData> {
 
     [SerializeField]
     private string name;
@@ -25,18 +25,13 @@ namespace MSMM {
     }
 
     public int CompareTo(RankingData other) {
-      if(other == null) {
-        return 1;
-      }
-      else {
-        return Score.CompareTo(other.Score);
-      }
+      return -Score.CompareTo(other.Score);
     }
   }
 
   [System.Serializable]
   public class RankingArray {
-    
+
     public RankingData[] data;
 
     public void SaveData(string fileName) {
@@ -72,7 +67,7 @@ namespace MSMM {
     public void SerializeDefaultData(string fileName) {
       RankingArray temp = new RankingArray();
       temp.data = new RankingData[5];
-      for(uint i = 0; i < temp.data.Length; i++) {
+      for (uint i = 0; i < temp.data.Length; i++) {
         temp.data[i] = new RankingData();
         temp.data[i].Name = "AAA";
         temp.data[i].Score = 100 + 100 * i;
@@ -97,6 +92,7 @@ namespace MSMM {
     [SerializeField]
     MSMM.MenuSelector[] selectors = null;
 
+    private bool rankingUpdated = false;
     private bool updatingRanking = false;
 
     void Start() {
@@ -115,30 +111,39 @@ namespace MSMM {
     }
 
     void Update() {
-      if (CheckForNewRecord(MSMM.RankingTempData.TempScore)) {
-        ActivateNameEntry();
-      }
-
-      if(updatingRanking && !newRecordCanvas.activeSelf) {
+      if (updatingRanking && !newRecordCanvas.activeSelf) {
         SwapScores(MSMM.RankingTempData.TempName, MSMM.RankingTempData.TempScore);
         Array.Sort(rankingArray.data);
         rankingArray.SaveData(fileName);
+        foreach (var selec in selectors) {
+          selec.SetComponentActive(true);
+        }
+        rankingUpdated = true;
+        updatingRanking = false;
       }
+
+      if (!rankingUpdated) {
+        if (CheckForNewRecord(MSMM.RankingTempData.TempScore)) {
+          ActivateNameEntry();
+        }
+      }
+
+      UpdateTexts();
     }
 
     void UpdateTexts() {
-      if(rankingTexts == null || rankingTexts.Length < 5) {
+      if (rankingTexts == null || rankingTexts.Length < 5) {
         Debug.LogError("Texts Missing");
       }
 
-      for(int i = 0;i < rankingTexts.Length; i++) {
+      for (int i = 0; i < rankingTexts.Length; i++) {
         rankingTexts[i].text = "Name : " + rankingArray.data[i].Name + "      Score : " + rankingArray.data[i].Score.ToString();
       }
     }
 
     bool CheckForNewRecord(uint newScore) {
-      for(int i = 0; i < 5; i++) {
-        if(newScore > rankingArray.data[i].Score) {
+      for (int i = 0; i < 5; i++) {
+        if (newScore > rankingArray.data[i].Score) {
           return true;
         }
       }
@@ -146,7 +151,7 @@ namespace MSMM {
     }
 
     void ActivateNameEntry() {
-      foreach(var selec in selectors) {
+      foreach (var selec in selectors) {
         selec.SetComponentActive(false);
       }
       newRecordCanvas.SetActive(true);
@@ -155,25 +160,33 @@ namespace MSMM {
 
     void SwapScores(string newName, uint newScore) {
       bool swapped = false;
-      RankingData temp = new RankingData();
+      RankingArray newAry = new RankingArray();
+      newAry.data = new RankingData[5];
       for (int i = 0; i < 5; i++) {
-        if (newScore > rankingArray.data[i].Score && !swapped) {
-          temp = rankingArray.data[i];
-          rankingArray.data[i].Name = newName;
-          rankingArray.data[i].Score = newScore;
+        newAry.data[i] = new RankingData();
+      }
+
+      for (int i = 0; i < 5; i++) {
+        if ((newScore > rankingArray.data[i].Score) && !swapped) {
+          newAry.data[i].Name = newName;
+          newAry.data[i].Score = newScore;
           swapped = true;
         }
-        if (swapped) {
-          if(i == 4) {
-            rankingArray.data[i] = temp;
-          }
-          else {
-            rankingArray.data[i + 1] = rankingArray.data[i];
-            rankingArray.data[i] = temp;
-          }
+        else if (!swapped) {
+          newAry.data[i].Name = rankingArray.data[i].Name;
+          newAry.data[i].Score = rankingArray.data[i].Score;
+        }
+        else {
+          newAry.data[i].Name = rankingArray.data[i - 1].Name;
+          newAry.data[i].Score = rankingArray.data[i - 1].Score;
         }
       }
+
+      for (int i = 0; i < 5; i++) {
+        rankingArray.data[i].Name = newAry.data[i].Name;
+        rankingArray.data[i].Score = newAry.data[i].Score;
+      }
     }
-   
+
   }
 }

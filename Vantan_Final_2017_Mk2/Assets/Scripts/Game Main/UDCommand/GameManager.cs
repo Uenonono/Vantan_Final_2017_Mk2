@@ -287,9 +287,16 @@ namespace UDCommand {
     }
 
     public void EndGame() {
-      //SaveScore();
+      MSMM.RankingTempData.TempScore = (uint)score;
       Reset();
-      SceneManager.LoadScene("UDCResult");
+      switch (gameMode) {
+        case GameMode.Trial:
+          SceneManager.LoadScene("UDCTrialResult");
+          break;
+        case GameMode.Challenge:
+          SceneManager.LoadScene("UDCChallengeResult");
+          break;
+      }    
     }
 
     private Sprite ImageTypeToSprite(UDC.ImageType imageType) {

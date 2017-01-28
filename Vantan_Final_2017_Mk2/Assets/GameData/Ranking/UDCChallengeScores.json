@@ -1,0 +1,24 @@
+{
+    "data": [
+        {
+            "name": "AAA",
+            "score": 500
+        },
+        {
+            "name": "AAA",
+            "score": 400
+        },
+        {
+            "name": "AAA",
+            "score": 300
+        },
+        {
+            "name": "BDF",
+            "score": 240
+        },
+        {
+            "name": "AAA",
+            "score": 200
+        }
+    ]
+}

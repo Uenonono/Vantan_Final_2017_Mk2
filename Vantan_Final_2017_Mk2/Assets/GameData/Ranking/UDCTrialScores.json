@@ -2,15 +2,7 @@
     "data": [
         {
             "name": "AAA",
-            "score": 100
-        },
-        {
-            "name": "AAA",
-            "score": 200
-        },
-        {
-            "name": "AAA",
-            "score": 300
+            "score": 500
         },
         {
             "name": "AAA",
@@ -18,7 +10,15 @@
         },
         {
             "name": "AAA",
-            "score": 500
+            "score": 300
+        },
+        {
+            "name": "BCC",
+            "score": 290
+        },
+        {
+            "name": "AAA",
+            "score": 200
         }
     ]
 }
