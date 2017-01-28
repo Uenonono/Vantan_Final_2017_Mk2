@@ -17,22 +17,52 @@ public class GameTime : MonoBehaviour
 
     public static bool isTimeUp;
 
+    [SerializeField]
+    public Text starttimeText;
+    float activeTime;
+    float active;
+    public static bool isCount = false;
+
+    [SerializeField]
+    public Text GameOvertext;
+    [SerializeField]
+    public Text TimeUptext;
+
 
     void Start()
     {
+        active = 0;
+        activeTime = 3;
         timeText = timeText.GetComponent<Text>();
+        isCount = false;
+        isTimeUp = false;
 
         limitTime = time;
 
         minite = ((int)(limitTime)) / 60;
         limitTime = minite * 60 + second;
         oldSecond = 0;
+
+
+        starttimeText = starttimeText.GetComponent<Text>();
+        StartCoroutine(Count());
+
+
+        GameOvertext = GameOvertext.GetComponent<Text>();
+        TimeUptext = TimeUptext.GetComponent<Text>();
     }
 
 
     void Update()
     {
-        if (Time.timeScale > 0 && limitTime > 0.0f)
+        active += Time.deltaTime;
+        if (active >= activeTime)
+        {
+            //active = 0;
+            isCount = true;
+        }
+
+        if (isCount && Time.timeScale > 0 && limitTime > 0.0f)
         {
             limitTime = minite * 60 + second;
             //-1/s
@@ -53,9 +83,48 @@ public class GameTime : MonoBehaviour
             //時間が0になったら
             if (limitTime <= 0.0f)
             {
-                Debug.Log("終了");
                 isTimeUp = true;
             }
         }
+
+        //ゲーム終了テキスト
+        if (isTimeUp)
+        {
+            TimeUptext.gameObject.SetActive(true);
+        }
+        else
+        {
+            TimeUptext.gameObject.SetActive(false);
+        }
+
+
+        //ゲームオーバーテキスト
+        if (STGPlayer.isDead)
+        {
+            GameOvertext.gameObject.SetActive(true);
+        }
+        else
+        {
+            GameOvertext.gameObject.SetActive(false);
+        }
+    }
+
+
+    //スタートのカウント
+    IEnumerator Count()
+    {
+        starttimeText.text = "3";
+        yield return new WaitForSeconds(1.0f);
+
+        starttimeText.text = "2";
+        yield return new WaitForSeconds(1.0f);
+
+        starttimeText.text = "1";
+        yield return new WaitForSeconds(1.0f);
+
+        starttimeText.text = "GameStart!!";
+        yield return new WaitForSeconds(1.0f);
+
+        starttimeText.gameObject.SetActive(false);
     }
 }

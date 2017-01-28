@@ -75,7 +75,6 @@ public class STGEnemy : MonoBehaviour
                 if (active >= activeTime)
                 {
                     enemyState = EnemyState.Active;
-                    Debug.Log(enemyState);
                 }
 
                 //移動
@@ -109,7 +108,6 @@ public class STGEnemy : MonoBehaviour
                 if (active >= activeTime)
                 {
                     enemyState = EnemyState.Active;
-                    Debug.Log(enemyState);
                 }
 
                 //移動
@@ -175,7 +173,6 @@ public class STGEnemy : MonoBehaviour
                 if (active >= activeTime)
                 {
                     enemyState = EnemyState.Active;
-                    Debug.Log(enemyState);
                 }
 
                 //移動
