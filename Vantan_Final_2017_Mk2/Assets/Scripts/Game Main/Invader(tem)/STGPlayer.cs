@@ -83,10 +83,10 @@ public class STGPlayer : MonoBehaviour
         {
             isDead = true;
 
-            //Instantiate(Pice, new Vector3(transform.position.x,
-            //                  transform.position.y,
-            //                  transform.position.z),
-            //                  Quaternion.identity);
+            Instantiate(Pice, new Vector3(transform.position.x,
+                              transform.position.y,
+                              transform.position.z),
+                              Quaternion.identity);
 
             //エフェクト
             Instantiate(Effect, new Vector3(transform.position.x,

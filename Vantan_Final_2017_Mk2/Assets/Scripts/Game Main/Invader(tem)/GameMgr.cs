@@ -105,20 +105,24 @@ public class GameMgr : MonoBehaviour
 
             //リザルト
             case GameState.Result:
-                //ボタン押したらタイトル画面へ
                 if (Input.GetAxis("BottomGreen") == 1)
                 {
-                    Score.MasterScore = 0;
-
-                    STGGameState.SetState(0);
-                    SceneManager.LoadScene("InvaderTitle");
-                }
-
-                //ボタン押したらタイトル画面へ
-                if (Input.GetAxis("BottomRed") == 1)
-                {
-                    Disable();
-                    SceneManager.LoadScene("MainTitle");
+                    var menuSelector = GetComponent<MSMM.MenuSelector>();
+                    var index = menuSelector.GetCurrentSelectedIndex();
+                    if (index == 0)
+                    {
+                        Score.MasterScore = 0;
+                        STGGameState.SetState(0);
+                        SceneManager.LoadScene("InvaderTitle");
+                        menuSelector.Reset();
+                    }
+                    else if (index == 1)
+                    {
+                        Disable();
+                        SoundMgr.StopBgm();
+                        menuSelector.Reset();
+                        SceneManager.LoadScene("MainTitle");
+                    }
                 }
                 break;
         }

@@ -8,17 +8,37 @@ public class STGSpawner : MonoBehaviour
     public float spawnIntervalTime; //スポーン間隔
     public GameObject Enemy;    //敵
 
+    public bool bosspawner;
+    public float intervalTime = 60;
+    float interval = 0;
 
     void Start()
     {
-        InvokeRepeating("Create", 0, spawnIntervalTime);
-        SoundMgr.SoundLoadSe("Spawn", "Invader/Spawn");
+        if(!bosspawner)
+        {
+            InvokeRepeating("Create", 0, spawnIntervalTime);
+            SoundMgr.SoundLoadSe("Spawn", "Invader/Spawn");
+
+            Destroy(this.gameObject, 55);
+        }
     }
 
 
     void Update()
     {
+        if (bosspawner)
+        {
+            interval += Time.deltaTime;
+            if (interval >= intervalTime)
+            {
+                Instantiate(Enemy, new Vector3(transform.position.x,
+                       transform.position.y,
+                       transform.position.z),
+                       Quaternion.identity);
 
+                Destroy(this.gameObject);
+            }
+        }
     }
 
 

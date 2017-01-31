@@ -200,10 +200,10 @@ public class STGEnemy : MonoBehaviour
             Score.score += getScore;
 
             //エフェクトピース
-            //Instantiate(Piece, new Vector3(transform.position.x,
-            //                               transform.position.y,
-            //                               transform.position.z),
-            //                               Quaternion.identity);
+            Instantiate(Piece, new Vector3(transform.position.x,
+                                           transform.position.y,
+                                           transform.position.z),
+                                           Quaternion.identity);
 
             //エフェクト
             Instantiate(Effect, new Vector3(transform.position.x,
