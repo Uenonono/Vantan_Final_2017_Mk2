@@ -8,19 +8,25 @@ public class Score : MonoBehaviour
 {
     public static int MasterScore;    //メインのスコア
     public static int score;    //加算をさせるスコア
-    public static int MScore;   //ゲーム終了時のスコア
+    public  int MScore = 0;   //ゲーム終了時のスコア
 
 
     void Start()
     {
         MasterScore = 0;
-        score = 0;
+        
     }
 
 
     void Update()
     {
         MasterScore = score;
+
+        if(MasterScore < MScore)
+        {
+            MasterScore += (STGEnemy.setScore / 100);
+        }
+        
 
         //スコア表示
         GetComponent<Text>().text = "score:" + MasterScore.ToString();

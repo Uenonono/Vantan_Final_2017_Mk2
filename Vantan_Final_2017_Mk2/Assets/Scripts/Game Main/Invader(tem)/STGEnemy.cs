@@ -17,6 +17,7 @@ public class STGEnemy : MonoBehaviour
     public float intervalTime;  //発射間隔
     float interval;
 
+    public static int setScore;
 
     //敵の状態
     enum EnemyState
@@ -40,6 +41,8 @@ public class STGEnemy : MonoBehaviour
         interval = 0;
         change = 0;
         active = 0;
+
+        setScore = getScore;
 
         //サウンドロードSpawn
         SoundMgr.SoundLoadSe("Shot", "Invader/Shot");

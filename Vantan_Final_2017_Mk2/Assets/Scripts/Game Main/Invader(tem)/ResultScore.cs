@@ -22,7 +22,7 @@ public class ResultScore : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        SetScore = Score.MScore;
+        SetScore = Score.MasterScore;
 
         if (MainScore < MemoryScore)
         {
