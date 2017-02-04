@@ -162,11 +162,11 @@ namespace UDCommand {
     }
 
     private void UpdateDisplayTime() {
-      timeText.text = "Time : " + waitTime.ToString("F2");
+      timeText.text = "残り時間　： " + waitTime.ToString("F2");
     }
 
     private void UpdateScoreText() {
-      scoreText.text = "Score : " + score.ToString();
+      scoreText.text = score.ToString() + "　どっこい";
     }
 
     private void GenerateRandomCommands() {

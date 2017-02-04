@@ -45,9 +45,20 @@ namespace MSMM {
 
     [SerializeField]
     private Text scoreText = null;
+    [SerializeField]
+    private string scorePlaceholder = "";
+    [SerializeField]
+    private bool useScorePlaceholder = false;
+    [SerializeField]
+    private string scoreUnit = "";
 
     [SerializeField]
     private Text nameText = null;
+    [SerializeField]
+    private string namePlaceholder = "";
+    [SerializeField]
+    private bool useNamePlaceholder = false;
+
     private string resultString;
 
     [SerializeField]
@@ -57,6 +68,19 @@ namespace MSMM {
       firstSymbol = secondSymbol = thirdSymbol = Symbol.A;
       currentLetter = 0;
       subCanvas.SetActive(false);
+
+      if (useScorePlaceholder) {
+        if(scorePlaceholder == "") {
+          scorePlaceholder = "Score : ";
+        }
+      }
+
+      if (useNamePlaceholder) {
+        if(namePlaceholder == "") {
+          namePlaceholder = "Name : ";
+        }
+      }
+
     }
 
     void Update() {
@@ -155,8 +179,13 @@ namespace MSMM {
           }
         }
       }
-      scoreText.text = "Score : " + MSMM.RankingTempData.TempScore.ToString();
-      nameText.text = "Name : " + resultString;
+      if (scoreUnit != "") {
+        scoreText.text = scorePlaceholder + MSMM.RankingTempData.TempScore.ToString() + " " + scoreUnit;
+      }
+      else {
+        scoreText.text = scorePlaceholder + MSMM.RankingTempData.TempScore.ToString();
+      }
+      nameText.text = namePlaceholder + resultString;
     }
 
     private void SwitchFlag() {

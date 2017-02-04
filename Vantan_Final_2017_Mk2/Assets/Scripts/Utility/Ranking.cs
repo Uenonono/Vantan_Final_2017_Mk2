@@ -92,6 +92,18 @@ namespace MSMM {
     [SerializeField]
     MSMM.MenuSelector[] selectors = null;
 
+    [SerializeField]
+    string scoreUnit = "";
+    [SerializeField]
+    string namePlaceholder = "";
+    [SerializeField]
+    string scorePlaceholder = "";
+
+    [SerializeField]
+    bool useNamePlaceholder = false;
+    [SerializeField]
+    bool useScorePlaceholder = false;
+
     private bool rankingUpdated = false;
     private bool updatingRanking = false;
 
@@ -107,6 +119,18 @@ namespace MSMM {
         }
         Array.Sort(rankingArray.data);
         UpdateTexts();
+      }
+
+      if (useNamePlaceholder) {
+        if (namePlaceholder == "") {
+          namePlaceholder = "Name : ";
+        }
+      }
+
+      if (useScorePlaceholder) {
+        if (scorePlaceholder == "") {
+          scorePlaceholder = "Score : ";
+        }
       }
     }
 
@@ -137,7 +161,12 @@ namespace MSMM {
       }
 
       for (int i = 0; i < rankingTexts.Length; i++) {
-        rankingTexts[i].text = "Name : " + rankingArray.data[i].Name + "      Score : " + rankingArray.data[i].Score.ToString();
+        if (scoreUnit != "") {
+          rankingTexts[i].text = namePlaceholder + rankingArray.data[i].Name + "   " + scorePlaceholder + rankingArray.data[i].Score.ToString() + " " + scoreUnit;
+        }
+        else {
+          rankingTexts[i].text = namePlaceholder + rankingArray.data[i].Name + "   " + scorePlaceholder + rankingArray.data[i].Score.ToString();
+        }
       }
     }
 
