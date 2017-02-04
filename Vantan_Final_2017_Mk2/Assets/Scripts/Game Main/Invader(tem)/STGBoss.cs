@@ -18,14 +18,6 @@ public class STGBoss : MonoBehaviour
     public float spawnIntervalTime0; //スポーン間隔
     public GameObject Enemy0;    //敵
 
-    public float spawnRange1; //スポーン範囲
-    public float spawnIntervalTime1; //スポーン間隔
-    public GameObject Enemy1;    //敵
-
-    public float spawnRange2; //スポーン範囲
-    public float spawnIntervalTime2; //スポーン間隔
-    public GameObject Enemy2;    //敵
-
 
     void Start()
     {
@@ -35,8 +27,6 @@ public class STGBoss : MonoBehaviour
         SoundMgr.SoundLoadSe("Spawn", "Invader/Spawn");
 
         InvokeRepeating("Create0", 0, spawnIntervalTime0);
-        InvokeRepeating("Create1", 0, spawnIntervalTime1);
-        InvokeRepeating("Create2", 0, spawnIntervalTime2);
     }
 
 
@@ -50,7 +40,7 @@ public class STGBoss : MonoBehaviour
 
             //弾
             Instantiate(Shot, new Vector3(transform.position.x,
-                                          transform.position.y - 5,
+                                          transform.position.y - 4.5f,
                                           transform.position.z - 1),
                                           Quaternion.identity);
 
@@ -64,29 +54,7 @@ public class STGBoss : MonoBehaviour
     void Create0()
     {
         Instantiate(Enemy0, new Vector3(transform.position.x + Random.Range(-spawnRange0, spawnRange0),
-                                       transform.position.y - 5,
-                                       transform.position.z),
-                                       Quaternion.identity);
-
-        //音
-        SoundMgr.PlaySe("Spawn", 5);
-    }
-
-    void Create1()
-    {
-        Instantiate(Enemy1, new Vector3(transform.position.x + Random.Range(-spawnRange1, spawnRange1),
-                                       transform.position.y - 5,
-                                       transform.position.z),
-                                       Quaternion.identity);
-
-        //音
-        SoundMgr.PlaySe("Spawn", 5);
-    }
-
-    void Create02()
-    {
-        Instantiate(Enemy2, new Vector3(transform.position.x + Random.Range(-spawnRange2, spawnRange2),
-                                       transform.position.y - 5,
+                                       transform.position.y - 4.5f,
                                        transform.position.z),
                                        Quaternion.identity);
 
@@ -102,7 +70,7 @@ public class STGBoss : MonoBehaviour
         {
             hp -= 1;
 
-            if(hp <= 0)
+            if (hp <= 0)
             {
                 //当たったら消える
                 Destroy(this.gameObject);

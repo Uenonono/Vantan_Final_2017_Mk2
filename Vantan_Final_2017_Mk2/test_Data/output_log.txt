@@ -14,199 +14,39 @@ Platform assembly: C:\Users\CAT_D\Desktop\Vantan_Final_2017_Mk2\Vantan_Final_201
 Loading C:\Users\CAT_D\Desktop\Vantan_Final_2017_Mk2\Vantan_Final_2017_Mk2\test_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
 Platform assembly: C:\Users\CAT_D\Desktop\Vantan_Final_2017_Mk2\Vantan_Final_2017_Mk2\test_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
 Loading C:\Users\CAT_D\Desktop\Vantan_Final_2017_Mk2\Vantan_Final_2017_Mk2\test_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
-- Completed reload, in  0.326 seconds
+- Completed reload, in  0.059 seconds
 Platform assembly: C:\Users\CAT_D\Desktop\Vantan_Final_2017_Mk2\Vantan_Final_2017_Mk2\test_Data\Managed\System.Core.dll (this message is harmless)
 Platform assembly: C:\Users\CAT_D\Desktop\Vantan_Final_2017_Mk2\Vantan_Final_2017_Mk2\test_Data\Managed\System.dll (this message is harmless)
 desktop: 1920x1080 60Hz; virtual: 1920x1080 at 0,0
 <RI> Initializing input.
 <RI> Input initialized.
 <RI> Initialized touch support.
-UnloadTime: 1.397004 ms
+UnloadTime: 0.883818 ms
 Setting up 1 worker threads for Enlighten.
-  Thread -> id: e98 -> priority: 1 
+  Thread -> id: 1c24 -> priority: 1 
 Unloading 6 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 10.727280 ms
+UnloadTime: 7.566059 ms
 
-Unloading 8 unused Assets to reduce memory usage. Loaded Objects now: 267.
-Total: 0.365501 ms (FindLiveObjects: 0.032501 ms CreateObjectMapping: 0.021097 ms MarkObjects: 0.294796 ms  DeleteObjects: 0.016535 ms)
+Unloading 8 unused Assets to reduce memory usage. Loaded Objects now: 259.
+Total: 0.280541 ms (FindLiveObjects: 0.031931 ms CreateObjectMapping: 0.022238 ms MarkObjects: 0.213256 ms  DeleteObjects: 0.011974 ms)
 
 Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 1.544117 ms
+UnloadTime: 0.866142 ms
 
-Unloading 24 unused Assets to reduce memory usage. Loaded Objects now: 223.
-Total: 0.518887 ms (FindLiveObjects: 0.127155 ms CreateObjectMapping: 0.023948 ms MarkObjects: 0.210976 ms  DeleteObjects: 0.155666 ms)
+Unloading 20 unused Assets to reduce memory usage. Loaded Objects now: 223.
+Total: 0.413399 ms (FindLiveObjects: 0.062152 ms CreateObjectMapping: 0.020527 ms MarkObjects: 0.204133 ms  DeleteObjects: 0.125445 ms)
 
 Unloading 5 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 0.534282 ms
+UnloadTime: 0.416250 ms
 
-Unloading 3 unused Assets to reduce memory usage. Loaded Objects now: 637.
-Total: 0.643192 ms (FindLiveObjects: 0.051318 ms CreateObjectMapping: 0.055309 ms MarkObjects: 0.525159 ms  DeleteObjects: 0.010833 ms)
+Unloading 3 unused Assets to reduce memory usage. Loaded Objects now: 617.
+Total: 0.479543 ms (FindLiveObjects: 0.045616 ms CreateObjectMapping: 0.041625 ms MarkObjects: 0.382608 ms  DeleteObjects: 0.009123 ms)
 
 Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 1.992298 ms
+UnloadTime: 1.200853 ms
 
-Unloading 1021 unused Assets to reduce memory usage. Loaded Objects now: 289.
-Total: 4.202986 ms (FindLiveObjects: 0.094654 ms CreateObjectMapping: 0.107198 ms MarkObjects: 0.261154 ms  DeleteObjects: 3.739409 ms)
-
-NullReferenceException: Object reference not set to an instance of an object
-  at GameMgr.Update () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-NullReferenceException: Object reference not set to an instance of an object
-  at GameMgr.Update () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-NullReferenceException: Object reference not set to an instance of an object
-  at GameMgr.Update () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-NullReferenceException: Object reference not set to an instance of an object
-  at GameMgr.Update () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-NullReferenceException: Object reference not set to an instance of an object
-  at GameMgr.Update () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-NullReferenceException: Object reference not set to an instance of an object
-  at GameMgr.Update () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-NullReferenceException: Object reference not set to an instance of an object
-  at GameMgr.Update () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-NullReferenceException: Object reference not set to an instance of an object
-  at GameMgr.Update () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-NullReferenceException: Object reference not set to an instance of an object
-  at GameMgr.Update () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-NullReferenceException: Object reference not set to an instance of an object
-  at GameMgr.Update () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-NullReferenceException: Object reference not set to an instance of an object
-  at GameMgr.Update () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-NullReferenceException: Object reference not set to an instance of an object
-  at GameMgr.Update () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-NullReferenceException: Object reference not set to an instance of an object
-  at GameMgr.Update () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-NullReferenceException: Object reference not set to an instance of an object
-  at GameMgr.Update () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-NullReferenceException: Object reference not set to an instance of an object
-  at GameMgr.Update () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-NullReferenceException: Object reference not set to an instance of an object
-  at GameMgr.Update () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-NullReferenceException: Object reference not set to an instance of an object
-  at GameMgr.Update () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-NullReferenceException: Object reference not set to an instance of an object
-  at GameMgr.Update () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-NullReferenceException: Object reference not set to an instance of an object
-  at GameMgr.Update () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-NullReferenceException: Object reference not set to an instance of an object
-  at GameMgr.Update () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-NullReferenceException: Object reference not set to an instance of an object
-  at GameMgr.Update () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-NullReferenceException: Object reference not set to an instance of an object
-  at GameMgr.Update () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-NullReferenceException: Object reference not set to an instance of an object
-  at GameMgr.Update () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-NullReferenceException: Object reference not set to an instance of an object
-  at GameMgr.Update () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-NullReferenceException: Object reference not set to an instance of an object
-  at GameMgr.Update () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-NullReferenceException: Object reference not set to an instance of an object
-  at GameMgr.Update () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-NullReferenceException: Object reference not set to an instance of an object
-  at GameMgr.Update () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-NullReferenceException: Object reference not set to an instance of an object
-  at GameMgr.Update () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-NullReferenceException: Object reference not set to an instance of an object
-  at GameMgr.Update () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-NullReferenceException: Object reference not set to an instance of an object
-  at GameMgr.Update () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-NullReferenceException: Object reference not set to an instance of an object
-  at GameMgr.Update () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-NullReferenceException: Object reference not set to an instance of an object
-  at GameMgr.Update () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
+Unloading 1606 unused Assets to reduce memory usage. Loaded Objects now: 289.
+Total: 5.896497 ms (FindLiveObjects: 0.118602 ms CreateObjectMapping: 0.120313 ms MarkObjects: 0.285102 ms  DeleteObjects: 5.370767 ms)
 
 NullReferenceException: Object reference not set to an instance of an object
   at GameMgr.Update () [0x00000] in <filename unknown>:0 
