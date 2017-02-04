@@ -10,27 +10,29 @@ public class ResultScore : MonoBehaviour
     private static int SetScore = 0;
     private int MemoryScore = 0;
     private int MainScore = 0;
-
-    
-
-    
+     
     // Use this for initialization
     void Start()
     {
+        SetScore = Score.score;
+
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        SetScore = Score.MasterScore;
+
+
+        MemoryScore += SetScore;
 
         if (MainScore < MemoryScore)
         {
-             MainScore += (SetScore / 10);
+            MainScore += (SetScore / 10);
         }
+
 
         //スコア表示
         GetComponent<Text>().text = MainScore.ToString();
-        
     }
 }
