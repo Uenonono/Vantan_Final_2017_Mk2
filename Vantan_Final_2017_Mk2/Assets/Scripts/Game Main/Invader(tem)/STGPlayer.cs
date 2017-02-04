@@ -66,7 +66,7 @@ public class STGPlayer : MonoBehaviour
 
                 Instantiate(Shot, new Vector3(transform.position.x,
                                               transform.position.y,
-                                              transform.position.z + 1.5f),
+                                              transform.position.z + 2.5f),
                                               Quaternion.identity);
 
                 //音

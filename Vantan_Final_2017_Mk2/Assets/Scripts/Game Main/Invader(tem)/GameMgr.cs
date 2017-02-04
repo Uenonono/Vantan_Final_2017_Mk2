@@ -67,7 +67,7 @@ public class GameMgr : MonoBehaviour
         {
             //タイトル
             case GameState.Title:
-             
+
 
                 //ボタン押したらルール画面へ
                 if (Input.GetAxis("BottomGreen") == 1)
@@ -107,24 +107,21 @@ public class GameMgr : MonoBehaviour
 
             //リザルト
             case GameState.Result:
+                //var menuSelector = GetComponent<MSMM.MenuSelector>();
+                //var index = menuSelector.GetCurrentSelectedIndex();
+                if (Input.GetAxis("BottomRed") == 1)
+                {
+                    Score.MasterScore = 0;
+                    STGGameState.SetState(0);
+                    SceneManager.LoadScene("InvaderTitle");
+                    //menuSelector.Reset();
+                }
                 if (Input.GetAxis("BottomGreen") == 1)
                 {
-                    var menuSelector = GetComponent<MSMM.MenuSelector>();
-                    var index = menuSelector.GetCurrentSelectedIndex();
-                    if (index == 0)
-                    {
-                        Score.MasterScore = 0;
-                        STGGameState.SetState(0);
-                        SceneManager.LoadScene("InvaderTitle");
-                        menuSelector.Reset();
-                    }
-                    else if (index == 1)
-                    {
-                        Disable();
-                        SoundMgr.StopBgm();
-                        menuSelector.Reset();
-                        SceneManager.LoadScene("MainTitle");
-                    }
+                    Disable();
+                    SoundMgr.StopBgm();
+                    //menuSelector.Reset();
+                    SceneManager.LoadScene("MainTitle");
                 }
                 break;
         }
