@@ -40,9 +40,9 @@ namespace UDCommand {
 
     private bool resetedToNeutral;
 
-    public float waitTimeDebug = 60.0f;
+    public float waitTime = 60.0f;
 
-    private float waitTime;
+    private float currentWaitTime;
 
     private int correctCommands;
     private bool commandAdded = false;
@@ -75,12 +75,13 @@ namespace UDCommand {
       previousFrameCommand = -1;
       currentCommand = 0;
       score = 0;
-      waitTime = waitTimeDebug;
+      currentWaitTime = waitTime;
       correctCommands = 0;
       onStandby = true;
       gameEnded = false;
       standbyCanvas.SetActive(true);
       resultCanvas.SetActive(false);
+      pauseCanvas.SetActive(false);
       UpdateDisplayTime();
       UpdateScoreText();
       gameMode = (UDC.GameMode)UDC.SelectedGameMode.GetMode();
@@ -111,11 +112,14 @@ namespace UDCommand {
       resetedToNeutral = false;
     }
 
-    void Update() {
+    void Update() {     
       if (!init) {
         Init();
-      }
+      }   
       if (!isPaused) {
+        if (onStandby) {
+          standbyCanvas.SetActive(true);
+        }
         UpdateDisplayTime();
         UpdateScoreText();
         if (currentCommand == 0 && (currentCommand != previousFrameCommand)) {
@@ -127,6 +131,7 @@ namespace UDCommand {
           isPauseReleased = true;
         }
         if ((Input.GetAxis("Pause") == 1) && isPauseReleased) {
+          Debug.Log("Paused");
           isPaused = true;
           standbyCanvasLastState = standbyCanvas.activeSelf;
           resultCanvasLastState = resultCanvas.activeSelf;
@@ -140,7 +145,7 @@ namespace UDCommand {
         if (!onStandby && !gameEnded) {
         CheckGamepadInput();
         ResetCurrentCommand();
-          waitTime -= Time.deltaTime;
+          currentWaitTime -= Time.deltaTime;
         }
       }
       if (isPaused) {
@@ -152,9 +157,9 @@ namespace UDCommand {
         }
       }
 
-      if(waitTime <= 0) {
+      if(currentWaitTime <= 0) {
         gameEnded = true;
-        waitTime = 0;
+        currentWaitTime = 0;
         if (!isPaused) {
           resultCanvas.SetActive(true);
         }
@@ -162,7 +167,7 @@ namespace UDCommand {
     }
 
     private void UpdateDisplayTime() {
-      timeText.text = "残り時間　： " + waitTime.ToString("F2");
+      timeText.text = "残り時間　： " + currentWaitTime.ToString("F2");
     }
 
     private void UpdateScoreText() {
@@ -297,6 +302,10 @@ namespace UDCommand {
           SceneManager.LoadScene("UDCChallengeResult");
           break;
       }    
+    }
+
+    public float GetCurrentTime() {
+      return currentWaitTime;
     }
 
     private Sprite ImageTypeToSprite(UDC.ImageType imageType) {

@@ -8,11 +8,11 @@ namespace UDCommand {
 
     private void Update() {
       if (Input.GetAxis("BottomGreen") == 1) {
-        var menuSelector = GetComponent<MSMM.MenuSelector>();
+        var menuSelector = gameObject.GetComponent<MSMM.MenuSelector>();
         var index = menuSelector.GetCurrentSelectedIndex();
         if (index == 0) {
-          manager.StartGame();
           menuSelector.Reset();
+          manager.StartGame();
           gameObject.SetActive(false);
         }
       }
