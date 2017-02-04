@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class STGTitle : MonoBehaviour
 {
@@ -23,6 +24,8 @@ public class STGTitle : MonoBehaviour
     void Start()
     {
       Time = 0.0f;
+
+   
        
     }
 

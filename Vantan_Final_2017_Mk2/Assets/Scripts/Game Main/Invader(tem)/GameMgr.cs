@@ -67,6 +67,8 @@ public class GameMgr : MonoBehaviour
         {
             //タイトル
             case GameState.Title:
+             
+
                 //ボタン押したらルール画面へ
                 if (Input.GetAxis("BottomGreen") == 1)
                 {
