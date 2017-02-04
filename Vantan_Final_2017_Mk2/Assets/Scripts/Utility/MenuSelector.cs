@@ -9,6 +9,9 @@ namespace MSMM{
     [SerializeField]
     private Image[] buttons = null;
 
+    [SerializeField]
+    private string sePath = "";
+
     private int selectedIndex = -1;
 
     private bool initialInput = false;
@@ -18,6 +21,9 @@ namespace MSMM{
     private bool active = true;
 
     void Start() {
+      if(sePath != "") {
+        SoundMgr.SoundLoadSe("SelectSE", sePath);
+      }
     }
 
     void Update() {
@@ -25,6 +31,9 @@ namespace MSMM{
         if (initialInput) {
           if (stickNeutral) {
             if (Input.GetAxis("Horizontal") > 0.5f) {
+              if (sePath != "") {
+                SoundMgr.PlaySe("SelectSE");
+              }
               selectedIndex++;
               if (selectedIndex > (buttons.Length - 1)) {
                 selectedIndex = 0;
@@ -32,6 +41,9 @@ namespace MSMM{
             }
 
             if (Input.GetAxis("Horizontal") < -0.5f) {
+              if (sePath != "") {
+                SoundMgr.PlaySe("SelectSE");
+              }
               selectedIndex--;
               if (selectedIndex < 0) {
                 selectedIndex = buttons.Length - 1;
@@ -43,6 +55,9 @@ namespace MSMM{
 
         if (!initialInput) {
           if ((Input.GetAxis("Horizontal") != 0) || (Input.GetAxis("Vertical") != 0)) {
+            if (sePath != "") {
+              SoundMgr.PlaySe("SelectSE");
+            }
             selectedIndex = 0;
             initialInput = true;
             stickNeutral = false;
