@@ -14,8 +14,7 @@ public class ResultScore : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        SetScore = Score.score;
-
+      
 
     }
 
@@ -23,14 +22,9 @@ public class ResultScore : MonoBehaviour
     void Update()
     {
 
+        
 
-        MemoryScore += SetScore;
-
-        if (MainScore < MemoryScore)
-        {
-            MainScore += (SetScore / 10);
-        }
-
+        MainScore = Score.score;
 
         //スコア表示
         GetComponent<Text>().text = MainScore.ToString();
