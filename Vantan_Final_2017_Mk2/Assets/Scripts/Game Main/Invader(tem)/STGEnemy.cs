@@ -35,6 +35,8 @@ public class STGEnemy : MonoBehaviour
     public float activeTime;
     float active;
 
+    public bool isTitle;
+
 
     void Start()
     {
@@ -124,9 +126,9 @@ public class STGEnemy : MonoBehaviour
 
                     //弾
                     Instantiate(Shot, new Vector3(transform.position.x,
-                                                  transform.position.y,
-                                                  transform.position.z - 1),
-                                                  Quaternion.identity);
+                                              transform.position.y,
+                                              transform.position.z - 1),
+                                              Quaternion.identity);
 
                     //音
                     SoundMgr.PlaySe("Shot", 3);

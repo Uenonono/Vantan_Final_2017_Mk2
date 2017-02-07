@@ -16,6 +16,8 @@ public class STGPlayer : MonoBehaviour
 
     public static bool isDead;  //生死フラグ
 
+    public bool isRule;
+
 
     void Start()
     {
@@ -32,7 +34,7 @@ public class STGPlayer : MonoBehaviour
 
     void Update()
     {
-        if(GameTime.isCount)
+        if (GameTime.isCount || isRule)
         {
             Move();
         }
@@ -42,35 +44,70 @@ public class STGPlayer : MonoBehaviour
     //プレイヤーの行動
     void Move()
     {
-        //左右移動
-        float x = Input.GetAxis("Horizontal");
-        float z = Input.GetAxis("Vertical");
-        // 移動する向きを求める
-        Vector3 direction = new Vector3(x, 0, z);
-        // 移動する向きとスピードを代入する
-        _rigidbody.velocity = direction * speed;
-
-        //制限をかけた値をプレイヤーの位置とする
-        Vector3 pos = transform.position;
-        pos.x = Mathf.Clamp(pos.x, -20, 20);
-        pos.z = Mathf.Clamp(pos.z, -20, -10);
-        transform.position = pos;
-
-        //ショット
-        interval += Time.deltaTime;
-        if (Input.GetAxis("BottomRed") == 1)
+        if (isRule)
         {
-            if (interval >= intervalTime)
+            float rx = Input.GetAxis("Horizontal");
+            float ry = Input.GetAxis("Vertical");
+
+            // 移動する向きを求める
+            Vector3 rdirection = new Vector3(rx, ry, 0);
+            // 移動する向きとスピードを代入する
+            _rigidbody.velocity = rdirection * speed;
+
+            //制限をかけた値をプレイヤーの位置とする
+            Vector3 rpos = transform.position;
+            rpos.x = Mathf.Clamp(rpos.x, 4, 9);
+            rpos.y = Mathf.Clamp(rpos.y, 1, 5);
+            transform.position = rpos;
+
+            //ショット
+            interval += Time.deltaTime;
+            if (Input.GetAxis("BottomRed") == 1)
             {
-                interval = 0.0f;
+                if (interval >= intervalTime)
+                {
+                    interval = 0.0f;
 
-                Instantiate(Shot, new Vector3(transform.position.x,
-                                              transform.position.y,
-                                              transform.position.z + 2.5f),
-                                              Quaternion.identity);
+                    Instantiate(Shot, new Vector3(transform.position.x,
+                                                  transform.position.y + 2.5f,
+                                                  transform.position.z),
+                                                  Quaternion.identity);
+                }
+            }
+        }
+        else
+        {
+            //左右移動
+            float x = Input.GetAxis("Horizontal");
+            float z = Input.GetAxis("Vertical");
 
-                //音
-                SoundMgr.PlaySe("Shot", 3);
+            // 移動する向きを求める
+            Vector3 direction = new Vector3(x, 0, z);
+            // 移動する向きとスピードを代入する
+            _rigidbody.velocity = direction * speed;
+
+            //制限をかけた値をプレイヤーの位置とする
+            Vector3 pos = transform.position;
+            pos.x = Mathf.Clamp(pos.x, -20, 20);
+            pos.z = Mathf.Clamp(pos.z, -20, -10);
+            transform.position = pos;
+
+            //ショット
+            interval += Time.deltaTime;
+            if (Input.GetAxis("BottomRed") == 1)
+            {
+                if (interval >= intervalTime)
+                {
+                    interval = 0.0f;
+
+                    Instantiate(Shot, new Vector3(transform.position.x,
+                                                  transform.position.y,
+                                                  transform.position.z + 2.5f),
+                                                  Quaternion.identity);
+
+                    //音
+                    SoundMgr.PlaySe("Shot", 3);
+                }
             }
         }
     }

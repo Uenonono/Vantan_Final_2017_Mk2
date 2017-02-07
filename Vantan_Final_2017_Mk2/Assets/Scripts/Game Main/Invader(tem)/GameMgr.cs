@@ -99,6 +99,7 @@ public class GameMgr : MonoBehaviour
                         active = 0;
                         SoundMgr.StopBgm();
                         STGGameState.SetState(3);
+                        MSMM.RankingTempData.TempScore = (uint)Score.score;
                         SceneManager.LoadScene("InvaderResult");
 
                     }

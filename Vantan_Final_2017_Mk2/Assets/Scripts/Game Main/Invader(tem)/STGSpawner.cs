@@ -12,12 +12,19 @@ public class STGSpawner : MonoBehaviour
     public float intervalTime = 60;
     float interval = 0;
 
+    public bool isTitle;
+   
+
     void Start()
     {
         if(!bosspawner)
         {
             InvokeRepeating("Create", 0, spawnIntervalTime);
-            SoundMgr.SoundLoadSe("Spawn", "Invader/Spawn");
+
+            if(!isTitle)
+            {
+                SoundMgr.SoundLoadSe("Spawn", "Invader/Spawn");
+            }
 
             Destroy(this.gameObject, 55);
         }

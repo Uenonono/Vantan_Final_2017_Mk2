@@ -10,7 +10,6 @@ public class STGShot : MonoBehaviour
     private Renderer rend;
     float interval;
     float intervalTime = 5;  //間隔
-    bool timeUp;
 
 
     void Start()
@@ -39,11 +38,7 @@ public class STGShot : MonoBehaviour
 
     void Update()
     {
-        interval += Time.deltaTime;
-        if (interval >= intervalTime)
-        {
-            timeUp = true;
-        }
+
     }
 
 
