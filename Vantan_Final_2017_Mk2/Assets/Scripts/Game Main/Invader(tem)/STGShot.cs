@@ -23,7 +23,7 @@ public class STGShot : MonoBehaviour
         if (enemyShot)
         {
             this.GetComponent<Rigidbody>().AddForce(
-            (transform.forward + transform.right) * speed, ForceMode.VelocityChange);
+            (transform.forward + transform.right) * -speed, ForceMode.VelocityChange);
         }
         else
         {

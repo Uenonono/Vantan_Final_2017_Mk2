@@ -28,7 +28,7 @@ public class STGEnemy : MonoBehaviour
     }
     EnemyState enemyState = EnemyState.Summon;
 
-    public GameObject activeEffect;    //エフェクト
+
     //状態チェンジまでの時間
     public float changeTime;
     float change;

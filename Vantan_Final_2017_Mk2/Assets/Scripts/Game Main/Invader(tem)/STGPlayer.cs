@@ -59,21 +59,6 @@ public class STGPlayer : MonoBehaviour
             rpos.x = Mathf.Clamp(rpos.x, 4, 9);
             rpos.y = Mathf.Clamp(rpos.y, 1, 5);
             transform.position = rpos;
-
-            //ショット
-            interval += Time.deltaTime;
-            if (Input.GetAxis("BottomRed") == 1)
-            {
-                if (interval >= intervalTime)
-                {
-                    interval = 0.0f;
-
-                    Instantiate(Shot, new Vector3(transform.position.x,
-                                                  transform.position.y + 2.5f,
-                                                  transform.position.z),
-                                                  Quaternion.identity);
-                }
-            }
         }
         else
         {
