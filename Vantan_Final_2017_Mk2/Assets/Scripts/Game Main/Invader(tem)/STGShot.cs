@@ -5,7 +5,8 @@ using System.Collections;
 public class STGShot : MonoBehaviour
 {
     public float speed; //速度
-    public bool enemyShot;  //弾の種類
+    public bool PlayerShot;  //弾の種類
+    public bool isleft; //右
 
     private Renderer rend;
     float interval;
@@ -20,7 +21,15 @@ public class STGShot : MonoBehaviour
         //サウンドロード
         SoundMgr.SoundLoadSe("Bounce", "Invader/Bounce");
 
-        if (enemyShot)
+        //プレイヤー
+        if (PlayerShot)
+        {
+            this.GetComponent<Rigidbody>().AddForce(
+            (transform.forward) * speed, ForceMode.VelocityChange);
+        }
+
+        //敵
+        if (isleft)
         {
             this.GetComponent<Rigidbody>().AddForce(
             (transform.forward + transform.right) * -speed, ForceMode.VelocityChange);
@@ -28,7 +37,7 @@ public class STGShot : MonoBehaviour
         else
         {
             this.GetComponent<Rigidbody>().AddForce(
-            (transform.forward) * speed, ForceMode.VelocityChange);
+            (transform.forward - transform.right) * -speed, ForceMode.VelocityChange);
         }
 
         //カオスになるのでとりあえず消滅させる

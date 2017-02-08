@@ -37,6 +37,10 @@ public class STGEnemy : MonoBehaviour
 
     public bool isTitle;
 
+    float moveX = 0.05f;
+    float moveTime;
+    float move;
+
 
     void Start()
     {
@@ -89,10 +93,11 @@ public class STGEnemy : MonoBehaviour
             //時間経過
             case EnemyState.Active:
                 //移動
-                transform.Translate(0, 0, speed * 2.0f);
+                transform.Translate(0, 0, speed * 3.0f);
                 break;
         }
     }
+
 
     public void AttackMove()
     {
@@ -138,11 +143,24 @@ public class STGEnemy : MonoBehaviour
             //時間経過
             case EnemyState.Active:
                 //移動
-                transform.Translate(0, 0, speed * 3.0f);
+                move += Time.deltaTime;
+                if (move >= 0)
+                {
+                    transform.Translate(moveX, 0, speed * 3.0f);
+                }
+                if (move >= 2)
+                {
+                    transform.Translate(-moveX * 2, 0, speed * 3.0f);
+                }
+                if (move >= 4)
+                {
+                    move = 0.0f;
+                }
+
 
                 //攻撃
                 interval += Time.deltaTime;
-                if (interval >= 3)
+                if (interval >= 2)
                 {
                     interval = 0.0f;
 
@@ -158,6 +176,7 @@ public class STGEnemy : MonoBehaviour
                 break;
         }
     }
+
 
     public void ShieldMove()
     {
@@ -188,6 +207,21 @@ public class STGEnemy : MonoBehaviour
             case EnemyState.Active:
                 //移動
                 transform.Translate(0, 0, 0);
+
+                //移動
+                move += Time.deltaTime;
+                if (move >= 0)
+                {
+                    transform.Translate(moveX, 0, 0);
+                }
+                if (move >= 2)
+                {
+                    transform.Translate(-moveX * 2, 0, 0);
+                }
+                if (move >= 4)
+                {
+                    move = 0.0f;
+                }
                 break;
         }
     }
