@@ -29,12 +29,12 @@ public class STGShot : MonoBehaviour
         }
 
         //敵
-        if (isleft)
+        if (!PlayerShot && isleft)
         {
             this.GetComponent<Rigidbody>().AddForce(
             (transform.forward + transform.right) * -speed, ForceMode.VelocityChange);
         }
-        else
+        if (!PlayerShot && !isleft)
         {
             this.GetComponent<Rigidbody>().AddForce(
             (transform.forward - transform.right) * -speed, ForceMode.VelocityChange);
@@ -42,12 +42,6 @@ public class STGShot : MonoBehaviour
 
         //カオスになるのでとりあえず消滅させる
         Destroy(this.gameObject, 10);
-    }
-
-
-    void Update()
-    {
-
     }
 
 
@@ -60,6 +54,7 @@ public class STGShot : MonoBehaviour
             SoundMgr.PlaySe("Bounce", 6);
         }
     }
+
 
     IEnumerator ColorChange()
     {

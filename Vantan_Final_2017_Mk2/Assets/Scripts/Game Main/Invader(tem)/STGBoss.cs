@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+//ボス
 public class STGBoss : MonoBehaviour
 {
     public int hp;  //hp
@@ -16,6 +17,8 @@ public class STGBoss : MonoBehaviour
 
     public GameObject Enemy;    //敵
     public float spawnRange; //スポーン範囲
+
+    public static bool isDead;  //生死フラグ
 
 
     //敵の状態
@@ -41,6 +44,8 @@ public class STGBoss : MonoBehaviour
         SoundMgr.SoundLoadSe("Shot", "Invader/Shot");
         SoundMgr.SoundLoadSe("Death", "Invader/Death");
         SoundMgr.SoundLoadSe("Spawn", "Invader/Spawn");
+
+        isDead = false;
     }
 
 
@@ -126,6 +131,8 @@ public class STGBoss : MonoBehaviour
 
             if (hp <= 0)
             {
+                isDead = true;
+
                 //当たったら消える
                 Destroy(this.gameObject);
 
@@ -158,6 +165,7 @@ public class STGBoss : MonoBehaviour
                 SoundMgr.PlaySe("Death", 4);
             }
         }
+
 
         //壁
         if (collision.gameObject.tag == "Dead")

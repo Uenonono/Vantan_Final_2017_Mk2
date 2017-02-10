@@ -2,6 +2,10 @@
     "data": [
         {
             "name": "AAA",
+            "score": 1110
+        },
+        {
+            "name": "AAA",
             "score": 500
         },
         {
@@ -15,10 +19,6 @@
         {
             "name": "BCC",
             "score": 290
-        },
-        {
-            "name": "CBA",
-            "score": 220
         }
     ]
 }

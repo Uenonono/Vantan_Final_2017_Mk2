@@ -56,8 +56,8 @@ public class STGPlayer : MonoBehaviour
 
             //制限をかけた値をプレイヤーの位置とする
             Vector3 rpos = transform.position;
-            rpos.x = Mathf.Clamp(rpos.x, 4, 9);
-            rpos.y = Mathf.Clamp(rpos.y, 1, 5);
+            rpos.x = Mathf.Clamp(rpos.x, 4, 8);
+            rpos.y = Mathf.Clamp(rpos.y, 3, 5);
             transform.position = rpos;
         }
         else

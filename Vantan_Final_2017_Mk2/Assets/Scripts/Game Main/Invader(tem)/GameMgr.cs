@@ -67,26 +67,26 @@ public class GameMgr : MonoBehaviour
         {
             //タイトル
             case GameState.Title:
-
-
                 //ボタン押したらルール画面へ
-                if (Input.GetAxis("BottomGreen") == 1)
+                if (Input.GetAxis("BottomRed") == 1 || Input.GetAxis("BottomGreen") == 1 || Input.GetAxis("BottomBlue") == 1 || Input.GetAxis("BottomYellow") == 1)
                 {
                     STGGameState.SetState(1);
                     SceneManager.LoadScene("InvaderRule");
                 }
                 break;
 
+
             //ルール
             case GameState.Rule:
                 //ボタン押したらゲーム本編へ
-                if (Input.GetAxis("BottomGreen") == 1)
+                if (Input.GetAxis("BottomRed") == 1 || Input.GetAxis("BottomGreen") == 1 || Input.GetAxis("BottomBlue") == 1 || Input.GetAxis("BottomYellow") == 1)
                 {
                     STGGameState.SetState(2);
                     SceneManager.LoadScene("InvaderMain");
                     SoundMgr.PlayBgm("img_Title2");
                 }
                 break;
+
 
             //ゲーム本編
             case GameState.Main:
@@ -101,27 +101,22 @@ public class GameMgr : MonoBehaviour
                         STGGameState.SetState(3);
                         MSMM.RankingTempData.TempScore = (uint)Score.score;
                         SceneManager.LoadScene("InvaderResult");
-
                     }
                 }
                 break;
 
+
             //リザルト
             case GameState.Result:
-                //var menuSelector = GetComponent<MSMM.MenuSelector>();
-                //var index = menuSelector.GetCurrentSelectedIndex();
                 if (Input.GetAxis("BottomRed") == 1)
                 {
-                    Score.MasterScore = 0;
                     STGGameState.SetState(0);
                     SceneManager.LoadScene("InvaderTitle");
-                    //menuSelector.Reset();
                 }
                 if (Input.GetAxis("BottomGreen") == 1)
                 {
                     Disable();
                     SoundMgr.StopBgm();
-                    //menuSelector.Reset();
                     SceneManager.LoadScene("MainTitle");
                 }
                 break;
@@ -132,7 +127,7 @@ public class GameMgr : MonoBehaviour
     public void Disable()
     {
         active = 0;
-        Score.MasterScore = 0;
+        Score.score = 0;
         STGGameState.SetState(4);
     }
 }

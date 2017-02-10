@@ -4,11 +4,13 @@ using System.Collections;
 //エフェクト
 public class Effect : MonoBehaviour
 {
-    public float time;
     public bool isParticle;
+    public float time;
+
 
     void Start()
     {
+        //もしisParticleならエフェクトの時間で消える
         ParticleSystem particle = GetComponent<ParticleSystem>();
         if (isParticle)
         {
@@ -18,11 +20,5 @@ public class Effect : MonoBehaviour
         {
             Destroy(this.gameObject, time);
         }
-    }
-
-
-    void Update()
-    {
-
     }
 }

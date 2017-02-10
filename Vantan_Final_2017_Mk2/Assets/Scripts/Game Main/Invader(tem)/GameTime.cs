@@ -27,6 +27,8 @@ public class GameTime : MonoBehaviour
     public Text GameOvertext;
     [SerializeField]
     public Text TimeUptext;
+    [SerializeField]
+    public Text GameCleartext;
 
 
     void Start()
@@ -107,6 +109,17 @@ public class GameTime : MonoBehaviour
         {
             GameOvertext.gameObject.SetActive(false);
         }
+
+
+        //ゲームクリアテキスト
+        if (STGBoss.isDead)
+        {
+            GameCleartext.gameObject.SetActive(true);
+        }
+        else
+        {
+            GameCleartext.gameObject.SetActive(false);
+        }
     }
 
 
@@ -122,7 +135,7 @@ public class GameTime : MonoBehaviour
         starttimeText.text = "1";
         yield return new WaitForSeconds(1.0f);
 
-        starttimeText.text = "GameStart!!";
+        starttimeText.text = "GameStart";
         yield return new WaitForSeconds(1.0f);
 
         starttimeText.gameObject.SetActive(false);

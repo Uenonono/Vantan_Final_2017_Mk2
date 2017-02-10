@@ -206,9 +206,6 @@ public class STGEnemy : MonoBehaviour
             //時間経過
             case EnemyState.Active:
                 //移動
-                transform.Translate(0, 0, 0);
-
-                //移動
                 move += Time.deltaTime;
                 if (move >= 0)
                 {
@@ -235,8 +232,12 @@ public class STGEnemy : MonoBehaviour
             //当たったら消える
             Destroy(this.gameObject);
 
-            //スコア
-            Score.score += getScore;
+            if (!STGPlayer.isDead)
+            {
+                //スコア
+                Score.score += getScore;
+            }
+
 
             //エフェクトピース
             Instantiate(Piece, new Vector3(transform.position.x,

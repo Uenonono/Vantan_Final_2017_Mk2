@@ -19,21 +19,14 @@ public class STGTitle : MonoBehaviour
     Text TitleName;
 
 
-
-    // Use this for initialization
     void Start()
     {
-      Time = 0.0f;
-
-   
-       
+      Time = 0.0f; 
     }
 
-    // Update is called once per frame
+
     void Update()
     {
-        //GetComponent<Text>().text = "Button To Press";
-
         Time += AngularFrequency * UnityEngine.Time.deltaTime;
         transform.localScale = Vector3.Lerp(MinSize, MaxSize, 0.5f * Mathf.Sin(Time) + 0.5f);
     }
