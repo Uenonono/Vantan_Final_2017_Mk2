@@ -6,21 +6,20 @@ using System.Collections.Generic;
 
 public class ResultScore : MonoBehaviour
 {
-    private static int SScore;
-    int MainScore;
+    public static int SScore;
+    public static int MainScore;
     int MemoryScore;
      
 
     void Start()
     {
+        MainScore = 0;
         MainScore = Score.score;
     }
 
 
     void Update()
     {
-        //MemoryScore += MainScore;
-
         if (SScore < MainScore)
         {
             SScore += 10;

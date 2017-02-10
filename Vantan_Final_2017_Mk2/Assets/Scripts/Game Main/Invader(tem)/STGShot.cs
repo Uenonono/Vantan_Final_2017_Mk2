@@ -9,8 +9,6 @@ public class STGShot : MonoBehaviour
     public bool isleft; //右
 
     private Renderer rend;
-    float interval;
-    float intervalTime = 5;  //間隔
 
 
     void Start()
@@ -40,10 +38,18 @@ public class STGShot : MonoBehaviour
             (transform.forward - transform.right) * -speed, ForceMode.VelocityChange);
         }
 
-        //カオスになるのでとりあえず消滅させる
+        //10s消滅させる
         Destroy(this.gameObject, 10);
     }
 
+
+    void Update()
+    {
+        if (STGBoss.isDead)
+        {
+            Destroy(this.gameObject);
+        }
+    }
 
     void OnCollisionEnter(Collision collision)
     {
@@ -51,7 +57,7 @@ public class STGShot : MonoBehaviour
         if (collision.gameObject.tag == "Wall")
         {
             //音
-            SoundMgr.PlaySe("Bounce", 6);
+            SoundMgr.PlaySe("Bounce", 4);
         }
     }
 

@@ -19,15 +19,9 @@ public class STGSpawner : MonoBehaviour
 
     void Start()
     {
-        if(!bosspawner)
+        if (!bosspawner)
         {
             InvokeRepeating("Create", 0, spawnIntervalTime);
-
-            if(!isTitle)
-            {
-                SoundMgr.SoundLoadSe("Spawn", "Invader/Spawn");
-            }
-
             Destroy(this.gameObject, 55);
         }
 
@@ -50,7 +44,6 @@ public class STGSpawner : MonoBehaviour
                        transform.position.y,
                        transform.position.z),
                        Quaternion.identity);
-
                 Destroy(this.gameObject);
             }
         }
@@ -76,9 +69,6 @@ public class STGSpawner : MonoBehaviour
                                        transform.position.y,
                                        transform.position.z),
                                        Quaternion.identity);
-
-        //音
-        SoundMgr.PlaySe("Spawn", 5);
     }
 
 

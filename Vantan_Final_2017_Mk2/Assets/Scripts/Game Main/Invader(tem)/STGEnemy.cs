@@ -61,6 +61,26 @@ public class STGEnemy : MonoBehaviour
         if (Normal) { NormalMove(); }
         if (Attacker) { AttackMove(); }
         if (Shielder) { ShieldMove(); }
+
+        if (STGBoss.isDead)
+        {
+            //エフェクトピース
+            Instantiate(Piece, new Vector3(transform.position.x,
+                                           transform.position.y,
+                                           transform.position.z),
+                                           Quaternion.identity);
+
+            //エフェクト
+            Instantiate(Effect, new Vector3(transform.position.x,
+                                           transform.position.y,
+                                           transform.position.z),
+                                           Quaternion.identity);
+
+            //音
+            SoundMgr.PlaySe("Death", 2);
+
+            Destroy(this.gameObject);
+        }
     }
 
 
@@ -136,7 +156,7 @@ public class STGEnemy : MonoBehaviour
                                               Quaternion.identity);
 
                     //音
-                    SoundMgr.PlaySe("Shot", 3);
+                    SoundMgr.PlaySe("Shot", 1);
                 }
                 break;
 
@@ -160,7 +180,7 @@ public class STGEnemy : MonoBehaviour
 
                 //攻撃
                 interval += Time.deltaTime;
-                if (interval >= 2)
+                if (interval >= 4)
                 {
                     interval = 0.0f;
 
@@ -171,7 +191,7 @@ public class STGEnemy : MonoBehaviour
                                                   Quaternion.identity);
 
                     //音
-                    SoundMgr.PlaySe("Shot", 3);
+                    SoundMgr.PlaySe("Shot", 1);
                 }
                 break;
         }
@@ -226,18 +246,13 @@ public class STGEnemy : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        //弾
         if (collision.gameObject.tag == "Shot")
         {
-            //当たったら消える
-            Destroy(this.gameObject);
-
-            if (!STGPlayer.isDead)
+            if (!STGPlayer.isDead && !STGBoss.isDead)
             {
                 //スコア
                 Score.score += getScore;
             }
-
 
             //エフェクトピース
             Instantiate(Piece, new Vector3(transform.position.x,
@@ -252,13 +267,21 @@ public class STGEnemy : MonoBehaviour
                                            Quaternion.identity);
 
             //音
-            SoundMgr.PlaySe("Death", 4);
+            SoundMgr.PlaySe("Death", 2);
+
+            Destroy(this.gameObject);
         }
+
 
         //壁
         if (collision.gameObject.tag == "Dead")
         {
-            //当たったら消える
+            if (!STGPlayer.isDead && Score.score > 0)
+            {
+                //スコア
+                Score.score -= getScore;
+            }
+
             Destroy(this.gameObject);
         }
     }

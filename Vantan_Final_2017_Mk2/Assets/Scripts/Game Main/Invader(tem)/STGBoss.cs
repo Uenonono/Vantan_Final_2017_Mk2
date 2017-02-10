@@ -115,7 +115,7 @@ public class STGBoss : MonoBehaviour
                                                   Quaternion.identity);
 
                     //音
-                    SoundMgr.PlaySe("Shot", 3);
+                    SoundMgr.PlaySe("Shot", 1);
                 }
                 break;
         }
@@ -162,7 +162,7 @@ public class STGBoss : MonoBehaviour
                                                Quaternion.identity);
 
                 //音
-                SoundMgr.PlaySe("Death", 4);
+                SoundMgr.PlaySe("Death", 2);
             }
         }
 

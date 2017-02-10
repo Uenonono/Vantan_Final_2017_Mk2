@@ -29,6 +29,7 @@ public class STGPlayer : MonoBehaviour
         //サウンドロード
         SoundMgr.SoundLoadSe("Shot", "Invader/Shot");
         SoundMgr.SoundLoadSe("Death", "Invader/Death");
+        SoundMgr.SoundLoadSe("End", "Invader/End");
     }
 
 
@@ -91,7 +92,7 @@ public class STGPlayer : MonoBehaviour
                                                   Quaternion.identity);
 
                     //音
-                    SoundMgr.PlaySe("Shot", 3);
+                    SoundMgr.PlaySe("Shot", 1);
                 }
             }
         }
@@ -117,7 +118,8 @@ public class STGPlayer : MonoBehaviour
                                            Quaternion.identity);
 
             //音
-            SoundMgr.PlaySe("Death", 4);
+            SoundMgr.PlaySe("Death", 2);
+            SoundMgr.PlaySe("End", 3);
 
             //当たったら消える
             Destroy(this.gameObject);
