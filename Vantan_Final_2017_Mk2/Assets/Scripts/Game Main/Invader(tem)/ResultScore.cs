@@ -4,29 +4,28 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 
 
-
 public class ResultScore : MonoBehaviour
 {
-    private static int SetScore = 0;
-    private int MemoryScore = 0;
-    private int MainScore = 0;
+    public static int SScore;
+    public static int MainScore;
+    int MemoryScore;
      
-    // Use this for initialization
+
     void Start()
     {
-      
-
+        MainScore = 0;
+        MainScore = Score.score;
     }
 
-    // Update is called once per frame
+
     void Update()
     {
-
-        
-
-        MainScore = Score.score;
+        if (SScore < MainScore)
+        {
+            SScore += 10;
+        }
 
         //スコア表示
-        GetComponent<Text>().text = MainScore.ToString();
+        GetComponent<Text>().text = SScore.ToString();
     }
 }

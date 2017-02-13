@@ -1,16 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+//UFO
 public class UFO : MonoBehaviour
 {
-
-    // Use this for initialization
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
     void Update()
     {
         transform.Rotate(0, 1, 0);
