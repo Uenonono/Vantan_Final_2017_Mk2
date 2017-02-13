@@ -5,6 +5,7 @@ using System.Collections;
 public class STGBoss : MonoBehaviour
 {
     public int hp;  //hp
+    int HP;
     public int getScore;    //スコア
     public GameObject Piece;    //死亡エフェクト
     public GameObject Effect0;    //死亡エフェクト
@@ -45,6 +46,7 @@ public class STGBoss : MonoBehaviour
         SoundMgr.SoundLoadSe("Death", "Invader/Death");
         SoundMgr.SoundLoadSe("Spawn", "Invader/Spawn");
 
+        HP = hp;
         isDead = false;
     }
 
@@ -127,9 +129,9 @@ public class STGBoss : MonoBehaviour
         //弾
         if (collision.gameObject.tag == "Shot")
         {
-            hp -= 1;
+            HP -= 1;
 
-            if (hp <= 0)
+            if (HP <= 0)
             {
                 isDead = true;
 

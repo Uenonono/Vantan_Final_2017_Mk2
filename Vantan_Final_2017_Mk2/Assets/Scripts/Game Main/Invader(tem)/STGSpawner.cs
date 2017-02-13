@@ -19,14 +19,13 @@ public class STGSpawner : MonoBehaviour
 
     void Start()
     {
-        if (!bosspawner)
+        if (!bosspawner && !isp)
         {
             InvokeRepeating("Create", 0, spawnIntervalTime);
             Destroy(this.gameObject, 55);
         }
 
-
-        if(isp)
+        if (isp)
         {
             InvokeRepeating("ParticleCreate", 0, spawnIntervalTime);
         }
@@ -77,7 +76,7 @@ public class STGSpawner : MonoBehaviour
     {
         Instantiate(Enemy, new Vector3(transform.position.x + Random.Range(-spawnRange, spawnRange),
                                        transform.position.y + Random.Range(-spawnRange, spawnRange),
-                                       transform.position.z),
+                                       transform.position.z + Random.Range(-spawnRange, spawnRange)),
                                        Quaternion.identity);
     }
 }

@@ -43,6 +43,8 @@ public class GameMgr : MonoBehaviour
         active = 0;
 
         STGGameState.SetState(0);
+
+        SoundMgr.SoundLoadSe("Start", "Invader/Start");
     }
 
 
@@ -69,6 +71,7 @@ public class GameMgr : MonoBehaviour
                 //ボタン押したらルール画面へ
                 if (Input.GetAxis("BottomRed") == 1 || Input.GetAxis("BottomGreen") == 1 || Input.GetAxis("BottomBlue") == 1 || Input.GetAxis("BottomYellow") == 1)
                 {
+                    SoundMgr.PlaySe("Start", 6);
                     STGGameState.SetState(1);
                     SceneManager.LoadScene("InvaderRule");
                 }
@@ -78,7 +81,7 @@ public class GameMgr : MonoBehaviour
             //ルール
             case GameState.Rule:
                 //ボタン押したらゲーム本編へ
-                if (Input.GetAxis("BottomRed") == 1 || Input.GetAxis("BottomGreen") == 1 || Input.GetAxis("BottomBlue") == 1 || Input.GetAxis("BottomYellow") == 1)
+                if (Rules.isStart)
                 {
                     STGGameState.SetState(2);
                     SceneManager.LoadScene("InvaderMain");
@@ -130,5 +133,8 @@ public class GameMgr : MonoBehaviour
         ResultScore.SScore = 0;
         ResultScore.MainScore = 0;
         STGGameState.SetState(4);
+        STGBoss.isDead = false;
+        STGPlayer.isDead = false;
+        Rules.isStart = false;
     }
 }

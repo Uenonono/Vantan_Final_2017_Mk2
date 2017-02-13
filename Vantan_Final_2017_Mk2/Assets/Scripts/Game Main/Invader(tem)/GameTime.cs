@@ -45,7 +45,7 @@ public class GameTime : MonoBehaviour
     void Start()
     {
         active = 0;
-        activeTime = 3;
+        activeTime = 4;
         timeText = timeText.GetComponent<Text>();
         isCount = false;
         isTimeUp = false;
