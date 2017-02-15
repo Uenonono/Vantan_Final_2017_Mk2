@@ -221,10 +221,10 @@ public class SoundMgr {
     return true;
   }
 
-  public static bool PlaySe(string key, float volume, int channel = -1) {
-    return GetInstance()._PlaySe(key, volume, channel);
+  public static bool PlayVolSe(string key, float volume, int channel = -1) {
+    return GetInstance()._PlayVolSe(key, volume, channel);
   }
-  bool _PlaySe(string key, float volume, int channel = -1) {
+  bool _PlayVolSe(string key, float volume, int channel = -1) {
     if (poolSe.ContainsKey(key) == false) {
       //対応するキーがない
       return false;
@@ -238,6 +238,7 @@ public class SoundMgr {
     if (0 <= channel && channel < CHANNEL) {
       //チャンネル指定
       var source = GetAudioSource(SoundType.Se, channel);
+      source.volume = volumeClamp;
       source.clip = _data.Clip;
       source.Play();
     }
