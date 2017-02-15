@@ -41,6 +41,8 @@ public class STGEnemy : MonoBehaviour
     float moveTime;
     float move;
 
+    public GameObject EffectS;    //登場エフェクト
+
 
     void Start()
     {
@@ -53,6 +55,13 @@ public class STGEnemy : MonoBehaviour
         //サウンドロードSpawn
         SoundMgr.SoundLoadSe("Shot", "Invader/Shot");
         SoundMgr.SoundLoadSe("Death", "Invader/Death");
+
+
+        //エフェクト
+        Instantiate(EffectS, new Vector3(transform.position.x,
+                                       transform.position.y,
+                                       transform.position.z),
+                                       Quaternion.identity);
     }
 
 

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 //ボス
 public class STGBoss : MonoBehaviour
@@ -7,10 +8,8 @@ public class STGBoss : MonoBehaviour
     public int hp;  //hp
     int HP;
     public int getScore;    //スコア
-    public GameObject Piece;    //死亡エフェクト
-    public GameObject Effect0;    //死亡エフェクト
-    public GameObject Effect1;    //死亡エフェクト
-    public GameObject Effect2;    //死亡エフェクト
+    public GameObject Piece;    //破片
+    public GameObject Effect;   //死亡エフェクト
 
     public GameObject Shot; //弾
     public float intervalTime;  //発射間隔
@@ -19,6 +18,7 @@ public class STGBoss : MonoBehaviour
     public GameObject Enemy;    //敵
     public float spawnRange; //スポーン範囲
 
+    Slider _Slider;
     public static bool isDead;  //生死フラグ
 
 
@@ -47,7 +47,13 @@ public class STGBoss : MonoBehaviour
         SoundMgr.SoundLoadSe("Spawn", "Invader/Spawn");
 
         HP = hp;
+        _Slider = GameObject.Find("BossHPSlider").GetComponent<Slider>();
+        //Sliderに値を設定
+        _Slider.maxValue = HP;
+        _Slider.value = HP;
         isDead = false;
+
+        StartCoroutine(Count());
     }
 
 
@@ -148,17 +154,7 @@ public class STGBoss : MonoBehaviour
                                                Quaternion.identity);
 
                 //エフェクト
-                Instantiate(Effect0, new Vector3(transform.position.x - 3,
-                                               transform.position.y,
-                                               transform.position.z),
-                                               Quaternion.identity);
-                //エフェクト
-                Instantiate(Effect1, new Vector3(transform.position.x,
-                                               transform.position.y,
-                                               transform.position.z),
-                                               Quaternion.identity);
-                //エフェクト
-                Instantiate(Effect2, new Vector3(transform.position.x + 3,
+                Instantiate(Effect, new Vector3(transform.position.x - 3,
                                                transform.position.y,
                                                transform.position.z),
                                                Quaternion.identity);
@@ -166,14 +162,15 @@ public class STGBoss : MonoBehaviour
                 //音
                 SoundMgr.PlaySe("Death", 2);
             }
-        }
 
-
-        //壁
-        if (collision.gameObject.tag == "Dead")
-        {
-            //当たったら消える
-            Destroy(this.gameObject);
+            //Sliderに値を設定
+            _Slider.value = HP;
         }
+    }
+
+    IEnumerator Count()
+    {
+        yield return new WaitForSeconds(4.0f);
+        _Slider.transform.Translate(0, 500, 0);
     }
 }
