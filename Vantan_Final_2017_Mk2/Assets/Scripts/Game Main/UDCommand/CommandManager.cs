@@ -15,6 +15,9 @@ namespace UDCommand {
     [SerializeField]
     GameObject radishObject = null;
 
+    [SerializeField]
+    GameObject particleObject = null;
+
     List<Sprite> colorCircleSprites;
     List<Sprite> numberSprites;
 
@@ -83,6 +86,10 @@ namespace UDCommand {
 
     public GameObject GetRadish() {
       return radishObject;
+    }
+
+    public GameObject GetParticles() {
+      return particleObject;
     }
   }
 }

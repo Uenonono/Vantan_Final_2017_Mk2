@@ -252,6 +252,7 @@ namespace UDCommand {
               AddScoreByCommandIndex(currentCommand);
               SoundMgr.PlaySe("UDCCorrectCommand", 2);
               commandObjects[currentCommand].GetComponentInChildren<Animator>().Play("Popup");
+              commandObjects[currentCommand].GetComponent<CommandManager>().GetParticles().GetComponent<GameParticles>().PlayParticles();
               currentCommand++;
             }
             else {
@@ -265,6 +266,7 @@ namespace UDCommand {
               AddScoreByCommandIndex(currentCommand);
               SoundMgr.PlaySe("UDCCorrectCommand", 2);
               commandObjects[currentCommand].GetComponentInChildren<Animator>().Play("Popup");
+              commandObjects[currentCommand].GetComponent<CommandManager>().GetParticles().GetComponent<GameParticles>().PlayParticles();
               currentCommand++;
             }
             else {
@@ -283,6 +285,7 @@ namespace UDCommand {
 
     private void MissCommand() {
       commandObjects[currentCommand].GetComponentInChildren<Animator>().Play("MPopup");
+      commandObjects[currentCommand].GetComponent<CommandManager>().GetParticles().GetComponent<GameParticles>().PlayParticles();
       commandObjects[currentCommand].GetComponent<CommandManager>().SwapMandragora();
       waitingAnimation = true;
       waitingTime = 0.0f;
