@@ -12,7 +12,7 @@ namespace UDCommand {
       SoundMgr.SoundLoadSe("UDCDecide", "UDCommand/Decide");
 
       if(SoundMgr.isBgmPlaying("UDCBGM") != 1) {
-        SoundMgr.PlayBgm("UDCBGM");
+        SoundMgr.PlayBgm("UDCBGM",0.3f);
       }
 
       trans = GameObject.FindGameObjectWithTag("Transition Handler");

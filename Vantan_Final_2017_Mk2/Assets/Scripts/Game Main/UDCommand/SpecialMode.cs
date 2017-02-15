@@ -46,7 +46,7 @@ namespace UDCommand {
       SoundMgr.SoundLoadSe("UDCDecide", "UDCommand/Decide");
 
       if (SoundMgr.isBgmPlaying("SpecialBGM") == 0) {
-        SoundMgr.PlayBgm("SpecialBGM");
+        SoundMgr.PlayBgm("SpecialBGM",0.3f);
       }
 
       trans = GameObject.FindGameObjectWithTag("Transition Handler");
@@ -90,14 +90,14 @@ namespace UDCommand {
         if(index == 0) {
           if (Input.GetAxis("BottomGreen") == 1) {
             if (UDCommand.SelectedGameMode.GetMode() == (int)UDCommand.GameMode.Trial) {
-              MSMM.RankingTempData.TempScore += (uint)buttonCount * 5;
+              MSMM.RankingTempData.TempScore += (uint)buttonCount * 1;
               SoundMgr.PlaySe("UDCDecide");
               selector.Reset();
               trans.GetComponent<MSMM.Transition>().LoadScene("UDCTrialResult");
               MSMM.PlayCounter.AddCount(MSMM.CountType.UDCEnd);
             }
             else if (UDCommand.SelectedGameMode.GetMode() == (int)UDCommand.GameMode.Challenge) {
-              MSMM.RankingTempData.TempScore += (uint)buttonCount * 5;
+              MSMM.RankingTempData.TempScore += (uint)buttonCount * 1;
               SoundMgr.PlaySe("UDCDecide");
               selector.Reset();
               trans.GetComponent<MSMM.Transition>().LoadScene("UDCChallengeResult");

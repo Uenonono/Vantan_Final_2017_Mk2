@@ -157,8 +157,8 @@ namespace UDCommand {
         if (!onStandby && !gameEnded) {
           if (waitingAnimation) {
             var radish = commandObjects[currentCommand].GetComponent<CommandManager>().GetRadish();
-            if(waitingTime >= 0.167f && !missSEPlayed) {
-              SoundMgr.PlaySe("UDCMissCommand");
+            if (waitingTime >= 0.167f && !missSEPlayed) {
+              SoundMgr.PlayVolSe("UDCMissCommand", 0.7f, 3);
               missSEPlayed = true;
             }
             if (radish.GetComponent<RectTransform>().anchoredPosition.y >= 150) {
@@ -191,7 +191,8 @@ namespace UDCommand {
 
       if (gameEnded) {
         if (!endSEPlayed) {
-          SoundMgr.PlaySe("UDCGameEnd");
+          SoundMgr.StopBgm();
+          SoundMgr.PlayVolSe("UDCGameEnd", 1.0f);
           endSEPlayed = true;
         }
         SpecialModeCanvas.SetActive(true);
@@ -245,13 +246,14 @@ namespace UDCommand {
       var inputs = TFC.GamepadInputHandler.GetActionsOnly();
       var trialInputs = TFC.GamepadInputHandler.GetColorInputs();
       if (resetedToNeutral) {
-        if (inputs.Count != 0) {
-          if (gameMode == UDC.GameMode.Trial) {
+        if (gameMode == UDC.GameMode.Trial) {
+          if (trialInputs.Count != 0) {
             if (trialInputs.Contains(trialInputList[currentCommand])) {
               resetedToNeutral = false;
               AddScoreByCommandIndex(currentCommand);
-              SoundMgr.PlaySe("UDCCorrectCommand", 2);
+              SoundMgr.PlayVolSe("UDCCorrectCommand", 0.5f, 2);
               commandObjects[currentCommand].GetComponentInChildren<Animator>().Play("Popup");
+              commandObjects[currentCommand].GetComponent<CommandManager>().GetParticles().GetComponent<GameParticles>().PlayParticles();
               currentCommand++;
             }
             else {
@@ -259,12 +261,15 @@ namespace UDCommand {
               resetedToNeutral = false;
             }
           }
-          else if (gameMode == UDC.GameMode.Challenge) {
+        }
+        else if (gameMode == UDC.GameMode.Challenge) {
+          if (inputs.Count != 0) {
             if (inputs.Contains(inputList[currentCommand])) {
               resetedToNeutral = false;
               AddScoreByCommandIndex(currentCommand);
-              SoundMgr.PlaySe("UDCCorrectCommand", 2);
+              SoundMgr.PlayVolSe("UDCCorrectCommand", 0.5f, 2);
               commandObjects[currentCommand].GetComponentInChildren<Animator>().Play("Popup");
+              commandObjects[currentCommand].GetComponent<CommandManager>().GetParticles().GetComponent<GameParticles>().PlayParticles();
               currentCommand++;
             }
             else {
@@ -283,6 +288,7 @@ namespace UDCommand {
 
     private void MissCommand() {
       commandObjects[currentCommand].GetComponentInChildren<Animator>().Play("MPopup");
+      commandObjects[currentCommand].GetComponent<CommandManager>().GetParticles().GetComponent<GameParticles>().PlayParticles();
       commandObjects[currentCommand].GetComponent<CommandManager>().SwapMandragora();
       waitingAnimation = true;
       waitingTime = 0.0f;

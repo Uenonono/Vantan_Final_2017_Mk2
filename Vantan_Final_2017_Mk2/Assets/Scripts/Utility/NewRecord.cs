@@ -91,6 +91,8 @@ namespace MSMM {
       SoundMgr.SoundLoadSe("RecordDecide", decideSEPath);
       SoundMgr.SoundLoadSe("RecordSelect", selectSEPath);
       SoundMgr.SoundLoadSe("RecordNew", newRecordSEPath);
+
+      SoundMgr.PlaySe("RecordNew");
     }
 
     void Update() {
@@ -248,10 +250,6 @@ namespace MSMM {
       currentLetter = 0;
       subCanvas.SetActive(false);
       timeCounter = 0;
-    }
-
-    public void PlayNewRecordSE() {
-      SoundMgr.PlaySe("RecordNew");
     }
   }
 }

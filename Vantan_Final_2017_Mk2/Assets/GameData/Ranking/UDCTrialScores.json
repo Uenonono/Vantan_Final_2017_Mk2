@@ -1,6 +1,14 @@
 {
     "data": [
         {
+            "name": "CDD",
+            "score": 7860
+        },
+        {
+            "name": "DRT",
+            "score": 7290
+        },
+        {
             "name": "ABB",
             "score": 5110
         },
@@ -11,14 +19,6 @@
         {
             "name": "AAA",
             "score": 500
-        },
-        {
-            "name": "AAA",
-            "score": 400
-        },
-        {
-            "name": "AAA",
-            "score": 300
         }
     ]
 }
