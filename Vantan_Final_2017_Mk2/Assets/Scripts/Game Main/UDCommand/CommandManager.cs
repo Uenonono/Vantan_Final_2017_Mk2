@@ -15,6 +15,9 @@ namespace UDCommand {
     [SerializeField]
     GameObject radishObject = null;
 
+    [SerializeField]
+    ParticleSystem soilEmitter = null;
+
     List<Sprite> colorCircleSprites;
     List<Sprite> numberSprites;
 
@@ -27,7 +30,6 @@ namespace UDCommand {
       numberSprites = new List<Sprite>();
 
       colorCircleSprites.AddRange(Resources.LoadAll<Sprite>("Sprites/UDCommand/ColorCircles"));
-      numberSprites.AddRange(Resources.LoadAll<Sprite>("Sprites/UDCommand/Numbers"));
     }
 
     public void SetCommand(ImageType type) {
@@ -49,28 +51,28 @@ namespace UDCommand {
 
       switch (type) {
         case ImageType.BRed:
-          assistNumber.sprite = numberSprites[0];
+          assistNumber.sprite = Resources.Load<Sprite>("Sprites/UDCommand/Num1");
           break;
         case ImageType.BGreen:
-          assistNumber.sprite = numberSprites[1];
+          assistNumber.sprite = Resources.Load<Sprite>("Sprites/UDCommand/Num2");
           break;
         case ImageType.BBlue:
-          assistNumber.sprite = numberSprites[2];
+          assistNumber.sprite = Resources.Load<Sprite>("Sprites/UDCommand/Num3");
           break;
         case ImageType.BYellow:
-          assistNumber.sprite = numberSprites[3];
+          assistNumber.sprite = Resources.Load<Sprite>("Sprites/UDCommand/Num4");
           break;
         case ImageType.URed:
-          assistNumber.sprite = numberSprites[4];
+          assistNumber.sprite = Resources.Load<Sprite>("Sprites/UDCommand/Num5");
           break;
         case ImageType.UGreen:
-          assistNumber.sprite = numberSprites[5];
+          assistNumber.sprite = Resources.Load<Sprite>("Sprites/UDCommand/Num6");
           break;
         case ImageType.UBlue:
-          assistNumber.sprite = numberSprites[6];
+          assistNumber.sprite = Resources.Load<Sprite>("Sprites/UDCommand/Num7");
           break;
         case ImageType.UYellow:
-          assistNumber.sprite = numberSprites[7];
+          assistNumber.sprite = Resources.Load<Sprite>("Sprites/UDCommand/Num8");
           break;
         default:
           assistNumber.gameObject.SetActive(false);
@@ -84,6 +86,10 @@ namespace UDCommand {
 
     public GameObject GetRadish() {
       return radishObject;
+    }
+
+    public ParticleSystem GetParticleSystem() {
+      return soilEmitter;
     }
   }
 }

@@ -1,16 +1,12 @@
 {
     "data": [
         {
-            "name": "GFG",
-            "score": 4220
+            "name": "ABB",
+            "score": 5110
         },
         {
-            "name": "BCE",
-            "score": 2520
-        },
-        {
-            "name": "AAA",
-            "score": 1110
+            "name": "ABC",
+            "score": 4230
         },
         {
             "name": "AAA",
@@ -23,13 +19,6 @@
         {
             "name": "AAA",
             "score": 300
-<<<<<<< HEAD
-=======
-        },
-        {
-            "name": "BCC",
-            "score": 290
->>>>>>> ccfb99cd7d452834a063884d21c885aeb7bc4fd5
         }
     ]
 }

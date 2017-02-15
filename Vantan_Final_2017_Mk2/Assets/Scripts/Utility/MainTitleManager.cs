@@ -20,11 +20,13 @@ namespace MSMM {
         if (index == 0) {
           var trans = GameObject.FindGameObjectWithTag("Transition Handler");
           trans.GetComponent<Transition>().LoadScene("UDCTitle");
+          PlayCounter.AddCount(CountType.UDCSelect);
           menuSelector.Reset();
         }
 
         if (index == 1) {
           SceneManager.LoadScene("InvaderTitle");
+          PlayCounter.AddCount(CountType.STGSelect);
           menuSelector.Reset();
           STGGameState.SetState(0);
         }

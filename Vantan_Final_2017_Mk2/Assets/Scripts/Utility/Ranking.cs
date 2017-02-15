@@ -76,9 +76,17 @@ namespace MSMM {
     }
   }
 
+  public enum RankingMode {
+    Update,
+    Review
+  }
+
   public class Ranking : MonoBehaviour {
 
     RankingArray rankingArray;
+
+    [SerializeField]
+    RankingMode mode = RankingMode.Update;
 
     [SerializeField]
     Text[] rankingTexts = null;
@@ -135,20 +143,22 @@ namespace MSMM {
     }
 
     void Update() {
-      if (updatingRanking && !newRecordCanvas.activeSelf) {
-        SwapScores(MSMM.RankingTempData.TempName, MSMM.RankingTempData.TempScore);
-        Array.Sort(rankingArray.data);
-        rankingArray.SaveData(fileName);
-        foreach (var selec in selectors) {
-          selec.SetComponentActive(true);
+      if (mode == RankingMode.Update) {
+        if (updatingRanking && !newRecordCanvas.activeSelf) {
+          SwapScores(MSMM.RankingTempData.TempName, MSMM.RankingTempData.TempScore);
+          Array.Sort(rankingArray.data);
+          rankingArray.SaveData(fileName);
+          foreach (var selec in selectors) {
+            selec.SetComponentActive(true);
+          }
+          rankingUpdated = true;
+          updatingRanking = false;
         }
-        rankingUpdated = true;
-        updatingRanking = false;
-      }
 
-      if (!rankingUpdated) {
-        if (CheckForNewRecord(MSMM.RankingTempData.TempScore)) {
-          ActivateNameEntry();
+        if (!rankingUpdated) {
+          if (CheckForNewRecord(MSMM.RankingTempData.TempScore)) {
+            ActivateNameEntry();
+          }
         }
       }
 

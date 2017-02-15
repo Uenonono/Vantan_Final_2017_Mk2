@@ -23,6 +23,12 @@ namespace UDCommand {
     [SerializeField]
     private GameObject resultCanvas = null;
 
+    [SerializeField]
+    private GameObject instructText = null;
+
+    [SerializeField]
+    private GameObject textAnim = null;
+
     private GameObject trans;
 
     void Start() {
@@ -45,7 +51,9 @@ namespace UDCommand {
 
       trans = GameObject.FindGameObjectWithTag("Transition Handler");
 
+      instructText.SetActive(true);
       resultCanvas.SetActive(false);
+      textAnim.SetActive(false);
     }
 
     void Update() {
@@ -56,6 +64,7 @@ namespace UDCommand {
       if (buttonCount > 0 && !animInit) {
         gameObject.GetComponentInChildren<Animator>().Play("Wiggle");
         animInit = true;
+        textAnim.SetActive(true);
       }
 
       if (currentTime > 0 && buttonCount > 0) {
@@ -64,10 +73,13 @@ namespace UDCommand {
 
       if (currentTime <= 0) {
         gameObject.GetComponentInChildren<Animator>().Play("PopupSpecial");
+        instructText.SetActive(false);
         resultCanvas.SetActive(true);
         if (!endSEPlayed) {
           SoundMgr.PlaySe("UDCGameEnd");
           endSEPlayed = true;
+          textAnim.GetComponent<TextAnimation>().Reset();
+          textAnim.SetActive(false);
         }
         SoundMgr.StopBgm();
       }
@@ -78,16 +90,18 @@ namespace UDCommand {
         if(index == 0) {
           if (Input.GetAxis("BottomGreen") == 1) {
             if (UDCommand.SelectedGameMode.GetMode() == (int)UDCommand.GameMode.Trial) {
-              MSMM.RankingTempData.TempScore += (uint)buttonCount * 20;
+              MSMM.RankingTempData.TempScore += (uint)buttonCount * 5;
               SoundMgr.PlaySe("UDCDecide");
               selector.Reset();
               trans.GetComponent<MSMM.Transition>().LoadScene("UDCTrialResult");
+              MSMM.PlayCounter.AddCount(MSMM.CountType.UDCEnd);
             }
             else if (UDCommand.SelectedGameMode.GetMode() == (int)UDCommand.GameMode.Challenge) {
-              MSMM.RankingTempData.TempScore += (uint)buttonCount * 20;
+              MSMM.RankingTempData.TempScore += (uint)buttonCount * 5;
               SoundMgr.PlaySe("UDCDecide");
               selector.Reset();
               trans.GetComponent<MSMM.Transition>().LoadScene("UDCChallengeResult");
+              MSMM.PlayCounter.AddCount(MSMM.CountType.UDCEnd);
             }
           }
         }
