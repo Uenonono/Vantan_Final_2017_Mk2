@@ -10,24 +10,40 @@ public class ResultScore : MonoBehaviour
     public static int MainScore;
     int MemoryScore;
 
+    //スコア表示
+    [SerializeField]
+    public Text score1;
+
+    [SerializeField]
+    public Text score2;
+    
+    
     void Start()
     {
         MainScore = 0;
         MainScore = Score.score;
 
+        //BGM
         SoundMgr.SoundLoadBgm("Result_A", "Invader/Result_A");
         SoundMgr.PlayBgm("Result_A");
+
+        score1 = score1.GetComponent<Text>();
+        score2 = score2.GetComponent<Text>();
+        MSMM.RankingTempData.TempScore = (uint)MainScore;
+
+
     }
 
 
     void Update()
     {
+
         if (SScore < MainScore)
         {
-            SScore += 10;
+            SScore += 100;
         }
-
-        //スコア表示
-        GetComponent<Text>().text = SScore.ToString();
+        score1.text = "スコア";
+        score2.text = SScore.ToString();
+      
     }
 }
