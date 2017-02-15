@@ -3,7 +3,7 @@ using Unity = UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.Collections.Generic;
-using System;
+using System.Collections;
 using UDC = UDCommand;
 using TFC = ToppingFullCustom;
 
@@ -25,8 +25,10 @@ namespace UDCommand {
     private bool standbyCanvasLastState;
 
     [SerializeField]
-    private GameObject resultCanvas = null;
-    private bool resultCanvasLastState;
+    private GameObject UICanvas = null;
+
+    [SerializeField]
+    private GameObject SpecialModeCanvas = null;
 
     private UDC.GameMode gameMode;
 
@@ -46,15 +48,21 @@ namespace UDCommand {
 
     private int correctCommands;
     private bool commandAdded = false;
+    private bool waitingAnimation = false;
+    private float waitingTime = 0.0f;
+    private bool missSEPlayed = false;
 
     private bool init = false;
     private bool onStandby = true;
     private bool gameEnded = false;
+    private bool endSEPlayed = false;
 
     [SerializeField]
     GameObject pauseCanvas = null;
     private bool isPaused = false;
     private bool isPauseReleased = true;
+
+    GameObject trans;
 
     void Start() {
       images = new List<UDC.ImageType>();
@@ -64,11 +72,13 @@ namespace UDCommand {
       SoundMgr.SoundLoadSe("UDCCorrectCommand", "UDCommand/CorrectCommand");
       SoundMgr.SoundLoadSe("UDCCorrectList", "UDCommand/CorrectList");
       SoundMgr.SoundLoadSe("UDCMissCommand", "UDCommand/MissCommand");
+      SoundMgr.SoundLoadSe("UDCGameEnd", "UDCommand/Finish");
+      trans = GameObject.Find("Transition Handler");
     }
 
     private void Init() {
       transform.DetachChildren();
-      foreach(var command in commandObjects) {
+      foreach (var command in commandObjects) {
         Destroy(command);
       }
       commandObjects.Clear();
@@ -79,9 +89,10 @@ namespace UDCommand {
       correctCommands = 0;
       onStandby = true;
       gameEnded = false;
+      endSEPlayed = false;
       standbyCanvas.SetActive(true);
-      resultCanvas.SetActive(false);
       pauseCanvas.SetActive(false);
+      UICanvas.SetActive(true);
       UpdateDisplayTime();
       UpdateScoreText();
       gameMode = (UDC.GameMode)UDC.SelectedGameMode.GetMode();
@@ -107,15 +118,20 @@ namespace UDCommand {
       init = false;
     }
 
+    IEnumerator LateReset(float seconds) {
+      yield return new WaitForSeconds(seconds);
+      Reset();
+    }
+
     public void StartGame() {
       onStandby = false;
       resetedToNeutral = false;
     }
 
-    void Update() {     
+    void Update() {
       if (!init) {
         Init();
-      }   
+      }
       if (!isPaused) {
         if (onStandby) {
           standbyCanvas.SetActive(true);
@@ -127,42 +143,63 @@ namespace UDCommand {
         }
         UpdateCommandIcons(currentCommand);
         previousFrameCommand = currentCommand;
-        if(Input.GetAxis("Pause") == 0) {
+        if (Input.GetAxis("Pause") == 0) {
           isPauseReleased = true;
         }
         if ((Input.GetAxis("Pause") == 1) && isPauseReleased) {
-          Debug.Log("Paused");
           isPaused = true;
           standbyCanvasLastState = standbyCanvas.activeSelf;
-          resultCanvasLastState = resultCanvas.activeSelf;
           standbyCanvas.GetComponent<MSMM.MenuSelector>().Reset();
-          resultCanvas.GetComponent<MSMM.MenuSelector>().Reset();
           standbyCanvas.SetActive(false);
-          resultCanvas.SetActive(false);
           pauseCanvas.SetActive(true);
           pauseCanvas.GetComponent<PauseMenu>().SetButtonState();
         }
         if (!onStandby && !gameEnded) {
-        CheckGamepadInput();
-        ResetCurrentCommand();
+          if (waitingAnimation) {
+            var radish = commandObjects[currentCommand].GetComponent<CommandManager>().GetRadish();
+            if(waitingTime >= 0.167f && !missSEPlayed) {
+              SoundMgr.PlaySe("UDCMissCommand");
+              missSEPlayed = true;
+            }
+            if (radish.GetComponent<RectTransform>().anchoredPosition.y >= 150) {
+              GenerateRandomCommands();
+              currentCommand = 0;
+              waitingAnimation = false;
+            }
+            waitingTime += Time.deltaTime;
+          }
+          else {
+            CheckGamepadInput();
+            ResetCurrentCommand();
+          }
           currentWaitTime -= Time.deltaTime;
         }
       }
       if (isPaused) {
-        if(!pauseCanvas.activeSelf) {
+        if (!pauseCanvas.activeSelf) {
           isPaused = false;
           isPauseReleased = false;
           standbyCanvas.SetActive(standbyCanvasLastState);
-          resultCanvas.SetActive(resultCanvasLastState);
         }
       }
 
-      if(currentWaitTime <= 0) {
+      if (currentWaitTime <= 0) {
         gameEnded = true;
         currentWaitTime = 0;
-        if (!isPaused) {
-          resultCanvas.SetActive(true);
+        UICanvas.SetActive(false);
+      }
+
+      if (gameEnded) {
+        if (!endSEPlayed) {
+          SoundMgr.PlaySe("UDCGameEnd");
+          endSEPlayed = true;
         }
+        SpecialModeCanvas.SetActive(true);
+        SpecialModeCanvas.GetComponent<SpecialModeTransition>().Execute();
+        MSMM.RankingTempData.TempScore = (uint)score;
+        UDC.SpecialModeData.Time = correctCommands;
+        StartCoroutine(LateReset(3));
+        SoundMgr.StopBgm();
       }
     }
 
@@ -182,19 +219,20 @@ namespace UDCommand {
         if (gameMode == UDC.GameMode.Trial) {
           images.Add((UDC.ImageType)Unity.Random.Range(0, 4));
         }
-        else if(gameMode == UDC.GameMode.Challenge) {
+        else if (gameMode == UDC.GameMode.Challenge) {
           images.Add((UDC.ImageType)Unity.Random.Range(4, 12));
         }
       }
 
       for (var i = 0; i < images.Count; i++) {
-        commandObjects[i].GetComponent<Image>().sprite = ImageTypeToSprite(images[i]);
+        commandObjects[i].GetComponent<CommandManager>().SetCommand(images[i]);
+        commandObjects[i].GetComponentInChildren<Animator>().Play("Idle");
       }
 
       if (gameMode == UDC.GameMode.Trial) {
         foreach (var img in images) {
           trialInputList.Add(ImageTypeToActionInput(img));
-        }   
+        }
       }
       else if (gameMode == UDC.GameMode.Challenge) {
         foreach (var img in images) {
@@ -213,12 +251,11 @@ namespace UDCommand {
               resetedToNeutral = false;
               AddScoreByCommandIndex(currentCommand);
               SoundMgr.PlaySe("UDCCorrectCommand", 2);
+              commandObjects[currentCommand].GetComponentInChildren<Animator>().Play("Popup");
               currentCommand++;
             }
             else {
-              currentCommand = 0;
-              GenerateRandomCommands();
-              SoundMgr.PlaySe("UDCMissCommand", 3);
+              MissCommand();
               resetedToNeutral = false;
             }
           }
@@ -227,12 +264,11 @@ namespace UDCommand {
               resetedToNeutral = false;
               AddScoreByCommandIndex(currentCommand);
               SoundMgr.PlaySe("UDCCorrectCommand", 2);
+              commandObjects[currentCommand].GetComponentInChildren<Animator>().Play("Popup");
               currentCommand++;
             }
             else {
-              currentCommand = 0;
-              GenerateRandomCommands();
-              SoundMgr.PlaySe("UDCMissCommand", 3);
+              MissCommand();
               resetedToNeutral = false;
             }
           }
@@ -245,21 +281,32 @@ namespace UDCommand {
       }
     }
 
+    private void MissCommand() {
+      commandObjects[currentCommand].GetComponentInChildren<Animator>().Play("MPopup");
+      commandObjects[currentCommand].GetComponent<CommandManager>().SwapMandragora();
+      waitingAnimation = true;
+      waitingTime = 0.0f;
+      missSEPlayed = false;
+    }
+
     private void AddScoreByCommandIndex(int currentCommand) {
       score += (int)(10 * Mathf.Pow(2, currentCommand));
     }
 
     private void ResetCurrentCommand() {
       if (currentCommand >= commandObjects.Count) {
-        currentCommand = 0;
-        correctCommands++;
-        SoundMgr.PlaySe("UDCCorrectList", 4);
-        commandAdded = false;
+        var radish = commandObjects[commandObjects.Count - 1].GetComponent<CommandManager>().GetRadish();
+        if (radish.GetComponent<RectTransform>().anchoredPosition.y >= 150) {
+          currentCommand = 0;
+          correctCommands++;
+          SoundMgr.PlaySe("UDCCorrectList", 4);
+          commandAdded = false;
+        }
       }
 
-      if(correctCommands >= 10) {
-        if(correctCommands % 10 == 0) {
-          if(commandObjects.Count < 5 && !commandAdded) {
+      if (correctCommands >= 3) {
+        if (correctCommands % 3 == 0) {
+          if (commandObjects.Count < 5 && !commandAdded) {
             AddCommand();
             commandAdded = true;
           }
@@ -291,67 +338,8 @@ namespace UDCommand {
       }
     }
 
-    public void EndGame() {
-      MSMM.RankingTempData.TempScore = (uint)score;
-      Reset();
-      switch (gameMode) {
-        case GameMode.Trial:
-          SceneManager.LoadScene("UDCTrialResult");
-          break;
-        case GameMode.Challenge:
-          SceneManager.LoadScene("UDCChallengeResult");
-          break;
-      }    
-    }
-
     public float GetCurrentTime() {
       return currentWaitTime;
-    }
-
-    private Sprite ImageTypeToSprite(UDC.ImageType imageType) {
-      string path = "";
-      switch (imageType) {
-        case UDC.ImageType.Red:
-          path = "Sprites/UDCommand/red";
-          break;
-        case UDC.ImageType.Green:
-          path = "Sprites/UDCommand/green";
-          break;
-        case UDC.ImageType.Blue:
-          path = "Sprites/UDCommand/blue";
-          break;
-        case UDC.ImageType.Yellow:
-          path = "Sprites/UDCommand/yellow";
-          break;
-
-        case UDC.ImageType.URed:
-          path = "Sprites/UDCommand/Ured";
-          break;
-        case UDC.ImageType.UGreen:
-          path = "Sprites/UDCommand/Ugreen";
-          break;
-        case UDC.ImageType.UBlue:
-          path = "Sprites/UDCommand/Ublue";
-          break;
-        case UDC.ImageType.UYellow:
-          path = "Sprites/UDCommand/Uyellow";
-          break;
-
-        case UDC.ImageType.BRed:
-          path = "Sprites/UDCommand/Bred";
-          break;
-        case UDC.ImageType.BGreen:
-          path = "Sprites/UDCommand/Bgreen";
-          break;
-        case UDC.ImageType.BBlue:
-          path = "Sprites/UDCommand/Bblue";
-          break;
-        case UDC.ImageType.BYellow:
-          path = "Sprites/UDCommand/Byellow";
-          break;
-      }
-
-      return Resources.Load<Sprite>(path);
     }
 
     private TFC.InputType ImageTypeToInputType(UDC.ImageType imageType) {

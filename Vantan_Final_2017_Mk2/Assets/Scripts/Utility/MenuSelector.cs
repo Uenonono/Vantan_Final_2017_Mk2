@@ -10,7 +10,12 @@ namespace MSMM{
     private Image[] buttons = null;
 
     [SerializeField]
-    private string sePath = "";
+    private string selectSEPath = "";
+
+    [SerializeField]
+    private Color neutralColor = Color.white;
+    [SerializeField]
+    private Color selectedColor = Color.red;
 
     private int selectedIndex = -1;
 
@@ -21,8 +26,8 @@ namespace MSMM{
     private bool active = true;
 
     void Start() {
-      if(sePath != "") {
-        SoundMgr.SoundLoadSe("SelectSE", sePath);
+      if(selectSEPath != "") {
+        SoundMgr.SoundLoadSe("SelectSE", selectSEPath);
       }
     }
 
@@ -31,7 +36,7 @@ namespace MSMM{
         if (initialInput) {
           if (stickNeutral) {
             if (Input.GetAxis("Horizontal") > 0.5f) {
-              if (sePath != "") {
+              if (selectSEPath != "") {
                 SoundMgr.PlaySe("SelectSE");
               }
               selectedIndex++;
@@ -41,7 +46,7 @@ namespace MSMM{
             }
 
             if (Input.GetAxis("Horizontal") < -0.5f) {
-              if (sePath != "") {
+              if (selectSEPath != "") {
                 SoundMgr.PlaySe("SelectSE");
               }
               selectedIndex--;
@@ -55,7 +60,7 @@ namespace MSMM{
 
         if (!initialInput) {
           if ((Input.GetAxis("Horizontal") != 0) || (Input.GetAxis("Vertical") != 0)) {
-            if (sePath != "") {
+            if (selectSEPath != "") {
               SoundMgr.PlaySe("SelectSE");
             }
             selectedIndex = 0;
@@ -77,9 +82,9 @@ namespace MSMM{
       if (index >= 0) {
         if (buttons.Length > 0) {
           foreach (Image but in buttons) {
-            but.color = Color.white;
+            but.color = neutralColor;
           }
-          buttons[index].color = Color.red;
+          buttons[index].color = selectedColor;
         }
       }
     }

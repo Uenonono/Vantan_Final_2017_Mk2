@@ -25,39 +25,39 @@ namespace UDCommand {
       bool isEven = CheckEvenTotal();
 
       if (index < 5) {
-        yPos = 200;
+        yPos = 0;
       }
       else {
-        yPos = -200;
+        yPos = -300;
       }
 
       if (totalChildren < 6) {
         if (isEven) {
           var halfTotal = totalChildren / 2;
-          var firstX = -250 * halfTotal + 125;
-          xPos = firstX + 250 * index;
+          var firstX = -300 * halfTotal + 150;
+          xPos = firstX + 300 * index;
         }
         else {
           var halfTotalRounded = (totalChildren - 1) / 2;
-          var firstX = -250 * halfTotalRounded;
-          xPos = firstX + 250 * index;
+          var firstX = -300 * halfTotalRounded;
+          xPos = firstX + 300 * index;
         }
       }
       else {
         if (index < 5) {
-          var firstX = -250 * 2;
-          xPos = firstX + 250 * index;
+          var firstX = -300 * 2;
+          xPos = firstX + 300 * index;
         }
         else {
           if (!isEven) {
             var halfTotal = (totalChildren - 5) / 2;
-            var firstX = -250 * halfTotal + 125;
-            xPos = firstX + 250 * (index - 5);
+            var firstX = -300 * halfTotal + 150;
+            xPos = firstX + 300 * (index - 5);
           }
           else {
             var halfTotalRounded = ((totalChildren - 5) - 1) / 2;
-            var firstX = -250 * halfTotalRounded;
-            xPos = firstX + 250 * (index - 5);
+            var firstX = -300 * halfTotalRounded;
+            xPos = firstX + 300 * (index - 5);
           }
         }
       }
