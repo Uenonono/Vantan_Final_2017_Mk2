@@ -68,6 +68,8 @@ namespace MSMM {
     string decideSEPath = "";
     [SerializeField]
     string selectSEPath = "";
+    [SerializeField]
+    string newRecordSEPath = "";
 
     void Start() {
       firstSymbol = secondSymbol = thirdSymbol = Symbol.A;
@@ -88,7 +90,7 @@ namespace MSMM {
 
       SoundMgr.SoundLoadSe("RecordDecide", decideSEPath);
       SoundMgr.SoundLoadSe("RecordSelect", selectSEPath);
-
+      SoundMgr.SoundLoadSe("RecordNew", newRecordSEPath);
     }
 
     void Update() {
@@ -246,6 +248,10 @@ namespace MSMM {
       currentLetter = 0;
       subCanvas.SetActive(false);
       timeCounter = 0;
+    }
+
+    public void PlayNewRecordSE() {
+      SoundMgr.PlaySe("RecordNew");
     }
   }
 }

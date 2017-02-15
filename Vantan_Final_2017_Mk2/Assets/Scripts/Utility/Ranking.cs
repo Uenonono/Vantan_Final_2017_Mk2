@@ -194,6 +194,7 @@ namespace MSMM {
         selec.SetComponentActive(false);
       }
       newRecordCanvas.SetActive(true);
+      newRecordCanvas.GetComponent<NewRecord>().PlayNewRecordSE();
       updatingRanking = true;
     }
 

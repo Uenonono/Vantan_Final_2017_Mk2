@@ -252,7 +252,6 @@ namespace UDCommand {
               AddScoreByCommandIndex(currentCommand);
               SoundMgr.PlaySe("UDCCorrectCommand", 2);
               commandObjects[currentCommand].GetComponentInChildren<Animator>().Play("Popup");
-              commandObjects[currentCommand].GetComponent<CommandManager>().GetParticleSystem().Play();
               currentCommand++;
             }
             else {
@@ -266,7 +265,6 @@ namespace UDCommand {
               AddScoreByCommandIndex(currentCommand);
               SoundMgr.PlaySe("UDCCorrectCommand", 2);
               commandObjects[currentCommand].GetComponentInChildren<Animator>().Play("Popup");
-              commandObjects[currentCommand].GetComponent<CommandManager>().GetParticleSystem().Play();
               currentCommand++;
             }
             else {
@@ -285,7 +283,6 @@ namespace UDCommand {
 
     private void MissCommand() {
       commandObjects[currentCommand].GetComponentInChildren<Animator>().Play("MPopup");
-      commandObjects[currentCommand].GetComponent<CommandManager>().GetParticleSystem().Play();
       commandObjects[currentCommand].GetComponent<CommandManager>().SwapMandragora();
       waitingAnimation = true;
       waitingTime = 0.0f;
@@ -307,8 +304,8 @@ namespace UDCommand {
         }
       }
 
-      if (correctCommands >= 3) {
-        if (correctCommands % 3 == 0) {
+      if (correctCommands >= 10) {
+        if (correctCommands % 10 == 0) {
           if (commandObjects.Count < 5 && !commandAdded) {
             AddCommand();
             commandAdded = true;
