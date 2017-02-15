@@ -4,28 +4,31 @@ using System.Collections;
 //シューティング エネミースポナー
 public class STGSpawner : MonoBehaviour
 {
+    //敵スポナー
+    public GameObject SpawneObject;    //敵
     public float spawnRange; //スポーン範囲
     public float spawnIntervalTime; //スポーン間隔
-    public GameObject Enemy;    //敵
 
-    public bool attackpawner;
-    public bool bosspawner;
-    public float intervalTime = 60;
+    //どのスポナーかチェック
+    //public bool attackSpawner;   //シャアスポナー
+    public bool bossSpawner;     //ボススポナー
+    public bool isEffect;    //エフェクト
+
+    public float intervalTime;  //スポナーインターバルタイム?
     float interval = 0;
 
-    public bool isTitle;
-    public bool isp;    //パーティクル
-   
 
     void Start()
     {
-        if (!bosspawner && !isp)
+        //エネミースポーン
+        if (!bossSpawner && !isEffect)
         {
-            InvokeRepeating("Create", 0, spawnIntervalTime);
+            InvokeRepeating("EnemyCreate", 0, spawnIntervalTime);
             Destroy(this.gameObject, 55);
         }
 
-        if (isp)
+        //エフェクトスポーン
+        if (isEffect)
         {
             InvokeRepeating("ParticleCreate", 0, spawnIntervalTime);
         }
@@ -34,37 +37,41 @@ public class STGSpawner : MonoBehaviour
 
     void Update()
     {
-        if (bosspawner)
-        {
-            interval += Time.deltaTime;
-            if (interval >= intervalTime)
-            {
-                Instantiate(Enemy, new Vector3(transform.position.x,
-                       transform.position.y,
-                       transform.position.z),
-                       Quaternion.identity);
-                Destroy(this.gameObject);
-            }
-        }
+        ////シャアスポナー
+        //if (attackSpawner)
+        //{
+        //    interval += Time.deltaTime;
+        //    if (interval >= intervalTime)
+        //    {
+        //        Instantiate(SpawneObject, new Vector3(transform.position.x,
+        //               transform.position.y,
+        //               transform.position.z),
+        //               Quaternion.identity);
+        //    }
+        //}
 
-        if (attackpawner)
+
+        //ボススポナー
+        if (bossSpawner)
         {
             interval += Time.deltaTime;
             if (interval >= intervalTime)
             {
-                Instantiate(Enemy, new Vector3(transform.position.x,
+                Instantiate(SpawneObject, new Vector3(transform.position.x,
                        transform.position.y,
                        transform.position.z),
                        Quaternion.identity);
+
+                Destroy(this.gameObject);
             }
         }
     }
 
 
-    //スポーン
-    void Create()
+    //エネミースポーン
+    void EnemyCreate()
     {
-        Instantiate(Enemy, new Vector3(transform.position.x + Random.Range(-spawnRange, spawnRange),
+        Instantiate(SpawneObject, new Vector3(transform.position.x + Random.Range(-spawnRange, spawnRange),
                                        transform.position.y,
                                        transform.position.z),
                                        Quaternion.identity);
@@ -74,7 +81,7 @@ public class STGSpawner : MonoBehaviour
     //エフェクトスポーン
     void ParticleCreate()
     {
-        Instantiate(Enemy, new Vector3(transform.position.x + Random.Range(-spawnRange, spawnRange),
+        Instantiate(SpawneObject, new Vector3(transform.position.x + Random.Range(-spawnRange, spawnRange),
                                        transform.position.y + Random.Range(-spawnRange, spawnRange),
                                        transform.position.z + Random.Range(-spawnRange, spawnRange)),
                                        Quaternion.identity);

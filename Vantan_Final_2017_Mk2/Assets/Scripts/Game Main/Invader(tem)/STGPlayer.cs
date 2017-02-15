@@ -7,16 +7,16 @@ public class STGPlayer : MonoBehaviour
 {
     Rigidbody _rigidbody;
     public float speed; //移動速度
-    float interval;
-    public float intervalTime;  //発射間隔
-    public GameObject Shot; //弾
 
-    public GameObject Pice; //エフェクト
-    public GameObject Effect;    //死亡エフェクト
+    //ショット
+    public GameObject Shot; //弾
+    public float intervalTime;  //発射間隔
+    float interval;
+
+    public GameObject EffectDead;       //死亡エフェクト
 
     public static bool isDead;  //生死フラグ
-
-    public bool isRule;
+    public bool isRule; //ルール画面かどうか
 
 
     void Start()
@@ -47,12 +47,13 @@ public class STGPlayer : MonoBehaviour
     {
         if (isRule)
         {
+            //もしルール画面なら
             float rx = Input.GetAxis("Horizontal");
             float ry = Input.GetAxis("Vertical");
 
-            // 移動する向きを求める
+            //移動する向きを求める
             Vector3 rdirection = new Vector3(rx, ry, 0);
-            // 移動する向きとスピードを代入する
+            //移動する向きとスピードを代入する
             _rigidbody.velocity = rdirection * speed;
 
             //制限をかけた値をプレイヤーの位置とする
@@ -67,9 +68,9 @@ public class STGPlayer : MonoBehaviour
             float x = Input.GetAxis("Horizontal");
             float z = Input.GetAxis("Vertical");
 
-            // 移動する向きを求める
+            //移動する向きを求める
             Vector3 direction = new Vector3(x, 0, z);
-            // 移動する向きとスピードを代入する
+            //移動する向きとスピードを代入する
             _rigidbody.velocity = direction * speed;
 
             //制限をかけた値をプレイヤーの位置とする
@@ -106,14 +107,8 @@ public class STGPlayer : MonoBehaviour
         {
             isDead = true;
 
-            //ピース
-            Instantiate(Pice, new Vector3(transform.position.x,
-                              transform.position.y,
-                              transform.position.z),
-                              Quaternion.identity);
-
-            //エフェクト
-            Instantiate(Effect, new Vector3(transform.position.x,
+            //死亡エフェクト
+            Instantiate(EffectDead, new Vector3(transform.position.x,
                                            transform.position.y,
                                            transform.position.z),
                                            Quaternion.identity);

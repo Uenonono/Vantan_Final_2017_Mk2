@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-//UFO
+//UFO回転
 public class UFO : MonoBehaviour
 {
-    public float speed;
+    public float speed; //速度
+
 
     void Update()
     {

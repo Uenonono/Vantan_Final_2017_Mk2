@@ -60,7 +60,7 @@ public class Rules : MonoBehaviour
             transform.Translate(0, 0, 3);
         }
 
-        if (interval2 >= 5)
+        if (interval2 >= 1)
         {
             isStart = true;
         }

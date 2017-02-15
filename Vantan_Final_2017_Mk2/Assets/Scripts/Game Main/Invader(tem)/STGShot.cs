@@ -4,23 +4,23 @@ using System.Collections;
 //シューティング 弾
 public class STGShot : MonoBehaviour
 {
+    private Renderer rend;
+
     public float speed; //速度
     public bool PlayerShot;  //弾の種類
     public bool isleft; //右
 
-    private Renderer rend;
-    public GameObject DeadEffect;   //消滅エフェクト
-
+    public GameObject EffectDead;   //消滅エフェクト
     bool timeup;
+
 
     void Start()
     {
         rend = GetComponent<Renderer>();
-        StartCoroutine(ColorChange());
-        StartCoroutine(Test());
 
-        //サウンドロード
-        SoundMgr.SoundLoadSe("Bounce", "Invader/Bounce");
+        StartCoroutine(DeadEffectCreate());
+        StartCoroutine(ColorChange());
+
 
         //プレイヤー
         if (PlayerShot)
@@ -43,45 +43,50 @@ public class STGShot : MonoBehaviour
 
         //10s消滅させる
         Destroy(this.gameObject, 10);
+
+
+        //サウンドロード
+        SoundMgr.SoundLoadSe("Bounce", "Invader/Bounce");
     }
 
 
     void Update()
     {
-        //if(timeup)
-        //{
-        //    Instantiate(DeadEffect, new Vector3(transform.position.x,
-        //                                transform.position.y,
-        //                                transform.position.z),
-        //                                Quaternion.identity);
-        //}
-
-
+        //ボスが死んだorタイムアップなら消滅
         if (STGBoss.isDead || GameTime.isTimeUp)
         {
+            Instantiate(EffectDead, new Vector3(transform.position.x,
+                    transform.position.y,
+                    transform.position.z),
+                    Quaternion.identity);
+
             Destroy(this.gameObject);
         }
     }
 
+
+    //壁ぶつかったら音
     void OnCollisionEnter(Collision collision)
     {
-        //壁ぶつかったら
         if (collision.gameObject.tag == "Wall")
         {
-            //音
             SoundMgr.PlaySe("Bounce", 4);
         }
     }
 
-    IEnumerator Test()
+
+    //消滅時エフェクト表示
+    IEnumerator DeadEffectCreate()
     {
         yield return new WaitForSeconds(9.9f);
-        Instantiate(DeadEffect, new Vector3(transform.position.x,
+        Instantiate(EffectDead, new Vector3(transform.position.x,
                             transform.position.y,
                             transform.position.z),
                             Quaternion.identity);
     }
 
+
+    //時間経過で点滅
     IEnumerator ColorChange()
     {
         yield return new WaitForSeconds(7f); //待ち時間

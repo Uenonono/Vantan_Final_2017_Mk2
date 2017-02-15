@@ -62,10 +62,11 @@ public class GameTime : MonoBehaviour
         GameStartText2 = GameStartText2.GetComponent<Text>();
         StartCoroutine(Count());
 
-        SoundMgr.SoundLoadSe("Count_3,2,1", "Invader/Count_3,2,1");
         SoundMgr.SoundLoadBgm("img_Title2", "Invader/img_Title2");
         SoundMgr.SoundLoadBgm("Boss00", "Invader/Boss00");
+        SoundMgr.SoundLoadSe("Count_3,2,1", "Invader/Count_3,2,1");
         SoundMgr.SoundLoadSe("BossAlert", "Invader/BossAlert");
+        SoundMgr.SoundLoadSe("TimeOver_A", "Invader/TimeOver_A");
     }
 
 
@@ -129,6 +130,7 @@ public class GameTime : MonoBehaviour
         if (!STGPlayer.isDead && isTimeUp)
         {
             TimeUptext.gameObject.SetActive(true);
+            SoundMgr.StopBgm();
         }
         else
         {
@@ -140,6 +142,7 @@ public class GameTime : MonoBehaviour
         if (STGPlayer.isDead)
         {
             GameOvertext.gameObject.SetActive(true);
+            SoundMgr.StopBgm();
         }
         else
         {
@@ -202,5 +205,8 @@ public class GameTime : MonoBehaviour
 
         yield return new WaitForSeconds(0.0f);
         SoundMgr.PlayBgm("Boss00");
+
+        yield return new WaitForSeconds(60.0f);
+        SoundMgr.PlaySe("TimeOver_A", 8);
     }
 }

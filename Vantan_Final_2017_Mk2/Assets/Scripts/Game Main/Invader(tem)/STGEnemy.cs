@@ -4,83 +4,74 @@ using System.Collections;
 //シューティング エネミー
 public class STGEnemy : MonoBehaviour
 {
+    //チェックを入れるとその敵の行動をする
     public bool Normal;   //通常エネミー
     public bool Attacker;   //攻撃エネミー
     public bool Shielder;   //盾エネミー
 
     public float speed; //移動速度
-    public int getScore;    //スコア
-    public GameObject Piece;    //死亡エフェクト
-    public GameObject Effect;    //死亡エフェクト
 
+    public int getScore;    //スコア
+
+    //ショット
     public GameObject Shot; //弾
     public float intervalTime;  //発射間隔
     float interval;
 
-    public static int setScore;
+    public GameObject EffectSummon;    //登場エフェクト
+    public GameObject EffectDead;    //死亡エフェクト
+
 
     //敵の状態
     enum EnemyState
     {
-        Summon, //召喚
         Normal,  //通常
         Active,   //異常
     }
-    EnemyState enemyState = EnemyState.Summon;
+    EnemyState enemyState = EnemyState.Normal;
 
 
-    //状態チェンジまでの時間
-    public float changeTime;
-    float change;
+    //アクティブまでの時間
     public float activeTime;
     float active;
 
     public bool isTitle;
 
-    float moveX = 0.05f;
-    float moveTime;
-    float move;
-
-    public GameObject EffectS;    //登場エフェクト
+    //ジグザグ移動とカニ移動
+    float moveX = 0.05f;    //X値
+    float moveTime; //移動
 
 
     void Start()
     {
         interval = 0;
-        change = 0;
         active = 0;
 
-        setScore = getScore;
-
-        //サウンドロードSpawn
-        SoundMgr.SoundLoadSe("Shot", "Invader/Shot");
-        SoundMgr.SoundLoadSe("Death", "Invader/Death");
-
-
-        //エフェクト
-        Instantiate(EffectS, new Vector3(transform.position.x,
+        //登場エフェクト
+        Instantiate(EffectSummon, new Vector3(transform.position.x,
                                        transform.position.y,
                                        transform.position.z),
                                        Quaternion.identity);
+
+        //サウンドロード
+        SoundMgr.SoundLoadSe("Shot", "Invader/Shot");
+        SoundMgr.SoundLoadSe("Death", "Invader/Death");
     }
 
 
     void Update()
     {
+        //チェックしたの敵の行動をする
         if (Normal) { NormalMove(); }
         if (Attacker) { AttackMove(); }
         if (Shielder) { ShieldMove(); }
 
+
+        //ボスが死んでたら死ぬ
         if (STGBoss.isDead)
         {
-            //エフェクトピース
-            Instantiate(Piece, new Vector3(transform.position.x,
-                                           transform.position.y,
-                                           transform.position.z),
-                                           Quaternion.identity);
-
-            //エフェクト
-            Instantiate(Effect, new Vector3(transform.position.x,
+            //死亡エフェクト
+            Instantiate(EffectDead, new Vector3(transform.position.x,
                                            transform.position.y,
                                            transform.position.z),
                                            Quaternion.identity);
@@ -93,22 +84,13 @@ public class STGEnemy : MonoBehaviour
     }
 
 
-    //行動
+    //緑行動
     public void NormalMove()
     {
         switch (enemyState)
         {
-            //召喚
-            case EnemyState.Summon:
-                change += Time.deltaTime;
-                if (change >= changeTime)
-                {
-                    enemyState = EnemyState.Normal;
-                }
-                break;
             //通常
             case EnemyState.Normal:
-                //ステータス変更
                 active += Time.deltaTime;
                 if (active >= activeTime)
                 {
@@ -119,6 +101,7 @@ public class STGEnemy : MonoBehaviour
                 transform.Translate(0, 0, speed);
                 break;
 
+
             //時間経過
             case EnemyState.Active:
                 //移動
@@ -128,21 +111,13 @@ public class STGEnemy : MonoBehaviour
     }
 
 
+    //赤行動
     public void AttackMove()
     {
         switch (enemyState)
         {
-            //召喚
-            case EnemyState.Summon:
-                change += Time.deltaTime;
-                if (change >= changeTime)
-                {
-                    enemyState = EnemyState.Normal;
-                }
-                break;
             //通常
             case EnemyState.Normal:
-                //ステータス変更
                 active += Time.deltaTime;
                 if (active >= activeTime)
                 {
@@ -169,23 +144,23 @@ public class STGEnemy : MonoBehaviour
                 }
                 break;
 
+
             //時間経過
             case EnemyState.Active:
-                //移動
-                move += Time.deltaTime;
-                if (move >= 0)
+                //ジグザグ移動
+                moveTime += Time.deltaTime;
+                if (moveTime >= 0)
                 {
                     transform.Translate(moveX, 0, speed * 3.0f);
                 }
-                if (move >= 2)
+                if (moveTime >= 2)
                 {
                     transform.Translate(-moveX * 2, 0, speed * 3.0f);
                 }
-                if (move >= 4)
+                if (moveTime >= 4)
                 {
-                    move = 0.0f;
+                    moveTime = 0.0f;
                 }
-
 
                 //攻撃
                 interval += Time.deltaTime;
@@ -207,21 +182,13 @@ public class STGEnemy : MonoBehaviour
     }
 
 
+    //青行動
     public void ShieldMove()
     {
         switch (enemyState)
         {
-            //召喚
-            case EnemyState.Summon:
-                change += Time.deltaTime;
-                if (change >= changeTime)
-                {
-                    enemyState = EnemyState.Normal;
-                }
-                break;
             //通常
             case EnemyState.Normal:
-                //ステータス変更
                 active += Time.deltaTime;
                 if (active >= activeTime)
                 {
@@ -232,21 +199,22 @@ public class STGEnemy : MonoBehaviour
                 transform.Translate(0, 0, speed);
                 break;
 
+
             //時間経過
             case EnemyState.Active:
-                //移動
-                move += Time.deltaTime;
-                if (move >= 0)
+                //カニ移動
+                moveTime += Time.deltaTime;
+                if (moveTime >= 0)
                 {
                     transform.Translate(moveX, 0, 0);
                 }
-                if (move >= 2)
+                if (moveTime >= 2)
                 {
                     transform.Translate(-moveX * 2, 0, 0);
                 }
-                if (move >= 4)
+                if (moveTime >= 4)
                 {
-                    move = 0.0f;
+                    moveTime = 0.0f;
                 }
                 break;
         }
@@ -255,6 +223,7 @@ public class STGEnemy : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
+        //プレイヤーの弾が当たったら
         if (collision.gameObject.tag == "Shot")
         {
             if (!STGPlayer.isDead && !STGBoss.isDead)
@@ -263,14 +232,8 @@ public class STGEnemy : MonoBehaviour
                 Score.score += getScore;
             }
 
-            //エフェクトピース
-            Instantiate(Piece, new Vector3(transform.position.x,
-                                           transform.position.y,
-                                           transform.position.z),
-                                           Quaternion.identity);
-
-            //エフェクト
-            Instantiate(Effect, new Vector3(transform.position.x,
+            //死亡エフェクト
+            Instantiate(EffectDead, new Vector3(transform.position.x,
                                            transform.position.y,
                                            transform.position.z),
                                            Quaternion.identity);
@@ -282,15 +245,13 @@ public class STGEnemy : MonoBehaviour
         }
 
 
-        //壁
+        //壁にぶつかるとスコア減る
         if (collision.gameObject.tag == "Dead")
         {
             if (!STGPlayer.isDead && Score.score >= 0)
             {
-                //スコア
                 Score.score -= getScore;
             }
-
             Destroy(this.gameObject);
         }
     }

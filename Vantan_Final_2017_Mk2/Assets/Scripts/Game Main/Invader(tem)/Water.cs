@@ -4,9 +4,9 @@ using System.Collections;
 //テクスチャを動かす
 public class Water : MonoBehaviour
 {
-    //速度
-    float scrollSpeed = 0.25F;
     Renderer rend;
+
+    float scrollSpeed = 0.25F;      //速度
 
 
     void Start()

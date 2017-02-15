@@ -4,13 +4,13 @@ using System.Collections;
 //エフェクト
 public class Effect : MonoBehaviour
 {
-    public bool isParticle;
+    public bool isParticle;     //もしチェックが入ってればエフェクトの時間で消える
     public float time;
 
 
     void Start()
     {
-        //もしisParticleならエフェクトの時間で消える
+        //エフェクトの時間で消える 入ってなければ時間設定
         ParticleSystem particle = GetComponent<ParticleSystem>();
         if (isParticle)
         {
