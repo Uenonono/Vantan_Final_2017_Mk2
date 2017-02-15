@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine.UI;
 using System.Collections.Generic;
 
-
+//リザルトスコア
 public class ResultScore : MonoBehaviour
 {
     public static int SScore;

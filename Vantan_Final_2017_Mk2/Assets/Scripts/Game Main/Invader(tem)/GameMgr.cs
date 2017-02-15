@@ -45,6 +45,8 @@ public class GameMgr : MonoBehaviour
         STGGameState.SetState(0);
 
         SoundMgr.SoundLoadSe("Start", "Invader/Start");
+        SoundMgr.SoundLoadBgm("Window_Rule", "Invader/Window_Rule");
+        SoundMgr.PlayBgm("Window_Rule");
     }
 
 
@@ -83,8 +85,10 @@ public class GameMgr : MonoBehaviour
                 //ボタン押したらゲーム本編へ
                 if (Rules.isStart)
                 {
+                    SoundMgr.PlaySe("Start", 6);
                     STGGameState.SetState(2);
                     SceneManager.LoadScene("InvaderMain");
+                    SoundMgr.StopBgm();
                 }
                 break;
 
