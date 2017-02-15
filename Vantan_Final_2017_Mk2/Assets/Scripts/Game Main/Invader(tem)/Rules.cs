@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine.UI;
 using System.Collections.Generic;
 
+//ルール画面
 public class Rules : MonoBehaviour
 {
     float speed = -0.2f;

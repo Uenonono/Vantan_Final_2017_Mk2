@@ -9,12 +9,15 @@ public class STGShot : MonoBehaviour
     public bool isleft; //右
 
     private Renderer rend;
+    public GameObject DeadEffect;   //消滅エフェクト
 
+    bool timeup;
 
     void Start()
     {
         rend = GetComponent<Renderer>();
         StartCoroutine(ColorChange());
+        StartCoroutine(Test());
 
         //サウンドロード
         SoundMgr.SoundLoadSe("Bounce", "Invader/Bounce");
@@ -45,7 +48,16 @@ public class STGShot : MonoBehaviour
 
     void Update()
     {
-        if (STGBoss.isDead)
+        //if(timeup)
+        //{
+        //    Instantiate(DeadEffect, new Vector3(transform.position.x,
+        //                                transform.position.y,
+        //                                transform.position.z),
+        //                                Quaternion.identity);
+        //}
+
+
+        if (STGBoss.isDead || GameTime.isTimeUp)
         {
             Destroy(this.gameObject);
         }
@@ -61,6 +73,14 @@ public class STGShot : MonoBehaviour
         }
     }
 
+    IEnumerator Test()
+    {
+        yield return new WaitForSeconds(9.9f);
+        Instantiate(DeadEffect, new Vector3(transform.position.x,
+                            transform.position.y,
+                            transform.position.z),
+                            Quaternion.identity);
+    }
 
     IEnumerator ColorChange()
     {
@@ -73,7 +93,6 @@ public class STGShot : MonoBehaviour
             yield return new WaitForSeconds(0.1f); //待ち時間
             rend.material = origenMaterial; //元に戻す
             yield return new WaitForSeconds(0.1f); //繰り返し待ち時間
-
         }
     }
 }

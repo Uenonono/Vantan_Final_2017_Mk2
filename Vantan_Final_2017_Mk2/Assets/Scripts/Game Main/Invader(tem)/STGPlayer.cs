@@ -106,6 +106,7 @@ public class STGPlayer : MonoBehaviour
         {
             isDead = true;
 
+            //ピース
             Instantiate(Pice, new Vector3(transform.position.x,
                               transform.position.y,
                               transform.position.z),

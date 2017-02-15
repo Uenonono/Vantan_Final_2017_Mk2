@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+//シ－ルド
 public class Shield : MonoBehaviour
 {
     public GameObject Effect;    //エフェクト

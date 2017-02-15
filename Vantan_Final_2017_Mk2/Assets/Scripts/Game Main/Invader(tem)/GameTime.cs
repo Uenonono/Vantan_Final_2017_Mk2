@@ -40,6 +40,7 @@ public class GameTime : MonoBehaviour
 
     //ワーニング
     public GameObject wariningbanner;
+    public GameObject warinng;
 
 
     void Start()
@@ -64,6 +65,7 @@ public class GameTime : MonoBehaviour
         SoundMgr.SoundLoadSe("Count_3,2,1", "Invader/Count_3,2,1");
         SoundMgr.SoundLoadBgm("img_Title2", "Invader/img_Title2");
         SoundMgr.SoundLoadBgm("Boss00", "Invader/Boss00");
+        SoundMgr.SoundLoadSe("BossAlert", "Invader/BossAlert");
     }
 
 
@@ -99,7 +101,7 @@ public class GameTime : MonoBehaviour
             {
                 isBoss = true;
             }
-            if (limitTime <= 60)
+            if (limitTime <= 62)
             {
                 isBoss = false;
             }
@@ -115,14 +117,16 @@ public class GameTime : MonoBehaviour
         if (isBoss)
         {
             wariningbanner.gameObject.SetActive(true);
+            warinng.gameObject.SetActive(true);
         }
         else
         {
             wariningbanner.gameObject.SetActive(false);
+            warinng.gameObject.SetActive(false);
         }
 
         //ゲーム終了テキスト
-        if (isTimeUp)
+        if (!STGPlayer.isDead && isTimeUp)
         {
             TimeUptext.gameObject.SetActive(true);
         }
@@ -147,6 +151,7 @@ public class GameTime : MonoBehaviour
         if (!STGPlayer.isDead && STGBoss.isDead)
         {
             GameCleartext.gameObject.SetActive(true);
+            SoundMgr.StopBgm();
         }
         else
         {
@@ -187,7 +192,15 @@ public class GameTime : MonoBehaviour
         yield return new WaitForSeconds(48.0f);
         SoundMgr.StopBgm();
 
-        yield return new WaitForSeconds(9.0f);
+        yield return new WaitForSeconds(6.0f);
+        SoundMgr.PlaySe("BossAlert", 6);
+        yield return new WaitForSeconds(1.25f);
+        SoundMgr.PlaySe("BossAlert", 6);
+        yield return new WaitForSeconds(1.25f);
+        SoundMgr.PlaySe("BossAlert", 6);
+        yield return new WaitForSeconds(1.25f);
+
+        yield return new WaitForSeconds(0.0f);
         SoundMgr.PlayBgm("Boss00");
     }
 }
