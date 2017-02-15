@@ -9,7 +9,6 @@ public class ResultScore : MonoBehaviour
     public static int SScore;
     public static int MainScore;
     int MemoryScore;
-     
 
     void Start()
     {
