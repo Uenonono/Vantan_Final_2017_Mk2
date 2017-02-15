@@ -5,21 +5,17 @@ using System.Collections;
 namespace UDCommand {
   public class UDCTitleManager : MonoBehaviour {
 
+    GameObject trans;
+
     void Start() {
       SoundMgr.SoundLoadBgm("UDCBGM", "UDCommand/BGM");
-      ushort cnt = 0;
-      while (SoundMgr.isBgmPlaying("UDCBGM") == -1 && cnt < 10) {
-        SoundMgr.SoundLoadBgm("UDCBGM", "UDCommand/BGM");
-        cnt++;
-      }
-
-      if(cnt == 9) {
-        Debug.Log("Error on loading the sound file");
-      }
+      SoundMgr.SoundLoadSe("UDCDecide", "UDCommand/Decide");
 
       if(SoundMgr.isBgmPlaying("UDCBGM") != 1) {
         SoundMgr.PlayBgm("UDCBGM");
       }
+
+      trans = GameObject.FindGameObjectWithTag("Transition Handler");
     }
 
     void Update() {
@@ -28,16 +24,19 @@ namespace UDCommand {
         var index = menuSelector.GetCurrentSelectedIndex();
         if (index == 0) {
           UDCommand.SelectedGameMode.SetMode(0);
-          SceneManager.LoadScene("UDCMain");
+          trans.GetComponent<MSMM.Transition>().LoadScene("UDCMain");
+          SoundMgr.PlaySe("UDCDecide");
           menuSelector.Reset();
         }
         else if (index == 1) {
           UDCommand.SelectedGameMode.SetMode(1);
-          SceneManager.LoadScene("UDCMain");
+          trans.GetComponent<MSMM.Transition>().LoadScene("UDCMain");
+          SoundMgr.PlaySe("UDCDecide");
           menuSelector.Reset();
         }
         else if(index == 2) {
-          SceneManager.LoadScene("UDCRanking");
+          trans.GetComponent<MSMM.Transition>().LoadScene("UDCRanking");
+          SoundMgr.PlaySe("UDCDecide");
           menuSelector.Reset();
         }
       }

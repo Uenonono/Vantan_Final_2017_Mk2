@@ -11,7 +11,7 @@ namespace UDCommand {
         var menuSelector = GetComponent<MSMM.MenuSelector>();
         var index = menuSelector.GetCurrentSelectedIndex();
         if (index == 0) {
-          manager.EndGame();
+          //manager.EndGame();
           menuSelector.Reset();
           gameObject.SetActive(false);
         }

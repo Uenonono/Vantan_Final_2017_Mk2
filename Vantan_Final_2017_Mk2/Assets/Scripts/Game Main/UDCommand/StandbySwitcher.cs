@@ -11,6 +11,7 @@ namespace UDCommand {
         var menuSelector = gameObject.GetComponent<MSMM.MenuSelector>();
         var index = menuSelector.GetCurrentSelectedIndex();
         if (index == 0) {
+          SoundMgr.PlaySe("UDCDecide");
           menuSelector.Reset();
           manager.StartGame();
           gameObject.SetActive(false);

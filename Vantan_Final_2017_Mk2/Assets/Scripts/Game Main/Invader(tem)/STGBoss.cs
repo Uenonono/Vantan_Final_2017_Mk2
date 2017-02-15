@@ -45,6 +45,7 @@ public class STGBoss : MonoBehaviour
         SoundMgr.SoundLoadSe("Shot", "Invader/Shot");
         SoundMgr.SoundLoadSe("Death", "Invader/Death");
         SoundMgr.SoundLoadSe("Spawn", "Invader/Spawn");
+        SoundMgr.SoundLoadSe("ClearFanfare", "Invader/ClearFanfare");
 
         HP = hp;
         _Slider = GameObject.Find("BossHPSlider").GetComponent<Slider>();
@@ -161,6 +162,7 @@ public class STGBoss : MonoBehaviour
 
                 //音
                 SoundMgr.PlaySe("Death", 2);
+                SoundMgr.PlaySe("ClearFanfare", 7);
             }
 
             //Sliderに値を設定

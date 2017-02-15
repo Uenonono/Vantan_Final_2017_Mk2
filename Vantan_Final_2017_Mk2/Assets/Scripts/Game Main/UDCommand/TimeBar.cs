@@ -23,19 +23,20 @@ namespace UDCommand {
 
     void Start() {
       if (manager == null) {
-        Debug.Log("Attach Game Manager!");
+        Debug.LogError("Attach Game Manager!");
       }
 
       rt = gameObject.GetComponent<RectTransform>();
       initialOffsetMax = rt.offsetMax;
+      initialOffsetMin = rt.offsetMin;
 
       barImage = gameObject.GetComponent<Image>();
     }
 
     void Update() {
       barImage.color = Color.Lerp(end, start, manager.GetCurrentTime() / 60.0f);
-
-      rt.offsetMax = Vector2.Lerp(new Vector2(-1550, initialOffsetMax.y),initialOffsetMax, manager.GetCurrentTime() / 60.0f);
+      
+      rt.offsetMax = Vector2.Lerp(new Vector2(-500, initialOffsetMax.y),initialOffsetMax, manager.GetCurrentTime() / 60.0f);
     }
 
   }

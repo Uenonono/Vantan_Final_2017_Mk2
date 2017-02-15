@@ -7,6 +7,7 @@ namespace MSMM {
     [SerializeField]
     GameObject softResetHandler = null;
 
+
     void Awake() {
       var srHandler = Instantiate(softResetHandler);
       DontDestroyOnLoad(srHandler);
@@ -17,7 +18,8 @@ namespace MSMM {
         var menuSelector = GetComponent<MSMM.MenuSelector>();
         var index = menuSelector.GetCurrentSelectedIndex();
         if (index == 0) {
-          SceneManager.LoadScene("UDCTitle");
+          var trans = GameObject.FindGameObjectWithTag("Transition Handler");
+          trans.GetComponent<Transition>().LoadScene("UDCTitle");
           menuSelector.Reset();
         }
 

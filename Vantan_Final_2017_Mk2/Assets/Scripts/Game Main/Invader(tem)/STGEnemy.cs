@@ -285,7 +285,7 @@ public class STGEnemy : MonoBehaviour
         //壁
         if (collision.gameObject.tag == "Dead")
         {
-            if (!STGPlayer.isDead && Score.score > 0)
+            if (!STGPlayer.isDead && Score.score >= 0)
             {
                 //スコア
                 Score.score -= getScore;

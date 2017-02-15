@@ -64,6 +64,11 @@ namespace MSMM {
     [SerializeField]
     private GameObject subCanvas = null;
 
+    [SerializeField]
+    string decideSEPath = "";
+    [SerializeField]
+    string selectSEPath = "";
+
     void Start() {
       firstSymbol = secondSymbol = thirdSymbol = Symbol.A;
       currentLetter = 0;
@@ -80,6 +85,9 @@ namespace MSMM {
           namePlaceholder = "Name : ";
         }
       }
+
+      SoundMgr.SoundLoadSe("RecordDecide", decideSEPath);
+      SoundMgr.SoundLoadSe("RecordSelect", selectSEPath);
 
     }
 
@@ -106,6 +114,7 @@ namespace MSMM {
     private void UpdateSymbol(ref Symbol sym) {
       if (inputNeutral) {
         if (Input.GetAxis("Vertical") >= 0.5f) {
+          SoundMgr.PlaySe("RecordSelect");
           if (sym != Symbol.A) {
             sym--;
           }
@@ -116,6 +125,7 @@ namespace MSMM {
         }
 
         if (Input.GetAxis("Vertical") <= -0.5f) {
+          SoundMgr.PlaySe("RecordSelect");
           if (sym != Symbol.Num9) {
             sym++;
           }
@@ -126,11 +136,13 @@ namespace MSMM {
         }
 
         if (Input.GetAxis("BottomGreen") == 1.0f) {
+          SoundMgr.PlaySe("RecordDecide");
           currentLetter++;
           inputNeutral = false;
         }
 
         if (Input.GetAxis("BottomRed") == 1.0f) {
+          SoundMgr.PlaySe("RecordDecide");
           if (currentLetter != 0) {
             currentLetter--;
           }
@@ -201,6 +213,7 @@ namespace MSMM {
       if (Input.GetAxis("BottomGreen") == 1.0f && inputNeutral) {
         switch (subCanvas.GetComponent<MSMM.MenuSelector>().GetCurrentSelectedIndex()) {
           case 0:
+            SoundMgr.PlaySe("RecordDecide");
             resultString = SymbolToString(firstSymbol) + SymbolToString(secondSymbol) + SymbolToString(thirdSymbol);
             MSMM.RankingTempData.TempName = resultString;
             subCanvas.GetComponent<MSMM.MenuSelector>().Reset();
@@ -208,6 +221,7 @@ namespace MSMM {
             this.gameObject.SetActive(false);
             break;
           case 1:
+            SoundMgr.PlaySe("RecordDecide");
             subCanvas.SetActive(false);
             currentLetter--;
             subCanvas.GetComponent<MSMM.MenuSelector>().Reset();

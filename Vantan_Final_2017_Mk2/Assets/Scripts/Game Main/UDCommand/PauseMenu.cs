@@ -12,8 +12,11 @@ namespace UDCommand {
     [SerializeField]
     UDCommand.GameManager manager = null;
 
+    GameObject trans;
+
     void Start() {
       pauseMenu = GetComponent<MSMM.MenuSelector>();
+      trans = GameObject.FindGameObjectWithTag("Transition Handler");
     }
 
     void Update() {
@@ -31,14 +34,17 @@ namespace UDCommand {
           var index = GetComponent<MSMM.MenuSelector>().GetCurrentSelectedIndex();
           if (index == 0) {
             gameObject.SetActive(false);
+            SoundMgr.PlaySe("UDCDecide");
             pauseMenu.Reset();
             manager.Reset();
+            trans.GetComponent<MSMM.Transition>().FadeOutIn();
           }
           if(index == 1) {
             gameObject.SetActive(false);
+            SoundMgr.PlaySe("UDCDecide");
             pauseMenu.Reset();
             manager.Reset();
-            SceneManager.LoadScene("UDCTitle");
+            trans.GetComponent<MSMM.Transition>().LoadScene("UDCTitle");
           }
         }
       }
