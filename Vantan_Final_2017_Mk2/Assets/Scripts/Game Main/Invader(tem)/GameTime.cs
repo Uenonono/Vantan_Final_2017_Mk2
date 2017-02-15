@@ -6,6 +6,7 @@ using System.Collections.Generic;
 //制限時間
 public class GameTime : MonoBehaviour
 {
+    //制限時間テキスト
     [SerializeField]
     public Text timeText;
 
@@ -15,24 +16,36 @@ public class GameTime : MonoBehaviour
     float second;	            //制限時間（秒）
     int oldSecond;              //前回Update時の秒数
 
+    bool isBoss;
     public static bool isTimeUp;
 
+    //ゲームスタート
     [SerializeField]
-    public Text starttimeText;
+    public Text GameStartText;
+    [SerializeField]
+    public Text GameStartText2;
     float activeTime;
     float active;
     public static bool isCount = false;
 
+    //ゲームオーバー
     [SerializeField]
     public Text GameOvertext;
+    //タイムアップ
     [SerializeField]
     public Text TimeUptext;
+    //ゲームクリア
+    [SerializeField]
+    public Text GameCleartext;
+
+    //ワーニング
+    public GameObject wariningbanner;
 
 
     void Start()
     {
         active = 0;
-        activeTime = 3;
+        activeTime = 4;
         timeText = timeText.GetComponent<Text>();
         isCount = false;
         isTimeUp = false;
@@ -44,12 +57,13 @@ public class GameTime : MonoBehaviour
         oldSecond = 0;
 
 
-        starttimeText = starttimeText.GetComponent<Text>();
+        GameStartText = GameStartText.GetComponent<Text>();
+        GameStartText2 = GameStartText2.GetComponent<Text>();
         StartCoroutine(Count());
 
-
-        GameOvertext = GameOvertext.GetComponent<Text>();
-        TimeUptext = TimeUptext.GetComponent<Text>();
+        SoundMgr.SoundLoadSe("Count_3,2,1", "Invader/Count_3,2,1");
+        SoundMgr.SoundLoadBgm("img_Title2", "Invader/img_Title2");
+        SoundMgr.SoundLoadBgm("Boss00", "Invader/Boss00");
     }
 
 
@@ -58,7 +72,6 @@ public class GameTime : MonoBehaviour
         active += Time.deltaTime;
         if (active >= activeTime)
         {
-            //active = 0;
             isCount = true;
         }
 
@@ -80,11 +93,32 @@ public class GameTime : MonoBehaviour
             }
             oldSecond = ((int)(second));
 
+
+            //ワーニング
+            if (limitTime <= 65)
+            {
+                isBoss = true;
+            }
+            if (limitTime <= 60)
+            {
+                isBoss = false;
+            }
+
             //時間が0になったら
             if (limitTime <= 0.0f)
             {
                 isTimeUp = true;
             }
+        }
+
+        //ワーニングテキスト
+        if (isBoss)
+        {
+            wariningbanner.gameObject.SetActive(true);
+        }
+        else
+        {
+            wariningbanner.gameObject.SetActive(false);
         }
 
         //ゲーム終了テキスト
@@ -107,24 +141,53 @@ public class GameTime : MonoBehaviour
         {
             GameOvertext.gameObject.SetActive(false);
         }
+
+
+        //ゲームクリアテキスト
+        if (!STGPlayer.isDead && STGBoss.isDead)
+        {
+            GameCleartext.gameObject.SetActive(true);
+        }
+        else
+        {
+            GameCleartext.gameObject.SetActive(false);
+        }
     }
 
 
     //スタートのカウント
     IEnumerator Count()
     {
-        starttimeText.text = "3";
+        GameStartText.text = "Standby";
+        GameStartText2.text = "Standby";
         yield return new WaitForSeconds(1.0f);
 
-        starttimeText.text = "2";
+        GameStartText.text = "3";
+        GameStartText2.text = "3";
+        SoundMgr.PlaySe("Count_3,2,1", 0);
         yield return new WaitForSeconds(1.0f);
 
-        starttimeText.text = "1";
+        GameStartText.text = "2";
+        GameStartText2.text = "2";
+        SoundMgr.PlaySe("Count_3,2,1", 0);
         yield return new WaitForSeconds(1.0f);
 
-        starttimeText.text = "GameStart!!";
+        GameStartText.text = "1";
+        GameStartText2.text = "1";
+        SoundMgr.PlaySe("Count_3,2,1", 0);
         yield return new WaitForSeconds(1.0f);
 
-        starttimeText.gameObject.SetActive(false);
+        GameStartText.text = "GameStart";
+        GameStartText2.text = "GameStart";
+        SoundMgr.PlayBgm("img_Title2");
+        yield return new WaitForSeconds(1.0f);
+
+        GameStartText.gameObject.SetActive(false);
+
+        yield return new WaitForSeconds(48.0f);
+        SoundMgr.StopBgm();
+
+        yield return new WaitForSeconds(9.0f);
+        SoundMgr.PlayBgm("Boss00");
     }
 }

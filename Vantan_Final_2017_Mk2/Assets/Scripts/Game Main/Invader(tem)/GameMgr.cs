@@ -43,7 +43,8 @@ public class GameMgr : MonoBehaviour
         active = 0;
 
         STGGameState.SetState(0);
-        SoundMgr.SoundLoadBgm("img_Title2", "Invader/img_Title2");
+
+        SoundMgr.SoundLoadSe("Start", "Invader/Start");
     }
 
 
@@ -67,31 +68,31 @@ public class GameMgr : MonoBehaviour
         {
             //タイトル
             case GameState.Title:
-             
-
                 //ボタン押したらルール画面へ
-                if (Input.GetAxis("BottomGreen") == 1)
+                if (Input.GetAxis("BottomRed") == 1 || Input.GetAxis("BottomGreen") == 1 || Input.GetAxis("BottomBlue") == 1 || Input.GetAxis("BottomYellow") == 1)
                 {
+                    SoundMgr.PlaySe("Start", 6);
                     STGGameState.SetState(1);
                     SceneManager.LoadScene("InvaderRule");
                 }
                 break;
 
+
             //ルール
             case GameState.Rule:
                 //ボタン押したらゲーム本編へ
-                if (Input.GetAxis("BottomGreen") == 1)
+                if (Rules.isStart)
                 {
                     STGGameState.SetState(2);
                     SceneManager.LoadScene("InvaderMain");
-                    SoundMgr.PlayBgm("img_Title2");
                 }
                 break;
+
 
             //ゲーム本編
             case GameState.Main:
                 //ゲームオーバーorタイムアップでリザルト画面へ
-                if (STGPlayer.isDead || GameTime.isTimeUp)
+                if (STGPlayer.isDead || GameTime.isTimeUp || STGBoss.isDead)
                 {
                     active += Time.deltaTime;
                     if (active >= activeTime)
@@ -99,32 +100,26 @@ public class GameMgr : MonoBehaviour
                         active = 0;
                         SoundMgr.StopBgm();
                         STGGameState.SetState(3);
+                        MSMM.RankingTempData.TempScore = (uint)Score.score;
                         SceneManager.LoadScene("InvaderResult");
-
                     }
                 }
                 break;
 
+
             //リザルト
             case GameState.Result:
+                if (Input.GetAxis("BottomRed") == 1)
+                {
+                    Disable();
+                    STGGameState.SetState(0);
+                    SceneManager.LoadScene("InvaderTitle");
+                }
                 if (Input.GetAxis("BottomGreen") == 1)
                 {
-                    var menuSelector = GetComponent<MSMM.MenuSelector>();
-                    var index = menuSelector.GetCurrentSelectedIndex();
-                    if (index == 0)
-                    {
-                        Score.MasterScore = 0;
-                        STGGameState.SetState(0);
-                        SceneManager.LoadScene("InvaderTitle");
-                        menuSelector.Reset();
-                    }
-                    else if (index == 1)
-                    {
-                        Disable();
-                        SoundMgr.StopBgm();
-                        menuSelector.Reset();
-                        SceneManager.LoadScene("MainTitle");
-                    }
+                    Disable();
+                    SoundMgr.StopBgm();
+                    SceneManager.LoadScene("MainTitle");
                 }
                 break;
         }
@@ -134,7 +129,12 @@ public class GameMgr : MonoBehaviour
     public void Disable()
     {
         active = 0;
-        Score.MasterScore = 0;
+        Score.score = 0;
+        ResultScore.SScore = 0;
+        ResultScore.MainScore = 0;
         STGGameState.SetState(4);
+        STGBoss.isDead = false;
+        STGPlayer.isDead = false;
+        Rules.isStart = false;
     }
 }

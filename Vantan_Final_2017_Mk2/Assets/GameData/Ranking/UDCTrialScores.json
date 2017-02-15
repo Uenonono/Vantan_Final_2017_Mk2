@@ -10,6 +10,10 @@
         },
         {
             "name": "AAA",
+            "score": 1110
+        },
+        {
+            "name": "AAA",
             "score": 500
         },
         {
@@ -19,6 +23,13 @@
         {
             "name": "AAA",
             "score": 300
+<<<<<<< HEAD
+=======
+        },
+        {
+            "name": "BCC",
+            "score": 290
+>>>>>>> ccfb99cd7d452834a063884d21c885aeb7bc4fd5
         }
     ]
 }

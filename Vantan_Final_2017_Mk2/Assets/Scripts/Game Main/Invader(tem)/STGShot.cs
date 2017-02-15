@@ -5,12 +5,10 @@ using System.Collections;
 public class STGShot : MonoBehaviour
 {
     public float speed; //速度
-    public bool enemyShot;  //弾の種類
+    public bool PlayerShot;  //弾の種類
+    public bool isleft; //右
 
     private Renderer rend;
-    float interval;
-    float intervalTime = 5;  //間隔
-    bool timeUp;
 
 
     void Start()
@@ -21,31 +19,37 @@ public class STGShot : MonoBehaviour
         //サウンドロード
         SoundMgr.SoundLoadSe("Bounce", "Invader/Bounce");
 
-        if (enemyShot)
-        {
-            this.GetComponent<Rigidbody>().AddForce(
-            (transform.forward + transform.right) * speed, ForceMode.VelocityChange);
-        }
-        else
+        //プレイヤー
+        if (PlayerShot)
         {
             this.GetComponent<Rigidbody>().AddForce(
             (transform.forward) * speed, ForceMode.VelocityChange);
         }
 
-        //カオスになるのでとりあえず消滅させる
+        //敵
+        if (!PlayerShot && isleft)
+        {
+            this.GetComponent<Rigidbody>().AddForce(
+            (transform.forward + transform.right) * -speed, ForceMode.VelocityChange);
+        }
+        if (!PlayerShot && !isleft)
+        {
+            this.GetComponent<Rigidbody>().AddForce(
+            (transform.forward - transform.right) * -speed, ForceMode.VelocityChange);
+        }
+
+        //10s消滅させる
         Destroy(this.gameObject, 10);
     }
 
 
     void Update()
     {
-        interval += Time.deltaTime;
-        if (interval >= intervalTime)
+        if (STGBoss.isDead)
         {
-            timeUp = true;
+            Destroy(this.gameObject);
         }
     }
-
 
     void OnCollisionEnter(Collision collision)
     {
@@ -53,9 +57,10 @@ public class STGShot : MonoBehaviour
         if (collision.gameObject.tag == "Wall")
         {
             //音
-            SoundMgr.PlaySe("Bounce", 6);
+            SoundMgr.PlaySe("Bounce", 4);
         }
     }
+
 
     IEnumerator ColorChange()
     {

@@ -4,8 +4,8 @@ using System.Collections;
 public class Reflection : MonoBehaviour
 {
     ReflectionProbe probe;
-
     public GameObject subCam;
+
 
     void Start()
     {

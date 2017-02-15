@@ -28,12 +28,18 @@ public class STGEnemy : MonoBehaviour
     }
     EnemyState enemyState = EnemyState.Summon;
 
-    public GameObject activeEffect;    //エフェクト
+
     //状態チェンジまでの時間
     public float changeTime;
     float change;
     public float activeTime;
     float active;
+
+    public bool isTitle;
+
+    float moveX = 0.05f;
+    float moveTime;
+    float move;
 
 
     void Start()
@@ -55,6 +61,26 @@ public class STGEnemy : MonoBehaviour
         if (Normal) { NormalMove(); }
         if (Attacker) { AttackMove(); }
         if (Shielder) { ShieldMove(); }
+
+        if (STGBoss.isDead)
+        {
+            //エフェクトピース
+            Instantiate(Piece, new Vector3(transform.position.x,
+                                           transform.position.y,
+                                           transform.position.z),
+                                           Quaternion.identity);
+
+            //エフェクト
+            Instantiate(Effect, new Vector3(transform.position.x,
+                                           transform.position.y,
+                                           transform.position.z),
+                                           Quaternion.identity);
+
+            //音
+            SoundMgr.PlaySe("Death", 2);
+
+            Destroy(this.gameObject);
+        }
     }
 
 
@@ -87,10 +113,11 @@ public class STGEnemy : MonoBehaviour
             //時間経過
             case EnemyState.Active:
                 //移動
-                transform.Translate(0, 0, speed * 2.0f);
+                transform.Translate(0, 0, speed * 3.0f);
                 break;
         }
     }
+
 
     public void AttackMove()
     {
@@ -124,23 +151,36 @@ public class STGEnemy : MonoBehaviour
 
                     //弾
                     Instantiate(Shot, new Vector3(transform.position.x,
-                                                  transform.position.y,
-                                                  transform.position.z - 1),
-                                                  Quaternion.identity);
+                                              transform.position.y,
+                                              transform.position.z - 1),
+                                              Quaternion.identity);
 
                     //音
-                    SoundMgr.PlaySe("Shot", 3);
+                    SoundMgr.PlaySe("Shot", 1);
                 }
                 break;
 
             //時間経過
             case EnemyState.Active:
                 //移動
-                transform.Translate(0, 0, speed * 3.0f);
+                move += Time.deltaTime;
+                if (move >= 0)
+                {
+                    transform.Translate(moveX, 0, speed * 3.0f);
+                }
+                if (move >= 2)
+                {
+                    transform.Translate(-moveX * 2, 0, speed * 3.0f);
+                }
+                if (move >= 4)
+                {
+                    move = 0.0f;
+                }
+
 
                 //攻撃
                 interval += Time.deltaTime;
-                if (interval >= 3)
+                if (interval >= 4)
                 {
                     interval = 0.0f;
 
@@ -151,11 +191,12 @@ public class STGEnemy : MonoBehaviour
                                                   Quaternion.identity);
 
                     //音
-                    SoundMgr.PlaySe("Shot", 3);
+                    SoundMgr.PlaySe("Shot", 1);
                 }
                 break;
         }
     }
+
 
     public void ShieldMove()
     {
@@ -185,7 +226,19 @@ public class STGEnemy : MonoBehaviour
             //時間経過
             case EnemyState.Active:
                 //移動
-                transform.Translate(0, 0, 0);
+                move += Time.deltaTime;
+                if (move >= 0)
+                {
+                    transform.Translate(moveX, 0, 0);
+                }
+                if (move >= 2)
+                {
+                    transform.Translate(-moveX * 2, 0, 0);
+                }
+                if (move >= 4)
+                {
+                    move = 0.0f;
+                }
                 break;
         }
     }
@@ -193,14 +246,13 @@ public class STGEnemy : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        //弾
         if (collision.gameObject.tag == "Shot")
         {
-            //当たったら消える
-            Destroy(this.gameObject);
-
-            //スコア
-            Score.score += getScore;
+            if (!STGPlayer.isDead && !STGBoss.isDead)
+            {
+                //スコア
+                Score.score += getScore;
+            }
 
             //エフェクトピース
             Instantiate(Piece, new Vector3(transform.position.x,
@@ -215,13 +267,21 @@ public class STGEnemy : MonoBehaviour
                                            Quaternion.identity);
 
             //音
-            SoundMgr.PlaySe("Death", 4);
+            SoundMgr.PlaySe("Death", 2);
+
+            Destroy(this.gameObject);
         }
+
 
         //壁
         if (collision.gameObject.tag == "Dead")
         {
-            //当たったら消える
+            if (!STGPlayer.isDead && Score.score > 0)
+            {
+                //スコア
+                Score.score -= getScore;
+            }
+
             Destroy(this.gameObject);
         }
     }
