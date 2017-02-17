@@ -3,12 +3,14 @@ using System.Collections;
 using UnityEngine.UI;
 using System.Collections.Generic;
 
-//ルール画面
+//ルール画面テキスト
 public class Rules : MonoBehaviour
 {
-    float speed = -0.2f;
     float interval;
 
+    //ルール1
+    [SerializeField]
+    public Text text0;
     //ルール1
     [SerializeField]
     public Text text1;
@@ -19,50 +21,50 @@ public class Rules : MonoBehaviour
     [SerializeField]
     public Text text3;
 
-    bool isS;
-    float interval2;
-
-    public static bool isStart;
-
 
     void Start()
     {
-        isS = false;
-        isStart = false;
 
-        text1.gameObject.SetActive(false);
-        text2.gameObject.SetActive(false);
-        text3.gameObject.SetActive(false);
     }
 
 
     void Update()
     {
-        Test();
-    }
-
-
-    void Test()
-    {
         interval += Time.deltaTime;
-        if (interval <= 20)
+        if(interval >= 0)
         {
-            interval = 0;
-            transform.Translate(0, speed, 0);
+            text0.gameObject.SetActive(true);
         }
-        if (interval >= 21 && Input.GetAxis("BottomRed") == 1 || Input.GetAxis("BottomGreen") == 1 || Input.GetAxis("BottomBlue") == 1 || Input.GetAxis("BottomYellow") == 1)
+        else
         {
-            isS = true;
+            text0.gameObject.SetActive(false);
         }
-        if (isS)
+        if (interval >= 10)
         {
-            interval2 += Time.deltaTime;
-            transform.Translate(0, 0, 3);
+            text0.gameObject.SetActive(false);
+            text1.gameObject.SetActive(true);
         }
-
-        if (interval2 >= 1)
+        else
         {
-            isStart = true;
+            text1.gameObject.SetActive(false);
+        }
+        if (interval >= 20)
+        {
+            text1.gameObject.SetActive(false);
+            text2.gameObject.SetActive(true);
+        }
+        else
+        {
+            text2.gameObject.SetActive(false);
+        }
+        if (interval >= 25)
+        {
+            text2.gameObject.SetActive(false);
+            text3.gameObject.SetActive(true);
+        }
+        else
+        {
+            text3.gameObject.SetActive(false);
         }
     }
 }

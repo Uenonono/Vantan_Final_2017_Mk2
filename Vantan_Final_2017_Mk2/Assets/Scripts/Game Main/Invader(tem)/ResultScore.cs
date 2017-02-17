@@ -24,8 +24,8 @@ public class ResultScore : MonoBehaviour
         MainScore = Score.score;
 
         //BGM
-        SoundMgr.SoundLoadBgm("Result_A", "Invader/Result_A");
-        SoundMgr.PlayBgm("Result_A");
+        //SoundMgr.SoundLoadBgm("Result_A", "Invader/Result_A");
+        //SoundMgr.PlayBgm("Result_A");
 
         score1 = score1.GetComponent<Text>();
         score2 = score2.GetComponent<Text>();

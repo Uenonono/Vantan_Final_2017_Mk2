@@ -1,10 +1,6 @@
 {
-    "udccount": 0,
-<<<<<<< HEAD
-    "stgcount": 2,
-=======
-    "stgcount": 1,
->>>>>>> f31f069a08ff03743d723d9241bd4bc606eb6e70
+    "udccount": 3,
+    "stgcount": 0,
     "udccountend": 0,
     "stgcountend": 0
 }

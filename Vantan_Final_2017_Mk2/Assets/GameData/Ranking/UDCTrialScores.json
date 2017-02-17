@@ -1,24 +1,24 @@
 {
     "data": [
         {
+            "name": "ERI",
+            "score": 56900
+        },
+        {
+            "name": "CAT",
+            "score": 50700
+        },
+        {
+            "name": "CAT",
+            "score": 11700
+        },
+        {
             "name": "CDD",
             "score": 7860
         },
         {
             "name": "DRT",
             "score": 7290
-        },
-        {
-            "name": "ABB",
-            "score": 5110
-        },
-        {
-            "name": "ABC",
-            "score": 4230
-        },
-        {
-            "name": "AAA",
-            "score": 500
         }
     ]
 }

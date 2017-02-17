@@ -1,0 +1,188 @@
+Initialize engine version: 5.4.1f1 (649f48bbbf0f)
+GfxDevice: creating device client; threaded=1
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.0]
+    Renderer: Intel(R) HD Graphics Family (ID=0xa16)
+    Vendor:   Intel
+    VRAM:     1024 MB
+Begin MonoManager ReloadAssembly
+Platform assembly: C:\Users\CAT_D\Documents\Vantan_Final_2017_Mk2\Vantan_Final_2017_Mk2\test_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading C:\Users\CAT_D\Documents\Vantan_Final_2017_Mk2\Vantan_Final_2017_Mk2\test_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: C:\Users\CAT_D\Documents\Vantan_Final_2017_Mk2\Vantan_Final_2017_Mk2\test_Data\Managed\Assembly-CSharp.dll (this message is harmless)
+Loading C:\Users\CAT_D\Documents\Vantan_Final_2017_Mk2\Vantan_Final_2017_Mk2\test_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+Platform assembly: C:\Users\CAT_D\Documents\Vantan_Final_2017_Mk2\Vantan_Final_2017_Mk2\test_Data\Managed\UnityEngine.UI.dll (this message is harmless)
+Loading C:\Users\CAT_D\Documents\Vantan_Final_2017_Mk2\Vantan_Final_2017_Mk2\test_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
+Platform assembly: C:\Users\CAT_D\Documents\Vantan_Final_2017_Mk2\Vantan_Final_2017_Mk2\test_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
+Loading C:\Users\CAT_D\Documents\Vantan_Final_2017_Mk2\Vantan_Final_2017_Mk2\test_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
+- Completed reload, in  0.075 seconds
+Platform assembly: C:\Users\CAT_D\Documents\Vantan_Final_2017_Mk2\Vantan_Final_2017_Mk2\test_Data\Managed\System.Core.dll (this message is harmless)
+Platform assembly: C:\Users\CAT_D\Documents\Vantan_Final_2017_Mk2\Vantan_Final_2017_Mk2\test_Data\Managed\System.dll (this message is harmless)
+desktop: 1920x1080 59Hz; virtual: 1920x1080 at 0,0
+<RI> Initializing input.
+<RI> Input initialized.
+<RI> Initialized touch support.
+UnloadTime: 1.084531 ms
+Setting up 1 worker threads for Enlighten.
+  Thread -> id: 2cb4 -> priority: 1 
+Unloading 6 Unused Serialized files (Serialized files now loaded: 0)
+IsolatedStorageException: Could not find a part of the path "C:\Users\CAT_D\Documents\Vantan_Final_2017_Mk2\Vantan_Final_2017_Mk2\test_Data\GameData\Counter\data.json".
+  at System.IO.FileStream..ctor (System.String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize, Boolean anonymous, FileOptions options) [0x00000] in <filename unknown>:0 
+  at System.IO.FileStream..ctor (System.String path, FileMode mode) [0x00000] in <filename unknown>:0 
+  at MSMM.CounterData.SaveData () [0x00000] in <filename unknown>:0 
+  at MSMM.PlayCounter.AddCount (CountType type) [0x00000] in <filename unknown>:0 
+  at MSMM.MainTitleManager.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+UnloadTime: 21.276657 ms
+
+Unloading 8 unused Assets to reduce memory usage. Loaded Objects now: 517.
+Total: 0.806270 ms (FindLiveObjects: 0.077547 ms CreateObjectMapping: 0.106058 ms MarkObjects: 0.595294 ms  DeleteObjects: 0.025659 ms)
+
+Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 2.286524 ms
+
+Unloading 166 unused Assets to reduce memory usage. Loaded Objects now: 315.
+Total: 1.763076 ms (FindLiveObjects: 0.148823 ms CreateObjectMapping: 0.169921 ms MarkObjects: 0.528010 ms  DeleteObjects: 0.914039 ms)
+
+Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 3.020949 ms
+
+Unloading 3 unused Assets to reduce memory usage. Loaded Objects now: 315.
+Total: 0.683676 ms (FindLiveObjects: 0.059301 ms CreateObjectMapping: 0.065573 ms MarkObjects: 0.537703 ms  DeleteObjects: 0.019386 ms)
+
+Unloading 5 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 1.089092 ms
+
+Unloading 6 unused Assets to reduce memory usage. Loaded Objects now: 843.
+Total: 1.691800 ms (FindLiveObjects: 0.129436 ms CreateObjectMapping: 0.141981 ms MarkObjects: 1.259014 ms  DeleteObjects: 0.158517 ms)
+
+Unloading 5 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 3.489659 ms
+
+Unloading 442 unused Assets to reduce memory usage. Loaded Objects now: 461.
+Total: 2.321307 ms (FindLiveObjects: 0.094083 ms CreateObjectMapping: 0.104347 ms MarkObjects: 0.617532 ms  DeleteObjects: 1.503062 ms)
+
+Unloading 5 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.919741 ms
+
+Unloading 18 unused Assets to reduce memory usage. Loaded Objects now: 852.
+Total: 0.950532 ms (FindLiveObjects: 0.110619 ms CreateObjectMapping: 0.064433 ms MarkObjects: 0.595294 ms  DeleteObjects: 0.179614 ms)
+
+Unloading 5 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 4.521161 ms
+
+Unloading 521 unused Assets to reduce memory usage. Loaded Objects now: 463.
+Total: 3.303771 ms (FindLiveObjects: 0.106058 ms CreateObjectMapping: 0.108339 ms MarkObjects: 0.673983 ms  DeleteObjects: 2.413680 ms)
+
+Unloading 5 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 1.208836 ms
+
+Unloading 18 unused Assets to reduce memory usage. Loaded Objects now: 852.
+Total: 1.255593 ms (FindLiveObjects: 0.089522 ms CreateObjectMapping: 0.066143 ms MarkObjects: 0.837632 ms  DeleteObjects: 0.261724 ms)
+
+Unloading 5 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 5.953517 ms
+
+Unloading 817 unused Assets to reduce memory usage. Loaded Objects now: 463.
+Total: 6.403410 ms (FindLiveObjects: 0.166500 ms CreateObjectMapping: 0.235494 ms MarkObjects: 0.860440 ms  DeleteObjects: 5.139264 ms)
+
+Unloading 5 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.902635 ms
+
+Unloading 18 unused Assets to reduce memory usage. Loaded Objects now: 852.
+Total: 0.954524 ms (FindLiveObjects: 0.099786 ms CreateObjectMapping: 0.078688 ms MarkObjects: 0.602137 ms  DeleteObjects: 0.172772 ms)
+
+Unloading 5 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 1.718029 ms
+
+Unloading 545 unused Assets to reduce memory usage. Loaded Objects now: 463.
+Total: 1.515606 ms (FindLiveObjects: 0.057020 ms CreateObjectMapping: 0.037063 ms MarkObjects: 0.294796 ms  DeleteObjects: 1.126156 ms)
+
+Unloading 5 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.899784 ms
+
+Unloading 18 unused Assets to reduce memory usage. Loaded Objects now: 852.
+Total: 1.003562 ms (FindLiveObjects: 0.116892 ms CreateObjectMapping: 0.079828 ms MarkObjects: 0.622094 ms  DeleteObjects: 0.184176 ms)
+
+Unloading 5 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 3.288946 ms
+
+Unloading 1601 unused Assets to reduce memory usage. Loaded Objects now: 465.
+Total: 12.470969 ms (FindLiveObjects: 0.264005 ms CreateObjectMapping: 0.218388 ms MarkObjects: 0.729293 ms  DeleteObjects: 11.258142 ms)
+
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 1.159798 ms
+
+Unloading 29 unused Assets to reduce memory usage. Loaded Objects now: 313.
+Total: 0.649464 ms (FindLiveObjects: 0.036493 ms CreateObjectMapping: 0.022808 ms MarkObjects: 0.279971 ms  DeleteObjects: 0.308481 ms)
+
+IsolatedStorageException: Could not find a part of the path "C:\Users\CAT_D\Documents\Vantan_Final_2017_Mk2\Vantan_Final_2017_Mk2\test_Data\GameData\Counter\data.json".
+  at System.IO.FileStream..ctor (System.String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize, Boolean anonymous, FileOptions options) [0x00000] in <filename unknown>:0 
+  at System.IO.FileStream..ctor (System.String path, FileMode mode) [0x00000] in <filename unknown>:0 
+  at MSMM.CounterData.SaveData () [0x00000] in <filename unknown>:0 
+  at MSMM.PlayCounter.AddCount (CountType type) [0x00000] in <filename unknown>:0 
+  at MSMM.MainTitleManager.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+Unloading 5 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.538274 ms
+
+Unloading 6 unused Assets to reduce memory usage. Loaded Objects now: 533.
+Total: 0.565073 ms (FindLiveObjects: 0.091232 ms CreateObjectMapping: 0.059301 ms MarkObjects: 0.397433 ms  DeleteObjects: 0.015395 ms)
+
+Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 3.302061 ms
+
+Unloading 166 unused Assets to reduce memory usage. Loaded Objects now: 326.
+Total: 1.824658 ms (FindLiveObjects: 0.093513 ms CreateObjectMapping: 0.075837 ms MarkObjects: 0.663149 ms  DeleteObjects: 0.989877 ms)
+
+Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 1.391301 ms
+
+Unloading 3 unused Assets to reduce memory usage. Loaded Objects now: 326.
+Total: 0.760084 ms (FindLiveObjects: 0.059871 ms CreateObjectMapping: 0.055880 ms MarkObjects: 0.623234 ms  DeleteObjects: 0.018816 ms)
+
+Unloading 5 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.662579 ms
+
+Unloading 6 unused Assets to reduce memory usage. Loaded Objects now: 854.
+Total: 0.866142 ms (FindLiveObjects: 0.068994 ms CreateObjectMapping: 0.046186 ms MarkObjects: 0.682536 ms  DeleteObjects: 0.067854 ms)
+
+Unloading 5 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.807411 ms
+
+Unloading 3 unused Assets to reduce memory usage. Loaded Objects now: 854.
+Total: 0.748680 ms (FindLiveObjects: 0.070705 ms CreateObjectMapping: 0.051888 ms MarkObjects: 0.614111 ms  DeleteObjects: 0.010833 ms)
+
+Unloading 5 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 3.986308 ms
+
+Unloading 805 unused Assets to reduce memory usage. Loaded Objects now: 465.
+Total: 6.497494 ms (FindLiveObjects: 0.204703 ms CreateObjectMapping: 0.204133 ms MarkObjects: 0.870133 ms  DeleteObjects: 5.216812 ms)
+
+Unloading 5 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.953954 ms
+
+Unloading 18 unused Assets to reduce memory usage. Loaded Objects now: 854.
+Total: 0.973911 ms (FindLiveObjects: 0.070135 ms CreateObjectMapping: 0.049607 ms MarkObjects: 0.662579 ms  DeleteObjects: 0.191018 ms)
+
+Unloading 5 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 3.097357 ms
+
+Unloading 2711 unused Assets to reduce memory usage. Loaded Objects now: 465.
+Total: 23.544363 ms (FindLiveObjects: 0.369493 ms CreateObjectMapping: 0.494368 ms MarkObjects: 0.955094 ms  DeleteObjects: 21.723698 ms)
+
+Unloading 5 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 1.006413 ms
+
+Unloading 18 unused Assets to reduce memory usage. Loaded Objects now: 854.
+Total: 0.990447 ms (FindLiveObjects: 0.117462 ms CreateObjectMapping: 0.075267 ms MarkObjects: 0.703633 ms  DeleteObjects: 0.093513 ms)
+
+Unloading 5 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 3.826650 ms
+
+Unloading 453 unused Assets to reduce memory usage. Loaded Objects now: 465.
+Total: 3.220521 ms (FindLiveObjects: 0.141411 ms CreateObjectMapping: 0.120313 ms MarkObjects: 0.829079 ms  DeleteObjects: 2.127437 ms)
+

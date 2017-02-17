@@ -92,7 +92,7 @@ public class STGBoss : MonoBehaviour
                     enemyState = EnemyState.Active;
                 }
 
-                //敵スポーン
+                //敵スポーン3s
                 interval += Time.deltaTime;
                 if (interval >= intervalTime)
                 {
@@ -113,7 +113,7 @@ public class STGBoss : MonoBehaviour
             case EnemyState.Active:
                 //攻撃
                 interval += Time.deltaTime;
-                if (interval >= intervalTime)
+                if (interval >= 2)
                 {
                     interval = 0.0f;
 

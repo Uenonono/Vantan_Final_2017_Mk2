@@ -127,7 +127,7 @@ public class GameTime : MonoBehaviour
         }
 
         //ゲーム終了テキスト
-        if (!STGPlayer.isDead && isTimeUp)
+        if (!STGPlayer.isDead && isTimeUp && !STGBoss.isDead)
         {
             TimeUptext.gameObject.SetActive(true);
             SoundMgr.StopBgm();
@@ -151,7 +151,7 @@ public class GameTime : MonoBehaviour
 
 
         //ゲームクリアテキスト
-        if (!STGPlayer.isDead && STGBoss.isDead)
+        if (!STGPlayer.isDead && STGBoss.isDead && !isTimeUp)
         {
             GameCleartext.gameObject.SetActive(true);
             SoundMgr.StopBgm();
@@ -185,8 +185,8 @@ public class GameTime : MonoBehaviour
         SoundMgr.PlaySe("Count_3,2,1", 0);
         yield return new WaitForSeconds(1.0f);
 
-        GameStartText.text = "GameStart";
-        GameStartText2.text = "GameStart";
+        GameStartText.text = "GAME START";
+        GameStartText2.text = "GAME START";
         SoundMgr.PlayBgm("img_Title2");
         yield return new WaitForSeconds(1.0f);
 

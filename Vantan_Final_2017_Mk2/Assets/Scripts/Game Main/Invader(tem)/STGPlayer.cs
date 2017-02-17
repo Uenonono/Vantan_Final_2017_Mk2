@@ -81,7 +81,7 @@ public class STGPlayer : MonoBehaviour
 
             //ショット
             interval += Time.deltaTime;
-            if (Input.GetAxis("BottomRed") == 1)
+            if (Input.GetAxis("BottomRed") == 1 || Input.GetAxis("BottomGreen") == 1 || Input.GetAxis("BottomBlue") == 1 || Input.GetAxis("BottomYellow") == 1)
             {
                 if (interval >= intervalTime)
                 {

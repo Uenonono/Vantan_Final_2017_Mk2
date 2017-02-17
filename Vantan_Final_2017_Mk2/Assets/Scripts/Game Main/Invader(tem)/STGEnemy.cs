@@ -12,6 +12,7 @@ public class STGEnemy : MonoBehaviour
     public float speed; //移動速度
 
     public int getScore;    //スコア
+    int mScore;
 
     //ショット
     public GameObject Shot; //弾
@@ -46,6 +47,7 @@ public class STGEnemy : MonoBehaviour
     {
         interval = 0;
         active = 0;
+        mScore = getScore;
 
         //登場エフェクト
         Instantiate(EffectSummon, new Vector3(transform.position.x,
@@ -56,6 +58,12 @@ public class STGEnemy : MonoBehaviour
         //サウンドロード
         SoundMgr.SoundLoadSe("Shot", "Invader/Shot");
         SoundMgr.SoundLoadSe("Death", "Invader/Death");
+
+        //タイトルのやつはsで消す
+        if(isTitle)
+        {
+            Destroy(this.gameObject, 90);
+        }
     }
 
 
@@ -246,11 +254,11 @@ public class STGEnemy : MonoBehaviour
 
 
         //壁にぶつかるとスコア減る
-        if (collision.gameObject.tag == "Dead")
+        if (collision.gameObject.tag == "aaa")
         {
-            if (!STGPlayer.isDead && Score.score >= 0)
+            if (!STGPlayer.isDead && Score.score > 0)
             {
-                Score.score -= getScore;
+                Score.score -= mScore;
             }
             Destroy(this.gameObject);
         }
